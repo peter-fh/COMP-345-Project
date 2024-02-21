@@ -6,12 +6,11 @@
 #include <math.h>
 #include <bits/stdc++.h>
 #include "Character.h"
-
 using namespace std;
 
-Character::Character(int level){
-    if (level > 0){
-        level = level;
+Character::Character(int setLevel){
+    if (setLevel > 0){
+        level = setLevel;
 
         strength = generateAbilityScores();
         dexterity = generateAbilityScores();
@@ -30,7 +29,7 @@ Character::Character(int level){
         hitPoints = calculateHitPoints();
         armorClass = calculateArmorClass();
         attackBonus = calculateAttackBonus();
-        damageBonus = calculateDamageBonus();
+        damageBonus = calculateDamageBonus();        
     }
     else{
         throw invalid_argument("Level must be positive");
@@ -38,12 +37,13 @@ Character::Character(int level){
 }
 int Character::generateAbilityScores(){
     int n = 4;
-    int roll[n];
+    int roll[4];
     for (int i=0;i<n; i++){ // rolling 4d6
         int high = 6;
         int low = 1;
         roll[i] = rand() % (high - low) + low;
     }
+    
     sort(roll, roll + n); // dropping the lowest roll
     return roll[1]+roll[2]+roll[3]; // summing the rest
 }
@@ -53,13 +53,13 @@ int Character::calculateModifiers(int points){
     return floor(modifier);
 }
 int Character::calculateHitPoints(){
-    return getConstitutionMod()+getLevel();
+    return getConstitutionMod()+level;
 }
 int Character::calculateArmorClass(){
     return getDexterityMod();
 }
 int Character::calculateAttackBonus(){
-    return getLevel()+getStrengthMod()+getDexterityMod();
+    return level+getStrengthMod()+getDexterityMod();
 }
 int Character::calculateDamageBonus(){
     return getStrengthMod();
@@ -248,34 +248,32 @@ string Character::getHelmet() const{return helmet;}
 
 void Character::printCharacter(){
     // Print attributes
-        cout << "Level: " << getLevel() << "\n";
-        cout << "Hit Points: " << getHitPoints() << "\n";
-        cout << "Armor Class: " << getArmorClass() << "\n";
-        cout << "Attack Bonus: " << getAttackBonus() << "\n";
-        cout << "Damage Bonus: " << getDamageBonus() << "\n";
-        
-        // Print ability scores
-        cout << "Ability Scores:" << "\n";
-        cout << "  Strength: " << getStrength() << " (Mod: " << getStrengthMod() << ")" << "\n";
-        cout << "  Dexterity: " << getDexterity() << " (Mod: " << getDexterityMod() << ")" << "\n";
-        cout << "  Constitution: " << getConstitution() << " (Mod: " << getConstitutionMod() << ")" << "\n";
-        cout << "  Intelligence: " << getIntelligence() << " (Mod: " << getIntelligenceMod() << ")" << "\n";
-        cout << "  Wisdom: " << getWisdom() << " (Mod: " << getWisdomMod() << ")" << "\n";
-        cout << "  Charisma: " << getCharisma() << " (Mod: " << getCharismaMod() << ")" << "\n";
-
-        // Print equipment
-        cout << "Equipment:" << "\n";
-        cout << "  Armor: " << (getArmor().empty() ? "None" : getArmor()) << "\n";
-        cout << "  Shield: " << (getShield().empty() ? "None" : getShield()) << "\n";
-        cout << "  Weapon: " << (getWeapon().empty() ? "None" : getWeapon()) << "\n";
-        cout << "  Boots: " << (getBoots().empty() ? "None" : getBoots()) << "\n";
-        cout << "  Ring: " << (getRing().empty() ? "None" : getRing()) << "\n";
-        cout << "  Helmet: " << (getHelmet().empty() ? "None" : getHelmet()) << "\n";
+    cout << "Level: " << getLevel() << "\n";
+    cout << "Hit Points: " << getHitPoints() << "\n";
+    cout << "Armor Class: " << getArmorClass() << "\n";
+    cout << "Attack Bonus: " << getAttackBonus() << "\n";
+    cout << "Damage Bonus: " << getDamageBonus() << "\n";
+    // Print ability scores
+    cout << "Ability Scores:" << "\n";
+    cout << "  Strength: " << getStrength() << " (Mod: " << getStrengthMod() << ")" << "\n";
+    cout << "  Dexterity: " << getDexterity() << " (Mod: " << getDexterityMod() << ")" << "\n";
+    cout << "  Constitution: " << getConstitution() << " (Mod: " << getConstitutionMod() << ")" << "\n";
+    cout << "  Intelligence: " << getIntelligence() << " (Mod: " << getIntelligenceMod() << ")" << "\n";
+    cout << "  Wisdom: " << getWisdom() << " (Mod: " << getWisdomMod() << ")" << "\n";
+    cout << "  Charisma: " << getCharisma() << " (Mod: " << getCharismaMod() << ")" << "\n";
+    // Print equipment
+    cout << "Equipment:" << "\n";
+    cout << "  Armor: " << (getArmor().empty() ? "None" : getArmor()) << "\n";
+    cout << "  Shield: " << (getShield().empty() ? "None" : getShield()) << "\n";
+    cout << "  Weapon: " << (getWeapon().empty() ? "None" : getWeapon()) << "\n";
+    cout << "  Boots: " << (getBoots().empty() ? "None" : getBoots()) << "\n";
+    cout << "  Ring: " << (getRing().empty() ? "None" : getRing()) << "\n";
+    cout << "  Helmet: " << (getHelmet().empty() ? "None" : getHelmet()) << "\n";
 }
 
 int main() {
-    Character fighter(12); // Create a level 1 fighter
-    cout<<fighter.getLevel();
+    srand(time(0)); // create random seed
+    Character fighter(1); // Create a level 1 fighter
     fighter.printCharacter(); // Print fighter details
     return 0;
 }
