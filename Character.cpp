@@ -270,10 +270,3 @@ void Character::printCharacter(){
     cout << "  Ring: " << (getRing().empty() ? "None" : getRing()) << "\n";
     cout << "  Helmet: " << (getHelmet().empty() ? "None" : getHelmet()) << "\n";
 }
-
-int main() {
-    srand(time(0)); // create random seed
-    Character fighter(1); // Create a level 1 fighter
-    fighter.printCharacter(); // Print fighter details
-    return 0;
-}
