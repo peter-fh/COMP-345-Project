@@ -3,15 +3,11 @@
 #include <cassert>
 using namespace std;
 
-
 // Test constructor and level initialization
 void testConstructor() {
     Character testCharacter(1);
     assert(testCharacter.getLevel() == 1);
     assert(testCharacter.getHitPoints() > 0);
-    assert(testCharacter.getArmorClass() > 0);
-    assert(testCharacter.getAttackBonus() > 0);
-    assert(testCharacter.getDamageBonus() > 0);
 
     assert(testCharacter.getStrength() > 2);
     assert(testCharacter.getDexterity() > 2);

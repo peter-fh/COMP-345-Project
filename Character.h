@@ -8,7 +8,6 @@ class Character {
 public:
     Character(int level); // Constructor declaration
     void printCharacter(); // Method to print character details
-
     // equip gear
     void equipArmor(string newArmor);
     void equipShield(string newShield);
@@ -53,7 +52,7 @@ public:
     void increaseCharisma(int charismaUp);
 
 private: // private!!!
-    int level;
+    int level; // assigned at the beginning
     int hitPoints; // based on constitution modifier and level
     int armorClass; // based on dexterity modifier
     int attackBonus; // based level and strength/dexterity modifiers
@@ -86,17 +85,14 @@ private: // private!!!
     int calculateArmorClass(); // based on dexterity modifier
     int calculateAttackBonus(); // based level and strength modifiers and dexterity modifiers
     int calculateDamageBonus(); // based on strength modifier
-
     // setters
     void setLevel(int newLevel);
-    // setters for abilities
     void setStrength(int newStrength);
     void setDexterity(int newDexterity);
     void setConstitution(int newConstitution);
     void setIntelligence(int newIntelligence);
     void setWisdom(int newWisdom);
     void setCharisma(int newCharisma);
-    
     // Recalculate attributes that depend on level or modifiers
     void recalculateAttributes();
 };

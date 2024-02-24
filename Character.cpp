@@ -43,9 +43,8 @@ int Character::generateAbilityScores(){
         int low = 1;
         roll[i] = rand() % (high - low) + low;
     }
-    
     sort(roll, roll + n); // dropping the lowest roll
-    return roll[1]+roll[2]+roll[3]; // summing the rest
+    return roll[1]+roll[2]+roll[3]; // summing the 3 highest rolls
 }
 int Character::calculateModifiers(int points){
     float difference = points-10;
@@ -53,7 +52,24 @@ int Character::calculateModifiers(int points){
     return floor(modifier);
 }
 int Character::calculateHitPoints(){
-    return getConstitutionMod()+level;
+    int hitDie = 10; // fighter hit die (d10)
+    int hitDieRoll;
+    int high;
+    int low = 1;
+    if(getLevel()==1){
+        hitDieRoll = 1;
+    }
+    else{
+        if(getLevel()<hitDie){
+        high = getLevel();
+    }
+    else{
+        high = hitDie;
+    }
+    hitDieRoll = rand() % (high - low) + low;
+    }
+    
+    return getConstitutionMod()+level+hitDieRoll;
 }
 int Character::calculateArmorClass(){
     return getDexterityMod();
@@ -75,122 +91,74 @@ void Character::setLevel(int newLevel){
     }
 }
 void Character::setStrength(int newStrength){
-    if (newStrength >= 0){
-        strength = newStrength;
-    } 
-    else{
-        throw invalid_argument("Strength must be positive");
-    }
+    strength = newStrength;
+    strengthMod = calculateModifiers(strength);
+    recalculateAttributes();
 }
 void Character::setDexterity(int newDexterity){
-    if (newDexterity >= 0){
-        dexterity = newDexterity;
-    }
-    else{
-        throw invalid_argument("Dexterity must be positive");
-    }
+    dexterity = newDexterity;
+    dexterityMod = calculateModifiers(dexterity);
+    recalculateAttributes();
 }
 void Character::setConstitution(int newConstitution){
-    if (newConstitution >= 0){
-        constitution = newConstitution;
-    }
-    else{
-        throw invalid_argument("Constitution must be positive");
-    }
+    constitution = newConstitution;
+    constitutionMod = calculateModifiers(constitution);
+    recalculateAttributes();
 }
 void Character::setIntelligence(int newIntelligence){
-    if (newIntelligence >= 0){
-        intelligence = newIntelligence;
-    }
-    else{
-        throw invalid_argument("Intelligence must be positive");
-    }
+    intelligence = newIntelligence;
+    intelligenceMod = calculateModifiers(intelligence);
+    recalculateAttributes();
 }
 void Character::setWisdom(int newWisdom){
-    if (newWisdom >= 0){
-        wisdom = newWisdom;
-    }
-    else{
-        throw invalid_argument("Wisdom must be positive");
-    }
+    wisdom = newWisdom;
+    wisdomMod = calculateModifiers(wisdom);
+    recalculateAttributes();
 }
 void Character::setCharisma(int newCharisma){
-    if (newCharisma >= 0){
-        charisma = newCharisma;
-    }
-    else{
-        throw invalid_argument("Charisma must be positive");
-    }
+    charisma = newCharisma;
+    charismaMod = calculateModifiers(charisma);
+    recalculateAttributes();
 }
 //increase (buff and debuff)
 void Character::increaseLevel(int levelUp){
     if (level+levelUp > 0){
         level+=levelUp;
-        recalculateAttributes();
+        recalculateAttributes(); // attributes are recalculated after a level change
     }
     else{
         throw invalid_argument("New Level must be positive");
     }
 }
 void Character::increaseStrength(int buffStrength){
-    if (strength + buffStrength >= 0){
-        strength += buffStrength;
-        strengthMod = calculateModifiers(strength);
-        recalculateAttributes();
-    } 
-    else{
-        throw invalid_argument("New Strength must be positive");
-    }
+    strength += buffStrength;
+    strengthMod = calculateModifiers(strength);
+    recalculateAttributes();
 }
 void Character::increaseDexterity(int buffDexterity){
-    if (dexterity + buffDexterity >= 0){
-        dexterity += buffDexterity;
-        dexterityMod = calculateModifiers(dexterity);
-        recalculateAttributes();
-    }
-    else{
-        throw invalid_argument("New Dexterity must be positive");
-    }
+    dexterity += buffDexterity;
+    dexterityMod = calculateModifiers(dexterity);
+    recalculateAttributes();
 }
 void Character::increaseConstitution(int buffConstitution){
-    if (constitution + buffConstitution >= 0){
-        constitution += buffConstitution;
-        constitutionMod = calculateModifiers(constitution);
-        recalculateAttributes();
-    }
-    else{
-        throw invalid_argument("New Constitution must be positive");
-    }
+    constitution += buffConstitution;
+    constitutionMod = calculateModifiers(constitution);
+    recalculateAttributes();
 }
 void Character::increaseIntelligence(int buffIntelligence){
-    if (intelligence + buffIntelligence >= 0){
-        intelligence += buffIntelligence;
-        intelligenceMod = calculateModifiers(intelligence);
-        recalculateAttributes();
-    }
-    else{
-        throw invalid_argument("New Intelligence must be positive");
-    }
+    intelligence += buffIntelligence;
+    intelligenceMod = calculateModifiers(intelligence);
+    recalculateAttributes();
 }
 void Character::increaseWisdom(int buffWisdom){
-    if (wisdom + buffWisdom >= 0){
-        wisdom += buffWisdom;
-        wisdomMod = calculateModifiers(wisdom);
-        recalculateAttributes();
-    }
-    else{
-        throw invalid_argument("New Wisdom must be positive");
-    }
+    wisdom += buffWisdom;
+    wisdomMod = calculateModifiers(wisdom);
+    recalculateAttributes();
 }
 void Character::increaseCharisma(int buffCharisma){
-    if (charisma + buffCharisma >= 0){
-        charisma += buffCharisma;
-        charismaMod = calculateModifiers(charisma);
-        recalculateAttributes();
-    }
-    else{
-        throw invalid_argument("New Charisma must be positive");
-    }
+    charisma += buffCharisma;
+    charismaMod = calculateModifiers(charisma);
+    recalculateAttributes();
 }
 // Recalculate attributes that depend on level or modifiers
 void Character::recalculateAttributes(){
@@ -200,24 +168,12 @@ void Character::recalculateAttributes(){
     damageBonus = calculateDamageBonus();
 }
 //equip gear
-void Character::equipArmor(string newArmor){
-    armor = newArmor;
-}
-void Character::equipShield(string newShield){
-    shield = newShield;
-}
-void Character::equipWeapon(string newWeapon){
-    weapon = newWeapon;
-}
-void Character::equipBoots(string newBoots){
-    boots = newBoots;
-}
-void Character::equipRing(string newRing){
-    ring = newRing;
-}
-void Character::equipHelmet(string newHelmet){
-    helmet = newHelmet;
-}
+void Character::equipArmor(string newArmor){armor = newArmor;}
+void Character::equipShield(string newShield){shield = newShield;}
+void Character::equipWeapon(string newWeapon){weapon = newWeapon;}
+void Character::equipBoots(string newBoots){boots = newBoots;}
+void Character::equipRing(string newRing){ring = newRing;}
+void Character::equipHelmet(string newHelmet){helmet = newHelmet;}
 // getters for Character stats
 int Character::getLevel() const{return level;}
 int Character::getHitPoints() const{return hitPoints;}
@@ -270,3 +226,10 @@ void Character::printCharacter(){
     cout << "  Ring: " << (getRing().empty() ? "None" : getRing()) << "\n";
     cout << "  Helmet: " << (getHelmet().empty() ? "None" : getHelmet()) << "\n";
 }
+
+// int main() {
+//     srand(time(0)); // create random seed
+//     Character fighter(1);
+//     fighter.printCharacter();
+//     return 0;
+// }
