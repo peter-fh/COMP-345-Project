@@ -5,7 +5,8 @@ using namespace std;
 struct Cell {
     int x;
     int y;
-
+    
+    Cell() {x = 0; y = 0;}
     Cell(int inp_x, int inp_y) {x = inp_x; y = inp_y;}
 };
 
@@ -20,16 +21,25 @@ const int END = 4;
 
 class Map 
 {
-    int width;
-    int height;
+
     vector<vector<int> > mapArray;
+    void breadthFirstSearch(vector<vector<int> > *map, Cell start_cell);
+    void displaySearchMap(vector<vector<int> > *map);
+ 
 public:
+    Cell start;
+    Cell end;
+    int width;
+    int height; 
     bool setCell(Cell cell, int value);
     int getCell(Cell cell);    
-    Map (int inp_width, int inp_height, Cell start, Cell end)
+    bool passable(Cell cell); 
+    Map (int inp_width, int inp_height, Cell inp_start, Cell inp_end)
     {
 	width = inp_width;
 	height = inp_height;
+	start = inp_start;
+	end = inp_end;
 	for (int x=0; x < width; x++){
 	    vector<int> column (height);
 	    fill(column.begin(), column.end(), EMPTY);
