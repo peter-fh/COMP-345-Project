@@ -43,6 +43,14 @@ public:
     string getBoots() const;
     string getRing() const;
     string getHelmet() const;
+    //increase (buff and debuff)
+    void increaseLevel(int levelUp);
+    void increaseStrength(int strengthUp);
+    void increaseDexterity(int dexterityUp);
+    void increaseConstitution(int constitutionUp);
+    void increaseIntelligence(int intelligenceUp);
+    void increaseWisdom(int wisdomUp);
+    void increaseCharisma(int charismaUp);
 
 private: // private!!!
     int level;
@@ -88,14 +96,7 @@ private: // private!!!
     void setIntelligence(int newIntelligence);
     void setWisdom(int newWisdom);
     void setCharisma(int newCharisma);
-    //increase (buff and debuff)
-    void increaseLevel(int levelUp);
-    void increaseStrength(int strengthUp);
-    void increaseDexterity(int dexterityUp);
-    void increaseConstitution(int constitutionUp);
-    void increaseIntelligence(int intelligenceUp);
-    void increaseWisdom(int wisdomUp);
-    void increaseCharisma(int charismaUp);
+    
     // Recalculate attributes that depend on level or modifiers
     void recalculateAttributes();
 };
