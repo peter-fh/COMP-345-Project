@@ -5,6 +5,8 @@
 #include <stdexcept>
 using namespace std;
 
+//Jackson Abbott
+
         Dice::Dice(){
             sides = 6;
         }
