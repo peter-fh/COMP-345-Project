@@ -12,7 +12,7 @@ using namespace std;
         }
         Dice::Dice(int diceSides){
             if (Valid(diceSides)) sides = diceSides;
-            else sides = 0;
+            else sides = 6;
         }
         bool Dice::Valid(int d){
             //checks to see if the dice entered was one of the valid ones. split only to test calling functions from functions
