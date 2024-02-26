@@ -21,6 +21,7 @@ class Dice{
         int Roll(int numOfRolls);
         int Roll();
         bool Parse(string s);
+        void DiceInput();
 
 
 };
