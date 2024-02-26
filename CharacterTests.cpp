@@ -1,3 +1,15 @@
+/**
+ * @file CharacterTests.cpp
+ * @brief Unit tests for the Character class in a role-playing game.
+ *
+ * This file includes tests for the Character class, ensuring the correct behavior of its constructor,
+ * level management, attribute modification methods, and gear equipment functionality. It uses assertions
+ * to validate the initial state of a character, level progression, attribute increases, and the successful
+ * equipment of gear items. The output of each test case is directed to standard output, indicating success.
+ *
+ * @author Eric Liu
+ * @date 2024-02-25
+ */
 #include "Character.h"
 #include <iostream>
 #include <cassert>

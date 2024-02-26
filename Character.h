@@ -1,8 +1,19 @@
+/**
+ * @file Character.h
+ * @brief Declaration of the Character class for a role-playing game.
+ *
+ * This file declares the Character class, including constructors, methods for equipping gear,
+ * getters for character attributes and equipment, and methods for increasing character abilities.
+ * The class represents a character in a role-playing game, encapsulating attributes such as
+ * strength, dexterity, intelligence, as well as character equipment like armor and weapons.
+ *
+ * @author Eric Liu
+ * @date 2024-02-25
+ */
 #ifndef CHARACTER_H
 #define CHARACTER_H
 #include <string>
 using std::string;
-
 
 class Character {
 public:

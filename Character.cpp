@@ -1,3 +1,15 @@
+/**
+ * @file Character.cpp
+ * @brief Implementation of the Character class for a role-playing game.
+ *
+ * Defines the Character class constructor, ability score generation, modifiers calculation, and character
+ * attribute recalculations. It also includes methods for leveling up, increasing abilities, equipping gear,
+ * and printing character details. The implementation utilizes random number generation for simulating
+ * ability score rolls and includes error handling for invalid level inputs.
+ *
+ * @author Eric Liu
+ * @date 2024-02-25
+ */
 #include <cstdlib> // For std::rand() and std::srand()
 #include <ctime>   // For std::time()
 #include <iostream>
@@ -61,14 +73,13 @@ int Character::calculateHitPoints(){
     }
     else{
         if(getLevel()<hitDie){
-        high = getLevel();
-    }
-    else{
-        high = hitDie;
-    }
+            high = getLevel();
+        }
+        else{
+            high = hitDie;
+        }
     hitDieRoll = rand() % (high - low) + low;
     }
-    
     return getConstitutionMod()+level+hitDieRoll;
 }
 int Character::calculateArmorClass(){
@@ -167,7 +178,7 @@ void Character::recalculateAttributes(){
     attackBonus = calculateAttackBonus();
     damageBonus = calculateDamageBonus();
 }
-//equip gear
+// Equip gear (as strings for simplicity for now)
 void Character::equipArmor(string newArmor){armor = newArmor;}
 void Character::equipShield(string newShield){shield = newShield;}
 void Character::equipWeapon(string newWeapon){weapon = newWeapon;}
@@ -227,6 +238,7 @@ void Character::printCharacter(){
     cout << "  Helmet: " << (getHelmet().empty() ? "None" : getHelmet()) << "\n";
 }
 
+// Optionally, the commented main function can be used for quick testing or demonstration.
 // int main() {
 //     srand(time(0)); // create random seed
 //     Character fighter(1);
