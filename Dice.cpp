@@ -107,13 +107,13 @@ using namespace std;
             
 
         }
-        static void Dice::DiceInput() {
+        void Dice::DiceInput() {
                 Dice one;
                 string parse, selection = "y";
                 do {
                         cout << "\nPlease Enter Your Roll in the Format xdy[z] \n \t - x is the amount of times you want to roll\n \t - y is the dice you want to roll\n \t - z is an optional addition to the sum of rolls \n";
                     getline(cin, parse);
-            if (Parse(parse)) {
+            if (one.Parse(parse)) {
                 cout << "\nWould you like to roll again? (y/n): ";
                 getline(cin, selection);
             } else {
@@ -127,10 +127,10 @@ using namespace std;
             }
         } while (selection == "Y" || selection == "y");
     }
-};
 
 
-int main(){
-        Dice::DiceInput();
-        return 0;
-}
+
+// int main(){
+//         Dice::DiceInput();
+//         return 0;
+// }

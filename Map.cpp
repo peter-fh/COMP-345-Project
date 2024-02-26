@@ -129,14 +129,15 @@ void Map::displayMap(){
 }
 
 
-int main(){
+// int main(){
 
-    Map map (20, 20, Cell(0, 0), Cell(19, 19));
+//     Map map (20, 20, Cell(0, 0), Cell(19, 19));
     
-    for (int y = 0; y < map.height; y++)
-	map.setCell(Cell(14, y), WALL);
+//     for (int y = 0; y < map.height; y++)
+// 	map.setCell(Cell(14, y), WALL);
 
-    map.setCell(Cell(14, 17), EMPTY);
-    map.displayMap();
-    cout << map.validate() << "\n";
-}
+//     map.setCell(Cell(14, 17), EMPTY);
+//     map.displayMap();
+//     cout << map.validate() << "\n";
+//     return 0;
+// }

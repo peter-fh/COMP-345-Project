@@ -61,15 +61,15 @@ void testPrint() {
     cout << "testPrint passed\n";
 }
 
-// Main function to run all tests
-int main() {
-    srand(time(0)); // create random seed
-    testConstructor();
-    testIncreaseLevel();
-    testStrengthAttribute();
-    testEquipArmor();
-    testPrint();
+// // Main function to run all tests
+// int main() {
+//     srand(time(0)); // create random seed
+//     testConstructor();
+//     testIncreaseLevel();
+//     testStrengthAttribute();
+//     testEquipArmor();
+//     testPrint();
 
-    cout << "All tests passed!\n";
-    return 0;
-}
+//     cout << "All tests passed!\n";
+//     return 0;
+// }
