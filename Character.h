@@ -1,12 +1,19 @@
 /**
  * @file Character.h
- * @brief Declaration of the Character class for a role-playing game.
+ * @brief Declaration of the Character class for a DND game.
  *
  * This file declares the Character class, including constructors, methods for equipping gear,
  * getters for character attributes and equipment, and methods for increasing character abilities.
- * The class represents a character in a role-playing game, encapsulating attributes such as
+ * The class represents a character in a DND game, encapsulating attributes such as
  * strength, dexterity, intelligence, as well as character equipment like armor and weapons.
- *
+ * 
+ * Design Description:
+ * - The Character class encapsulates a character's attributes, equipment, and actions like equipping gear and stat increases.
+ * - Attributes affect combat outcomes, simulated through methods calculating bonuses and hit points.
+ * 
+ * Libraries Used:
+ * - <string> for representing character names and equipment. Chosen for comprehensive support for string operations.
+ * 
  * @author Eric Liu
  * @date 2024-02-25
  */
