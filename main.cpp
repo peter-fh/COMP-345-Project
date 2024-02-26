@@ -10,7 +10,7 @@
 #include "Character.h"
 #include "Dice.h"
 #include "map.h"
-// #include "Item.h"
+#include "Item.cpp"
 #include <iostream>
 using namespace std;
 
@@ -34,7 +34,20 @@ int main() {
     map.displayMap();
     cout << map.validate() << "\n";
 
-    // inializing items with item container
-    
+    // inializing items
+    Helmet helmet1;
+    Armor armor1;
+    Shield shield1;
+    Ring ring1;
+    Belt belt1;
+    Boots boots1;
+    Weapon weapon1;
+    cout << helmet1.getEnchantment() << endl;
+    cout << armor1.getEnchantment() << endl;
+    cout << shield1.getEnchantment() << endl;
+    cout << ring1.getEnchantment() << endl;
+    cout << belt1.getEnchantment() << endl;
+    cout << boots1.getEnchantment() << endl;
+    cout << weapon1.getEnchantment() << endl;
     return 0;
 }
