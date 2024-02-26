@@ -107,31 +107,30 @@ using namespace std;
             
 
         }
+        static void Dice::DiceInput() {
+                Dice one;
+                string parse, selection = "y";
+                do {
+                        cout << "\nPlease Enter Your Roll in the Format xdy[z] \n \t - x is the amount of times you want to roll\n \t - y is the dice you want to roll\n \t - z is an optional addition to the sum of rolls \n";
+                    getline(cin, parse);
+            if (Parse(parse)) {
+                cout << "\nWould you like to roll again? (y/n): ";
+                getline(cin, selection);
+            } else {
+                cout << "Invalid selection, please type y if you would like to try and roll again? (y/n): ";
+                getline(cin, selection);
+            }
+
+            while (selection[0] != 'y' && selection[0] != 'Y' && selection[0] != 'n' && selection[0] != 'N') {
+                cout << "Invalid entry, would you like to roll again? (y/n): ";
+                getline(cin, selection);
+            }
+        } while (selection == "Y" || selection == "y");
+    }
+};
 
 
 int main(){
-    string parse, selection = "y";
-    Dice one(0);
-    do{
-
-        cout << "\nPlease Enter Your Roll in the Format xdy[z] \n \t - x is the amount of times you want to roll\n \t - y is the dice you want to roll\n \t - z is an optional addition to the sum of rolls \n";
-        getline(cin, parse);
-        if(one.Parse(parse)){
-            cout << "\nWould you like to roll again? (y/n):";
-            getline(cin, selection);
-            if (selection == "n" || selection =="n"){
-                exit(0);
-            }
-        }
-        else{
-            cout << "Invalid selection,please type y if you would like to try and roll again? (y/n):";
-             getline(cin, selection);
-            }
-        while (selection[0] != 'y' && selection != "Y" && selection != "n" && selection != "N"){
-            cout << "Invalid entry, would you like to roll again? (y/n):";
-            getline(cin, selection);
-        }
-        
-    }while (selection == "Y" || selection == "y");
-
+        Dice::DiceInput();
+        return 0;
 }
