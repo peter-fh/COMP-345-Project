@@ -1,5 +1,5 @@
 #include "Subject.h"
-#include "Observer.h"
+#include "../Observer/Observer.h"
 Subject::Subject(){
     _observers = new list<Observer*>;
 }

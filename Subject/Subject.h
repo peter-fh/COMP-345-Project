@@ -1,5 +1,5 @@
 #pragma once
-#include "Observer.h"
+#include "../Observer/Observer.h"
 #include <list>
 using namespace std;
 class Subject{
