@@ -20,9 +20,10 @@
 #ifndef CHARACTER_H
 #define CHARACTER_H
 #include <string>
+#include "Subject.h"
 using std::string;
 
-class Character {
+class Character : public Subject{
 public:
     Character(int level); // Constructor declaration
     void printCharacter(); // Method to print character details

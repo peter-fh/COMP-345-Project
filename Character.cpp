@@ -18,6 +18,8 @@
 #include <math.h>
 #include <bits/stdc++.h>
 #include "Character.h"
+#include "Observer.h"
+
 using namespace std;
 
 Character::Character(int setLevel){
@@ -177,6 +179,7 @@ void Character::recalculateAttributes(){
     armorClass = calculateArmorClass();
     attackBonus = calculateAttackBonus();
     damageBonus = calculateDamageBonus();
+    Notify();
 }
 // Equip gear (as strings for simplicity for now)
 void Character::equipArmor(string newArmor){armor = newArmor;}
@@ -285,9 +288,9 @@ void testPrint() {
 }
 
 // Optionally, the commented main function can be used for quick testing or demonstration.
-// int main() {
-//     srand(time(0)); // create random seed
-//     Character fighter(1);
-//     fighter.printCharacter();
-//     return 0;
-// }
+int main() {
+    srand(time(0)); // create random seed
+    Character fighter(1);
+    fighter.printCharacter();
+    return 0;
+}
