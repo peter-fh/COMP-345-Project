@@ -52,9 +52,6 @@ class CharGUI: public Character {
       }
       } while (selection != "Y" && selection != "y");
   }
-  void setLast(){
-      
-  }
     
 
   void regDisplay(){
@@ -67,6 +64,11 @@ class CharGUI: public Character {
     nameCharacter();
     regDisplay();
     char selection;
+
+    
+    
+    while char
+    
     
 }
 
