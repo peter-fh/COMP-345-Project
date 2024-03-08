@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-#include Character.h;
+#include "Character/Character.h"
 using namespace std;
 
 class CharGUI: public Character {
