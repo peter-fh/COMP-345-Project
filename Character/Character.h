@@ -20,7 +20,7 @@
 #ifndef CHARACTER_H
 #define CHARACTER_H
 #include <string>
-#include "Subject.h"
+#include "../Subject/Subject.h"
 using std::string;
 
 class Character : public Subject{

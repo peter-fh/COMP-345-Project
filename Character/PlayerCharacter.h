@@ -1,6 +1,6 @@
 #pragma once
-#include "Observer.h"
-#include "Character.h"
+#include "../Observer/Observer.h"
+#include "../Character/Character.h"
 class PlayerCharacter : public Observer{
     public:
         PlayerCharacter(Character* c);

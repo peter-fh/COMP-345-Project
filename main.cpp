@@ -17,10 +17,10 @@
  * @author Eric Liu
  * @date 2024-02-25
  */
-#include "Character.h"
-#include "Dice.h"
-#include "map.h"
-#include "Item.cpp"
+#include "Character/Character.h"
+#include "Dice/Dice.h"
+#include "Map/map.h"
+#include "Item/Item.cpp"
 #include <iostream>
 using namespace std;
 
