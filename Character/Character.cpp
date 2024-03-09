@@ -12,13 +12,13 @@
  */
 #include <cstdlib> // For std::rand() and std::srand()
 #include <ctime>   // For std::time()
+#include <cassert>
 #include <iostream>
 #include <string>
 #include <stdexcept>
 #include <math.h>
-#include <bits/stdc++.h>
 #include "Character.h"
-#include "Observer.h"
+#include "../Observer/Observer.h"
 
 using namespace std;
 
@@ -288,9 +288,9 @@ void testPrint() {
 }
 
 // Optionally, the commented main function can be used for quick testing or demonstration.
-int main() {
-    srand(time(0)); // create random seed
-    Character fighter(1);
-    fighter.printCharacter();
-    return 0;
-}
+// int main() {
+//     srand(time(0)); // create random seed
+//     Character fighter(1);
+//     fighter.printCharacter();
+//     return 0;
+// }

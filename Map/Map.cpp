@@ -32,7 +32,6 @@ bool Map::passable(Cell cell){
 const int REACHED = 1;
 const int UNREACHED = 0;
 
-
 bool Map::validate(){
     vector<vector<int> > searchMap;
 
@@ -112,8 +111,6 @@ void Map::displayMap(){
     cell_map[START] = "◰";
     cell_map[END] = "◲";
     
-    cout << "\n";
-
 
     cout << "\n";
     for (int y=0; y < height; y++){
@@ -125,15 +122,15 @@ void Map::displayMap(){
 }
 
 
-int main(){
-
-    Map map (20, 20, Cell(0, 0), Cell(19, 19));
-	
-    for (int y = 0; y < map.height; y++)
-    map.setCell(Cell(14, y), WALL);
-
-    map.setCell(Cell(14, 17), EMPTY);
-    map.displayMap();
-    cout << map.validate() << "\n";
-    return 0;
-}
+// int main(){
+//
+//     Map map (20, 20, Cell(0, 0), Cell(19, 19));
+// 	
+//     for (int y = 0; y < map.height; y++)
+//     map.setCell(Cell(14, y), WALL);
+//
+//     map.setCell(Cell(14, 17), EMPTY);
+//     map.displayMap();
+//     cout << map.validate() << "\n";
+//     return 0;
+// }
