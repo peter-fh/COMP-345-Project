@@ -45,7 +45,6 @@ bool Map::validate(){
 
     
     breadthFirstSearch(&searchMap, start);
-    displaySearchMap(&searchMap);
 
     if (searchMap[end.x][end.y] == REACHED)
 	return true;
@@ -107,37 +106,34 @@ void Map::displaySearchMap(vector<vector<int> > *map){
 
 void Map::displayMap(){
     map<int, string> cell_map;
-    cell_map[EMPTY] = " ";
-    cell_map[WALL] = "W";
-    cell_map[OCCUPIED] = "O";
-    cell_map[START] = "S";
-    cell_map[END] = "E";
+    cell_map[EMPTY] = "□";
+    cell_map[WALL] = "■";
+    cell_map[OCCUPIED] = "▣";
+    cell_map[START] = "◰";
+    cell_map[END] = "◲";
     
     cout << "\n";
 
-    for (int x=0; x < width; x++){
-	cout << x % 10<< " ";
-    }
 
     cout << "\n";
     for (int y=0; y < height; y++){
 	for (int x=0; x < width; x++){
 	    cout << cell_map[getCell(Cell(x, y))] << " ";
 	}
-	cout << y << "\n";
+	cout << "\n";
     }
 }
 
 
-// int main(){
+int main(){
 
-//     Map map (20, 20, Cell(0, 0), Cell(19, 19));
-    
-//     for (int y = 0; y < map.height; y++)
-// 	map.setCell(Cell(14, y), WALL);
+    Map map (20, 20, Cell(0, 0), Cell(19, 19));
+	
+    for (int y = 0; y < map.height; y++)
+    map.setCell(Cell(14, y), WALL);
 
-//     map.setCell(Cell(14, 17), EMPTY);
-//     map.displayMap();
-//     cout << map.validate() << "\n";
-//     return 0;
-// }
+    map.setCell(Cell(14, 17), EMPTY);
+    map.displayMap();
+    cout << map.validate() << "\n";
+    return 0;
+}

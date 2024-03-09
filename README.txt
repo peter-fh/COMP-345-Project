@@ -32,3 +32,6 @@ Item.cpp (cpp file for Item)
 
 main.cpp (main function, where all the classes are be initialized)
 driver.exe (running the main function)
+
+Compilation command used is: 
+g++ -o test main.cpp Character/Character.cpp Item/Item.cpp Observer/Observer.cpp Subject/Subject.cpp Dice/Dice.cpp Map/Map.cpp
