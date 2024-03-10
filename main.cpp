@@ -38,12 +38,14 @@ int main() {
     Dice::DiceInput();
 
     // inializing a map
-    Map map (20, 20, Cell(0, 0), Cell(19, 19));
+    Map map(20, 20);
+    map.setStart(0, 0);
+    map.setEnd(19, 19);
     
     for (int y = 0; y < map.height; y++)
-	map.setCell(Cell(14, y), WALL);
+	map.setCell(14, y, WALL);
 
-    map.setCell(Cell(14, 17), EMPTY);
+    map.setCell(14, 17,EMPTY);
     map.displayMap();
     cout << map.validate() << "\n";
 

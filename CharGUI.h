@@ -8,4 +8,3 @@ class CharGUI{
 
   private:
     string name;
-    

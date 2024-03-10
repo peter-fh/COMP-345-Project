@@ -1,26 +1,41 @@
 #include <iostream>
 #include <map>
 #include "map.h"
-using namespace std;
+using std::cout;
 
 
-int Map::getCell(Cell cell){
-    return mapArray[cell.x][cell.y];
+string Map::getName(){
+    return name;
 }
 
 
-bool Map::setCell(Cell cell, int type){
-    int cell_type = getCell(cell);
-    if (cell_type == START || cell_type == END)
+Cell Map::getCell(int x, int y){
+    return mapArray[x][y];
+}
+
+
+bool Map::setCell(int x, int y, int type){
+    Cell inp_cell = Cell(x, y, type);
+    int prev_cell_type = getCell(x, y).type;
+    if (prev_cell_type  == START || prev_cell_type == END)
 	return false;
 
-    mapArray[cell.x][cell.y] = type;
+    mapArray[inp_cell.x][inp_cell.y] = inp_cell;
+    return true;
+
+}
+bool Map::setCell(Cell inp_cell){
+    int prev_cell_type = getCell(inp_cell.x, inp_cell.y).type;
+    if (prev_cell_type  == START || prev_cell_type == END)
+	return false;
+
+    mapArray[inp_cell.x][inp_cell.y] = inp_cell;
     return true;
 }
 
 
-bool Map::passable(Cell cell){
-    int cell_type = getCell(cell);
+bool Map::passable(int x, int y){
+    int cell_type = getCell(x, y).type;
 
     if (cell_type == EMPTY || cell_type == START || cell_type == END) 
 	return true;
@@ -43,9 +58,9 @@ bool Map::validate(){
     }
 
     
-    breadthFirstSearch(&searchMap, start);
+    breadthFirstSearch(&searchMap, *start);
 
-    if (searchMap[end.x][end.y] == REACHED)
+    if (searchMap[end->x][end->y] == REACHED)
 	return true;
 
     return false;
@@ -60,26 +75,26 @@ void Map::breadthFirstSearch(vector<vector<int> > *map, Cell start_cell){
     map->at(x)[y] = REACHED;
 
     // Search left
-    if (x > 0 && map->at(x-1)[y] == UNREACHED && passable(Cell(x-1, y))){
+    if (x > 0 && map->at(x-1)[y] == UNREACHED && passable(x-1, y)){
 	breadthFirstSearch(map, Cell(x-1, y));
     }
     
 
     // Search right
     if (x < width - 1){
-	if (map->at(x+1)[y] == UNREACHED && passable(Cell(x+1, y)))
+	if (map->at(x+1)[y] == UNREACHED && passable(x+1, y))
 	    breadthFirstSearch(map, Cell(x+1, y));
     }
 
 
     // Search down
-    if (y > 0 && map->at(x)[y-1] == UNREACHED && passable(Cell(x, y-1))){
+    if (y > 0 && map->at(x)[y-1] == UNREACHED && passable(x, y-1)){
 	breadthFirstSearch(map, Cell(x, y-1));
     }
 
 
     // Search up
-    if (y < height - 1 && map->at(x)[y+1] == UNREACHED && passable(Cell(x, y+1))){
+    if (y < height - 1 && map->at(x)[y+1] == UNREACHED && passable(x, y+1)){
 	breadthFirstSearch(map, Cell(x, y+1));
     }
 }
@@ -104,7 +119,7 @@ void Map::displaySearchMap(vector<vector<int> > *map){
 
 
 void Map::displayMap(){
-    map<int, string> cell_map;
+    std::map<int, string> cell_map;
     cell_map[EMPTY] = "□";
     cell_map[WALL] = "■";
     cell_map[OCCUPIED] = "▣";
@@ -115,10 +130,71 @@ void Map::displayMap(){
     cout << "\n";
     for (int y=0; y < height; y++){
 	for (int x=0; x < width; x++){
-	    cout << cell_map[getCell(Cell(x, y))] << " ";
+	    cout << cell_map[getCell(x, y).type] << " ";
 	}
 	cout << "\n";
     }
+}
+
+
+bool Map::setStart(int x, int y){
+    bool returnBool;
+    returnBool = true;
+    if (x >= width || y >= height || x < 0 || y < 0){
+	cout << "Invalid start space given to map\n";
+	x = 0;
+	y = 0;
+	returnBool = false;
+    }    
+   
+    
+    if (start != nullptr) 
+	*start = Cell(start->x, start->y, EMPTY); 
+    setCell(Cell(x, y, START));
+    start = &(mapArray[x][y]);
+    return returnBool;
+ 
+}
+
+
+bool Map::setEnd(int x, int y){
+    bool returnBool;
+    returnBool = true;
+    if (x >= width || y >= height || x < 0 || y < 0){
+	cout << "Invalid start space given to map\n";
+	x = 0;
+	y = 0;
+	returnBool = false;
+    }
+
+    if (end != nullptr) 
+	*end = Cell(end->x, end->y, EMPTY); 
+    setCell(Cell(x, y, END));
+    end = &(mapArray[x][y]);
+    return returnBool;
+ 
+}
+
+Map::Map(int inp_width, int inp_height)
+{
+    name = "";
+    width = inp_width;
+    height = inp_height;
+    
+    for (int x=0; x < width; x++){
+	vector<Cell> column (height);
+	for (int y=0; y < height; y++){
+	    column.push_back(Cell(x, y, EMPTY));
+	}
+	mapArray.push_back(column);
+    }
+    
+    
+    setStart(0, 0);
+    start = &mapArray[0][0];
+    setEnd(width - 1, height - 1);
+    end = &mapArray[width - 1][height - 1];
+
 }
 
 
