@@ -29,7 +29,7 @@ class Character : public Subject{
 public:
     void Attach(Observer* observer);
     void Detach(Observer* observer);
-    void Notify(string attribute, int newValue);
+    void Notify(string attribute, int newValue, int oldValue);
     Character(int level); // Constructor declaration
     void printCharacter(); // Method to print character details
     // equip gear
