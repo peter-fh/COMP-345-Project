@@ -4,5 +4,5 @@ class Observer{
         ~Observer();
         virtual void Update() = 0;
     protected:
-        Observer();
+        virtual Observer();
 };
