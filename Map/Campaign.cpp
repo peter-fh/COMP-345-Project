@@ -31,15 +31,13 @@ void Campaign::push_back(Map map){
 
 
 void Campaign::display_names(){
-    cout << "Campaign Maps:\n";
+    std::cout << "Campaign Maps:\n";
     int i=0;
     for(std::list<Map>::iterator it = maps.begin(); it != maps.end(); ++it){
-	cout << i << ": "<< it->getName() << "\n";
+	std::cout << i << ": "<< it->getName() << "\n";
 	++i;
     }
 }
 
 
-int main(){
     
-}

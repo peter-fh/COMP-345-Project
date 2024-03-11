@@ -1,13 +1,16 @@
-#include "map.h"
+#include "MapEditor.h"
 using std::cout;
 
 int main(){
-    Map map = Map(10, 10);
-    map.setStart(2, 2);
+    Map map = Map(10, 10, "");
+    map.setStart(0, 0);
     map.setEnd(7, 7);
-    for (int y=0; y < 10; y++){
-	map.setCell(4, y, WALL);
-    }
+
+    MapEditor mapEditor = MapEditor(map);    
+
+    bool squareSuccess = mapEditor.drawSquare(1, 1, 8, 8, WALL);
+    map.displayMap();
+    map = mapEditor.saveMap();
 
     map.displayMap();
     bool valid_map = map.validate();

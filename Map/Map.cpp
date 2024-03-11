@@ -1,6 +1,6 @@
 #include <iostream>
 #include <map>
-#include "map.h"
+#include "Map.h"
 using std::cout;
 
 
@@ -34,6 +34,14 @@ bool Map::setCell(Cell inp_cell){
 }
 
 
+bool Map::checkBounds(int x, int y){
+    if (x >= width || x < 0 || y >= height || y < 0)
+	return false;
+
+    return true;
+}
+
+
 bool Map::passable(int x, int y){
     int cell_type = getCell(x, y).type;
 
@@ -57,7 +65,6 @@ bool Map::validate(){
 	searchMap.push_back(column);
     }
 
-    
     breadthFirstSearch(&searchMap, *start);
 
     if (searchMap[end->x][end->y] == REACHED)
@@ -141,15 +148,14 @@ bool Map::setStart(int x, int y){
     bool returnBool;
     returnBool = true;
     if (x >= width || y >= height || x < 0 || y < 0){
-	cout << "Invalid start space given to map\n";
+	cout << "Invalid start space given to map (line 144)\n";
 	x = 0;
 	y = 0;
 	returnBool = false;
     }    
    
-    
-    if (start != nullptr) 
-	*start = Cell(start->x, start->y, EMPTY); 
+    if (start != nullptr)
+	*start = Cell(start->x, start->y, EMPTY);
     setCell(Cell(x, y, START));
     start = &(mapArray[x][y]);
     return returnBool;
@@ -161,25 +167,28 @@ bool Map::setEnd(int x, int y){
     bool returnBool;
     returnBool = true;
     if (x >= width || y >= height || x < 0 || y < 0){
-	cout << "Invalid start space given to map\n";
+	cout << "Invalid end space given to map\n";
 	x = 0;
 	y = 0;
 	returnBool = false;
     }
+ 
+    if (end != nullptr)
+	*end = Cell(start->x, start->y, EMPTY);
 
-    if (end != nullptr) 
-	*end = Cell(end->x, end->y, EMPTY); 
     setCell(Cell(x, y, END));
     end = &(mapArray[x][y]);
     return returnBool;
  
 }
 
-Map::Map(int inp_width, int inp_height)
+Map::Map(int inp_width, int inp_height, string inp_name)
 {
-    name = "";
+    name = inp_name;
     width = inp_width;
     height = inp_height;
+    start = nullptr;
+    end = nullptr;
     
     for (int x=0; x < width; x++){
 	vector<Cell> column (height);
@@ -191,9 +200,40 @@ Map::Map(int inp_width, int inp_height)
     
     
     setStart(0, 0);
-    start = &mapArray[0][0];
     setEnd(width - 1, height - 1);
-    end = &mapArray[width - 1][height - 1];
+
+
+}
+
+
+Map::Map(int inp_width, int inp_height)
+{
+    name = "Unnamed";
+    width = inp_width;
+    height = inp_height;
+    start = nullptr;
+    end = nullptr;
+    
+    for (int x=0; x < width; x++){
+	vector<Cell> column (height);
+	for (int y=0; y < height; y++){
+	    column.push_back(Cell(x, y, EMPTY));
+	}
+	mapArray.push_back(column);
+    }
+    
+    
+    setStart(0, 0);
+    setEnd(width - 1, height - 1);
+}
+
+Map::Map(Map *map){
+    name = map->name;
+    width = map->width;
+    height = map->height;
+    start = map->start;
+    end = map->end;
+    mapArray = map->mapArray;
 
 }
 

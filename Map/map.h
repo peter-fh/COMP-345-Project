@@ -33,8 +33,8 @@ class Map
     void displaySearchMap(vector<vector<int> > *map);
  
 public:
-    Cell* start = nullptr;
-    Cell* end = nullptr;
+    Cell* start;
+    Cell* end; 
     bool initialized;
     int width;
     int height; 
@@ -46,7 +46,9 @@ public:
     bool passable(int x, int y); 
     bool setStart(int x, int y);
     bool setEnd(int x, int y);
-     
+    bool checkBounds(int x, int y);
+
+    Map (Map *map);
     Map (int inp_width, int inp_height);
     Map (int inp_width, int inp_height, string inp_name);
     
