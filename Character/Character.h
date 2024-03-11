@@ -71,6 +71,7 @@ public:
     void increaseCharisma(int charismaUp);
 
 private: // private!!!
+    std::vector<IObserver*> observers;
     int level; // assigned at the beginning
     int hitPoints; // based on constitution modifier and level
     int armorClass; // based on dexterity modifier
