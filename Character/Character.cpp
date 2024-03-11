@@ -177,31 +177,31 @@ void Character::increaseStrength(int buffStrength){
     recalculateAttributes();
 }
 void Character::increaseDexterity(int buffDexterity){
-    Notify("Dexterity", dexterity, (dexterity + buffDexterity))
+    Notify("Dexterity", dexterity, (dexterity + buffDexterity));
     dexterity += buffDexterity;
     dexterityMod = calculateModifiers(dexterity);
     recalculateAttributes();
 }
 void Character::increaseConstitution(int buffConstitution){
-    Notify("Constitution", constitution, (constitution + buffConstitution))
+    Notify("Constitution", constitution, (constitution + buffConstitution));
     constitution += buffConstitution;
     constitutionMod = calculateModifiers(constitution);
     recalculateAttributes();
 }
 void Character::increaseIntelligence(int buffIntelligence){
-    Notify("Intelligence", intelligence, (intelligence + buffIntelligence))
+    Notify("Intelligence", intelligence, (intelligence + buffIntelligence));
     intelligence += buffIntelligence;
     intelligenceMod = calculateModifiers(intelligence);
     recalculateAttributes();
 }
 void Character::increaseWisdom(int buffWisdom){
-    Notify("Wisdom", wisdom, (wisdom + buffWisdom))
+    Notify("Wisdom", wisdom, (wisdom + buffWisdom));
     wisdom += buffWisdom;
     wisdomMod = calculateModifiers(wisdom);
     recalculateAttributes();
 }
 void Character::increaseCharisma(int buffCharisma){
-    Notify("Charisma", charisma, (charisma + buffCharisma))
+    Notify("Charisma", charisma, (charisma + buffCharisma));
     charisma += buffCharisma;
     charismaMod = calculateModifiers(charisma);
     recalculateAttributes();
