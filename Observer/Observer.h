@@ -2,7 +2,7 @@
 class Observer{
     public:
         ~Observer();
-        virtual void Update() = 0;
+        virtual void Update(string attribute, int newValue) = 0;
     protected:
         virtual Observer();
 };
