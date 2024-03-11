@@ -22,10 +22,14 @@
 #include <string>
 #include <vector>
 #include "../Subject/Subject.h"
+#include "../Observer/Observer.h"
 using std::string;
 
 class Character : public Subject{
 public:
+    void Attach(Observer* observer);
+    void Detach(Observer* observer);
+    void Notify();
     Character(int level); // Constructor declaration
     void printCharacter(); // Method to print character details
     // equip gear
