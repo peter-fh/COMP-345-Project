@@ -20,6 +20,7 @@
 #ifndef CHARACTER_H
 #define CHARACTER_H
 #include <string>
+#include <vector>
 #include "../Subject/Subject.h"
 using std::string;
 
@@ -71,7 +72,7 @@ public:
     void increaseCharisma(int charismaUp);
 
 private: // private!!!
-    std::vector<Observer*> observers;
+    vector<Observer*> observers;
     int level; // assigned at the beginning
     int hitPoints; // based on constitution modifier and level
     int armorClass; // based on dexterity modifier
