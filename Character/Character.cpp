@@ -101,6 +101,7 @@ int Character::calculateHitPoints(){
         }
     hitDieRoll = rand() % (high - low) + low;
     }
+    Notify("Hit Points", hitPoints, getConstitutionMod()+level+hitDieRoll);
     return getConstitutionMod()+level+hitDieRoll;
 }
 int Character::calculateArmorClass(){
@@ -114,6 +115,7 @@ int Character::calculateDamageBonus(){
 }
 // Setter for level
 void Character::setLevel(int newLevel){
+    Notify("Level", level, newLevel);
     if (newLevel > 0){
         level = newLevel;
         recalculateAttributes();
@@ -123,31 +125,37 @@ void Character::setLevel(int newLevel){
     }
 }
 void Character::setStrength(int newStrength){
+    Notify("Strength", strength, newStrength);
     strength = newStrength;
     strengthMod = calculateModifiers(strength);
     recalculateAttributes();
 }
 void Character::setDexterity(int newDexterity){
+    Notify("Dexterity", dexterity, newDexterity);
     dexterity = newDexterity;
     dexterityMod = calculateModifiers(dexterity);
     recalculateAttributes();
 }
 void Character::setConstitution(int newConstitution){
+    Notify("Constitution", constitution, newConstitution);
     constitution = newConstitution;
     constitutionMod = calculateModifiers(constitution);
     recalculateAttributes();
 }
 void Character::setIntelligence(int newIntelligence){
+    Notify("Intelligence", intelligence, newIntelligence);
     intelligence = newIntelligence;
     intelligenceMod = calculateModifiers(intelligence);
     recalculateAttributes();
 }
 void Character::setWisdom(int newWisdom){
+    Notify("Wisdom", wisdom, newWisdom);
     wisdom = newWisdom;
     wisdomMod = calculateModifiers(wisdom);
     recalculateAttributes();
 }
 void Character::setCharisma(int newCharisma){
+    Notify("Charisma", charisma, newCharisma);
     charisma = newCharisma;
     charismaMod = calculateModifiers(charisma);
     recalculateAttributes();
@@ -163,31 +171,37 @@ void Character::increaseLevel(int levelUp){
     }
 }
 void Character::increaseStrength(int buffStrength){
+    Notify("Strength", strength, (strength + buffStrength));
     strength += buffStrength;
     strengthMod = calculateModifiers(strength);
     recalculateAttributes();
 }
 void Character::increaseDexterity(int buffDexterity){
+    Notify("Dexterity", dexterity, (dexterity + buffDexterity))
     dexterity += buffDexterity;
     dexterityMod = calculateModifiers(dexterity);
     recalculateAttributes();
 }
 void Character::increaseConstitution(int buffConstitution){
+    Notify("Constitution", constitution, (constitution + buffConstitution))
     constitution += buffConstitution;
     constitutionMod = calculateModifiers(constitution);
     recalculateAttributes();
 }
 void Character::increaseIntelligence(int buffIntelligence){
+    Notify("Intelligence", intelligence, (intelligence + buffIntelligence))
     intelligence += buffIntelligence;
     intelligenceMod = calculateModifiers(intelligence);
     recalculateAttributes();
 }
 void Character::increaseWisdom(int buffWisdom){
+    Notify("Wisdom", wisdom, (wisdom + buffWisdom))
     wisdom += buffWisdom;
     wisdomMod = calculateModifiers(wisdom);
     recalculateAttributes();
 }
 void Character::increaseCharisma(int buffCharisma){
+    Notify("Charisma", charisma, (charisma + buffCharisma))
     charisma += buffCharisma;
     charismaMod = calculateModifiers(charisma);
     recalculateAttributes();
@@ -198,7 +212,6 @@ void Character::recalculateAttributes(){
     armorClass = calculateArmorClass();
     attackBonus = calculateAttackBonus();
     damageBonus = calculateDamageBonus();
-    Notify();
 }
 // Equip gear (as strings for simplicity for now)
 void Character::equipArmor(string newArmor){armor = newArmor;}
