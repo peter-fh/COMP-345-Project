@@ -49,6 +49,25 @@ Character::Character(int setLevel){
         throw invalid_argument("Level must be positive");
     }
 }
+void Character::Attach(Observer* observer) {
+    observers.push_back(observer);
+}
+void Character::Notify() {
+        for (auto& observer : observers) {
+            observer->Update();
+        }
+    }
+void Character::Detach(Observer* observer) {
+    for (auto it = observers.begin(); it != observers.end(); ) {
+        if (*it == observer) {
+            it = observers.erase(it);
+        } else {
+            ++it;
+        }
+    }
+}
+
+
 int Character::generateAbilityScores(){
     int n = 4;
     int roll[4];
