@@ -52,9 +52,9 @@ Character::Character(int setLevel){
 void Character::Attach(Observer* observer) {
     observers.push_back(observer);
 }
-void Character::Notify(string attribute, int newValue) {
+void Character::Notify(string attribute, int newValue, int oldValue) {
         for (auto& observer : observers) {
-            observer->Update(attribute, newValue);
+            observer->Update(attribute, newValue, oldValue);
         }
     }
 void Character::Detach(Observer* observer) {
