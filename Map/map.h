@@ -1,7 +1,6 @@
 #include <iostream>
 #include <vector>
 #include "MySubject.h"
-
 using namespace std;
 
 

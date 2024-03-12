@@ -7,11 +7,9 @@ string Map::getName(){
     return name;
 }
 
-
 Cell Map::getCell(int x, int y){
     return mapArray[x][y];
 }
-
 
 bool Map::setCell(int x, int y, int type){
     Cell inp_cell = Cell(x, y, type);
@@ -34,14 +32,12 @@ bool Map::setCell(Cell inp_cell){
     return true;
 }
 
-
 bool Map::checkBounds(int x, int y){
     if (x >= width || x < 0 || y >= height || y < 0)
 	return false;
 
     return true;
 }
-
 
 bool Map::passable(int x, int y){
     int cell_type = getCell(x, y).type;
@@ -51,7 +47,6 @@ bool Map::passable(int x, int y){
 
     return false;
 }
-
 
 const int REACHED = 1;
 const int UNREACHED = 0;
@@ -71,9 +66,7 @@ bool Map::validate(){
 	return true;
 
     return false;
-    
 }
-
 
 void Map::breadthFirstSearch(vector<vector<int> > *map, Cell start_cell){
     int x = start_cell.x;
@@ -84,27 +77,20 @@ void Map::breadthFirstSearch(vector<vector<int> > *map, Cell start_cell){
     if (x > 0 && map->at(x-1)[y] == UNREACHED && passable(x-1, y)){
 	breadthFirstSearch(map, Cell(x-1, y));
     }
-    
-
     // Search right
     if (x < width - 1){
 	if (map->at(x+1)[y] == UNREACHED && passable(x+1, y))
 	    breadthFirstSearch(map, Cell(x+1, y));
     }
-
-
     // Search down
     if (y > 0 && map->at(x)[y-1] == UNREACHED && passable(x, y-1)){
 	breadthFirstSearch(map, Cell(x, y-1));
     }
-
-
     // Search up
     if (y < height - 1 && map->at(x)[y+1] == UNREACHED && passable(x, y+1)){
 	breadthFirstSearch(map, Cell(x, y+1));
     }
 }
-
 
 void Map::displaySearchMap(vector<vector<int> > *map){
     cout << "\n";
@@ -122,7 +108,6 @@ void Map::displaySearchMap(vector<vector<int> > *map){
 	cout << y << "\n";
     }
 }
-
 
 void Map::displayMap(){
     map<int, string> cell_map;
@@ -142,7 +127,6 @@ void Map::displayMap(){
     }
 }
 
-
 bool Map::setStart(int x, int y){
     bool returnBool;
     returnBool = true;
@@ -157,9 +141,7 @@ bool Map::setStart(int x, int y){
     start = Cell(x, y, START);
     mapArray[x][y] = start;
     return returnBool;
- 
 }
-
 
 bool Map::setEnd(int x, int y){
     bool returnBool;
@@ -175,9 +157,7 @@ bool Map::setEnd(int x, int y){
     end = Cell(x, y, END);
     mapArray[x][y] = end;
     return returnBool;
- 
 }
-
 
 Map::Map(){
     name = "";
@@ -210,14 +190,7 @@ Map::Map(int inp_width, int inp_height, string inp_name)
     
     setStart(0, 0);
     setEnd(width - 1, height - 1);
-<<<<<<< Updated upstream
-
-
-
-=======
->>>>>>> Stashed changes
 }
-
 
 Map::Map(int inp_width, int inp_height)
 {
