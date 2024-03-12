@@ -35,18 +35,6 @@ bool Map::setCell(Cell inp_cell){
 
 
 bool Map::checkBounds(int x, int y){
-    if (x >= width)
-	cout << "x >= width";
-    if (x < 0)
-	cout << "x > width";
-    if (y >= height ){
-	cout << "y >= height";
-	cout << "y: " << y << "\n";
-	cout << "height: " << height << "\n";
-    }
-    if (y < 0)
-	cout << "y < width";
-
     if (x >= width || x < 0 || y >= height || y < 0)
 	return false;
 
@@ -164,10 +152,9 @@ bool Map::setStart(int x, int y){
 	returnBool = false;
     }    
    
-
-    setCell(start.x, start.y, EMPTY);
-    setCell(Cell(x, y, START));
-    start = (mapArray[x][y]);
+    mapArray[start.x][start.y] = Cell(start.x, start.y, EMPTY);
+    start = Cell(x, y, START);
+    mapArray[x][y] = start;
     return returnBool;
  
 }
@@ -177,16 +164,15 @@ bool Map::setEnd(int x, int y){
     bool returnBool;
     returnBool = true;
     if (x >= width || y >= height || x < 0 || y < 0){
-	cout << "Invalid end space given to map\n";
+	cout << "\nInvalid end space given to map.\n";
 	x = 0;
 	y = 0;
 	returnBool = false;
     }
     
-
-    setCell(end.x, end.y, EMPTY);
-    setCell(Cell(x, y, END));
-    end = (mapArray[x][y]);
+    mapArray[end.x][end.y] = Cell(end.x, end.y, EMPTY);
+    end = Cell(x, y, END);
+    mapArray[x][y] = end;
     return returnBool;
  
 }

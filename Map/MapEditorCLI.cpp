@@ -1,5 +1,7 @@
 #include "MapEditorCLI.h"
 
+// TODO: Add functionality to load from file (line 325)
+// TODO: Add functionality to save to file (line 353)
 
 using std::cout;
 using std::cin;
@@ -52,7 +54,8 @@ bool MapEditorCLI::setSquare(){
     cin >> x2;
     cout << "y: ";
     cin >> y2;
-    mapEditor.drawSquare(x1, y1, x2, y2, type);
+    if (type > 0 && type < 5)
+	mapEditor.drawSquare(x1, y1, x2, y2, type);
     return true;
 }
 
@@ -301,7 +304,7 @@ void MapEditorCLI::campaignEditorLoop(){
 	    Map* userMap = campaign.get(userInMap);
 	    if (userMap != nullptr){
 		mapEditor = MapEditor(*userMap);
-		mapEditorLoop();
+		campaign.replace(mapEditorLoop());
 	    }
 	    else 
 		cout << "Invalid map name.\n";
@@ -320,7 +323,8 @@ void MapEditorCLI::campaignEditorLoop(){
 	else if (userIn == 4){
 	     campaign.display_campaign();
 	}
-	else if (userIn == 5){
+	else if (userIn == 5){ // EXIT
+	    // TODO: Add save to file functionality
 	    exit = true;
 	}
 
@@ -349,7 +353,6 @@ Campaign MapEditorCLI::editorLoop(){
 	campaignEditorLoop();
     }
     // TODO: Add functionality to load from file
-    // TODO: Add functionality to save from file
 
     return campaign;
 }
