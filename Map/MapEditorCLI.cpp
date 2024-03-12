@@ -1,5 +1,7 @@
 #include "MapEditorCLI.h"
 
+// TODO: Add functionality to load from file (line 325)
+// TODO: Add functionality to save to file (line 353)
 
 using std::cout;
 using std::cin;
@@ -23,7 +25,11 @@ Map MapEditorCLI::createMap(){
     cout << "Height: ";
     cin >> height;
 
-    return Map(width, height, name);
+    Map returnMap = Map(width, height, name);
+    returnMap.setStart(0, 0);
+    returnMap.setEnd(width-1, height-1);
+
+    return returnMap;
      
 }
 
@@ -48,7 +54,8 @@ bool MapEditorCLI::setSquare(){
     cin >> x2;
     cout << "y: ";
     cin >> y2;
-    mapEditor.drawSquare(x1, y1, x2, y2, type);
+    if (type > 0 && type < 5)
+	mapEditor.drawSquare(x1, y1, x2, y2, type);
     return true;
 }
 
@@ -130,20 +137,17 @@ bool MapEditorCLI::saveMapAs(){
 
 
 bool MapEditorCLI::moveMap(){
-    string name;
-    int index;
+    string name1;
+    string name2;
 
-    cout << "Select a map and it's new index.\n";
-    cout << "Map name: ";
-    cin >> name;
-    cout << "Index: ";
-    cin >> index;
+    cout << "Select the two maps to swap.\n";
+    cout << "Map 1 name: ";
+    cin >> name1;
+    cout << "Map 2 name: ";
+    cin >> name2;
 
-    Map* map = campaign.get(name);
-    if (map == nullptr)
-	return false;
 
-    return campaign.remove(*map);
+    return campaign.swap(name1, name2);
 }
 
 
@@ -201,7 +205,7 @@ Map MapEditorCLI::mapEditorLoop(){
 	    cout << "x1: ";
 	    cin >> x1;
 	    cout << "y1: ";
-	    cin >> x2;
+	    cin >> y1;
 	    cout << "x2: ";
 	    cin >> x2;
 	    cout << "y2: ";
@@ -256,8 +260,11 @@ Map MapEditorCLI::mapEditorLoop(){
 	}
 	else if (userChoice == EXIT){
 	    Map final_map = mapEditor.saveMap();
-	    if (final_map.validate())
+	    bool valid_map = final_map.validate();
+	    if (valid_map){
+		cout << "Map is valid. Saving.";
 		return final_map;
+	    }
 	    else {
 		cout << "Map is invalid: start not reachable from end.\n";
 		cout << "(1) Continue editing\n";
@@ -297,14 +304,18 @@ void MapEditorCLI::campaignEditorLoop(){
 	    Map* userMap = campaign.get(userInMap);
 	    if (userMap != nullptr){
 		mapEditor = MapEditor(*userMap);
-		mapEditorLoop();
+		campaign.replace(mapEditorLoop());
 	    }
 	    else 
 		cout << "Invalid map name.\n";
 	    
 	}
 	else if (userIn == 2){
-	    moveMap();
+	    bool success = moveMap();
+	    if (success)
+		cout << "Successfully moved map";
+	    else 
+		cout << "Failed to move map";
 	}
 	else if (userIn == 3){
 	    campaign.push_back(createMap());
@@ -312,7 +323,8 @@ void MapEditorCLI::campaignEditorLoop(){
 	else if (userIn == 4){
 	     campaign.display_campaign();
 	}
-	else if (userIn == 5){
+	else if (userIn == 5){ // EXIT
+	    // TODO: Add save to file functionality
 	    exit = true;
 	}
 
@@ -341,7 +353,6 @@ Campaign MapEditorCLI::editorLoop(){
 	campaignEditorLoop();
     }
     // TODO: Add functionality to load from file
-    // TODO: Add functionality to save from file
 
     return campaign;
 }

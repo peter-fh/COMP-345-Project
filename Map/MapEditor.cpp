@@ -10,9 +10,14 @@ bool MapEditor::drawCell(int x, int y, int type){
 }
 
 bool MapEditor::drawSquare(int x1, int y1, int x2, int y2, int type){
+    
+    if (!editedMap.checkBounds(x1, y1))
+	std::cout << "First point is out of bounds.\n";
 
+    if (!editedMap.checkBounds(x2, y2))
+	std::cout << "Second point is out of bounds.\n";
     if (!editedMap.checkBounds(x1, y1) || !editedMap.checkBounds(x2, y2)){
-	std::cout << "out of bounds\n";
+	std::cout << "One of the given points is out of bounds\n";
 	return false;
     }
 
