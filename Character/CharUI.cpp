@@ -15,10 +15,24 @@ CharUI::CharUI(Character* c) : playerChar(c){
                   std::cout << "Failed attachment, please pass a reference to a character";
       }
 }
+CharUI::CharUI(Character* c, std::string given) : playerChar(c){
+            if (playerChar) {
+                        playerChar->Attach(this);
+                        setNmae(given);
+            }
+            else{
+                        std::cout << "Failed attachment, please pass a reference to a character";   
+            }
+
+}
 
 
 void CharUI::Update(std::string attribute, int newValue, int oldValue) {
     std::cout << "\nUpdate: " << attribute << " changed from " << newValue << " to " << oldValue;
+}
+
+void CharUI::setName(std::string given){
+            name = given;
 }
 
 void CharUI::statChecker(){
