@@ -4,11 +4,19 @@
 
 class Campaign {
     std::list<Map> maps;
+    string name;
 public:
     Campaign();
-    Map get(int index);
-    void set(Map map, int index);
+    string getName();
+    void setName(string inp_name);
+    Map* get(int index);
+    Map* get(string name);
+    bool remove(Map map);
+    bool replace(Map map);
+    bool set(Map map, int index);
+    bool insert(Map map, int index);
     void push_back(Map map);
+    void display_campaign();
     void display_names();
 };
 
