@@ -159,7 +159,7 @@ Map MapEditorCLI::mapEditorLoop(){
     bool exit = false;
     while (!exit){
 	int userChoice;
-	cout << "You are editing the map " << initial_map.getName() << ".\n";
+	cout << "\n\n\nYou are editing the map " << initial_map.getName() << ".\n";
 	cout << "Select one of these options:\n";
 	cout << "(1) Set specific cell to certain type\n";
 	cout << "(2) Set square of cells to certain type\n";
@@ -275,22 +275,73 @@ Map MapEditorCLI::mapEditorLoop(){
     return mapEditor.saveMap();
 }
 
+
+void MapEditorCLI::campaignEditorLoop(){
+    bool exit = false;
+    while (!exit){
+	int userIn;
+	cout << "\n\n\nNow editing campaign " << campaign.getName() << ".\n";
+	cout << "Your options are:\n";
+	cout << "(1) Edit map\n";
+	cout << "(2) Reorder maps\n";
+	cout << "(3) Create new map\n";
+	cout << "(4) Display campaign\n";
+	cout << "(5) Exit campaign editor\n";
+	cout << "Selection: #";
+	cin >> userIn;
+
+	if (userIn == 1){
+	    string userInMap;
+	    cout << "Enter a map name: ";
+	    cin >> userInMap;
+	    Map* userMap = campaign.get(userInMap);
+	    if (userMap != nullptr){
+		mapEditor = MapEditor(*userMap);
+		mapEditorLoop();
+	    }
+	    else 
+		cout << "Invalid map name.\n";
+	    
+	}
+	else if (userIn == 2){
+	    moveMap();
+	}
+	else if (userIn == 3){
+	    campaign.push_back(createMap());
+	}
+	else if (userIn == 4){
+	     campaign.display_campaign();
+	}
+	else if (userIn == 5){
+	    exit = true;
+	}
+
+
+    }
+}
+
+
 Campaign MapEditorCLI::editorLoop(){
-    cout << "You are now creating a new campaign!\n";
-    cout << "Name your new campaign:\n"; 
-    string name;
-    cout << "Name: ";
-    cin >> name;
-    campaign = Campaign();
-    campaign.setName(name);
 
-    cout << "Now editing campaign";
-    cout << "\n\n\n";
-
-
-    campaign.insert(mapEditorLoop(), 0);
-
-
+    cout << "\n\n\nWelcome to the campaign editor!\n";
+    cout << "Your options are:\n";
+    cout << "(1) Create new campaign\n";
+    cout << "(2) Load campaign from file\n";
+    int userInput;
+    cout << "Selection: #";
+    cin >> userInput;
+    if (userInput == 1){
+	cout << "\n\n\nYou are now creating a new campaign!\n";
+	cout << "Name your new campaign:\n"; 
+	string name;
+	cout << "Name: ";
+	cin >> name;
+	campaign = Campaign();
+	campaign.setName(name);
+	campaignEditorLoop();
+    }
+    // TODO: Add functionality to load from file
+    // TODO: Add functionality to save from file
 
     return campaign;
 }
