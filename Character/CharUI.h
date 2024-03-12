@@ -10,6 +10,7 @@ class CharUI : public Observer {
   public:
     std::string name;
     CharUI(Character* c);
+    CharUI(Character* c, std::string name);
     void Update(std::string attribute, int newValue, int oldValue) override;
 
 
