@@ -23,6 +23,7 @@
 using namespace std;
 
 Character::Character(int setLevel){
+    
     if (setLevel > 0){
         level = setLevel;
 
@@ -76,7 +77,7 @@ int Character::generateAbilityScores(){
         int low = 1;
         roll[i] = rand() % (high - low) + low;
     }
-    sort(roll, roll + n); // dropping the lowest roll
+    //sort(roll, roll + n); // dropping the lowest roll
     return roll[1]+roll[2]+roll[3]; // summing the 3 highest rolls
 }
 int Character::calculateModifiers(int points){
