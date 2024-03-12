@@ -12,6 +12,7 @@ class CharUI : public Observer {
     CharUI(Character* c);
     void Update(std::string attribute, int newValue, int oldValue) override;
 
+
     void checkAbilityScores();
     void checkAttributes();
     void checkEquipment();
