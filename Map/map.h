@@ -32,8 +32,8 @@ class Map : public MySubject{
     void displaySearchMap(vector<vector<int> > *map);
  
 public:
-    Cell* start;
-    Cell* end; 
+    Cell start;
+    Cell end; 
     bool initialized;
     int width;
     int height; 
