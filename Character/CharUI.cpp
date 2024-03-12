@@ -1,8 +1,9 @@
 #include "CharUI.h"
 
+/* Jackson Abbott 40252068
+Character UI/observer, attaches to character, displays stats, notifies of changes
 
-
-
+*/
 CharUI::CharUI(Character* c) : playerChar(c){
             if (playerChar) {
                   playerChar->Attach(this);
@@ -17,7 +18,7 @@ CharUI::CharUI(Character* c) : playerChar(c){
 
 
 void CharUI::Update(std::string attribute, int newValue, int oldValue) {
-    std::cout << "Update: " << attribute << " changed from " << oldValue << " to " << newValue;
+    std::cout << "\nUpdate: " << attribute << " changed from " << newValue << " to " << oldValue;
 }
 
 void CharUI::statChecker(){
@@ -80,9 +81,9 @@ void CharUI::nameCharacter() {
 }
 
   void CharUI::regDisplay(){
-    std::cout << "  Name:" << CharUI::name;
-    std::cout << "Level: " << playerChar->getLevel() << "\n";
-    std::cout << "Hit Points: " << playerChar->getHitPoints() << "\n";
+    std::cout << "  Name:" << CharUI::name + "\n";
+    std::cout << "  Level: " << playerChar->getLevel() << "\n";
+    std::cout << "  Hit Points: " << playerChar->getHitPoints() << "\n";
   }
   void CharUI::checkAbilityScores(){
     std::cout << "  Strength: " << playerChar->getStrength() << " (Mod: " << playerChar->getStrengthMod() << ")" << "\n";
