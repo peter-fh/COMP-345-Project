@@ -111,11 +111,11 @@ void Map::displaySearchMap(vector<vector<int> > *map){
 
 void Map::displayMap(){
     map<int, string> cell_map;
-    cell_map[EMPTY] = "□";
-    cell_map[WALL] = "■";
-    cell_map[OCCUPIED] = "▣";
-    cell_map[START] = "◰";
-    cell_map[END] = "◲";
+    cell_map[EMPTY] = "0";
+    cell_map[WALL] = "W";
+    cell_map[OCCUPIED] = "1";
+    cell_map[START] = "S";
+    cell_map[END] = "E";
     
 
     cout << "\n";
@@ -157,6 +157,22 @@ bool Map::setEnd(int x, int y){
     end = Cell(x, y, END);
     mapArray[x][y] = end;
     return returnBool;
+}
+
+//create empty square map
+Map::Map(int x){
+    name = "";
+    width = x;
+    height = x;
+    
+    for (int x=0; x < width; x++){
+	vector<Cell> column (height);
+	for (int y=0; y < height; y++){
+	    column.push_back(Cell(x, y, EMPTY));
+	}
+	mapArray.push_back(column);
+    }
+
 }
 
 Map::Map(){

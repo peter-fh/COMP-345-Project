@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-#include "MySubject.h"
+#include "../Map/myEL/MySubject.h"
 using namespace std;
 
 
@@ -46,6 +46,7 @@ public:
     bool setEnd(int x, int y);
     bool checkBounds(int x, int y);
 
+    Map(int x);
     Map ();
     Map (Map *map);
     Map (int inp_width, int inp_height);
