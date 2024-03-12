@@ -1,8 +1,8 @@
 #include <iostream>
 #include <vector>
+#include "MySubject.h"
 
-using std::vector;
-using std::string;
+using namespace std;
 
 
 const int EMPTY = 0;
@@ -24,10 +24,9 @@ struct Cell {
 typedef struct Cell Cell;
 
 
-class Map 
-{
+class Map : public MySubject{
 
-    std::vector<vector<Cell> > mapArray;
+    vector<vector<Cell> > mapArray;
     string name;
     void breadthFirstSearch(vector<vector<int> > *map, Cell start_cell);
     void displaySearchMap(vector<vector<int> > *map);

@@ -1,8 +1,7 @@
 #include <iostream>
 #include <map>
-#include "Map.h"
-using std::cout;
-
+#include "map.h"
+using namespace std;
 
 string Map::getName(){
     return name;
@@ -126,7 +125,7 @@ void Map::displaySearchMap(vector<vector<int> > *map){
 
 
 void Map::displayMap(){
-    std::map<int, string> cell_map;
+    map<int, string> cell_map;
     cell_map[EMPTY] = "□";
     cell_map[WALL] = "■";
     cell_map[OCCUPIED] = "▣";
