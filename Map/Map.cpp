@@ -35,6 +35,18 @@ bool Map::setCell(Cell inp_cell){
 
 
 bool Map::checkBounds(int x, int y){
+    if (x >= width)
+	cout << "x >= width";
+    if (x < 0)
+	cout << "x > width";
+    if (y >= height ){
+	cout << "y >= height";
+	cout << "y: " << y << "\n";
+	cout << "height: " << height << "\n";
+    }
+    if (y < 0)
+	cout << "y < width";
+
     if (x >= width || x < 0 || y >= height || y < 0)
 	return false;
 
@@ -57,7 +69,6 @@ const int UNREACHED = 0;
 
 bool Map::validate(){
     vector<vector<int> > searchMap;
-
     // Fill entire map with unreached
     for (int x = 0; x < width; x++){
 	vector<int> column (height);
@@ -65,9 +76,9 @@ bool Map::validate(){
 	searchMap.push_back(column);
     }
 
-    breadthFirstSearch(&searchMap, *start);
+    breadthFirstSearch(&searchMap, Cell(start.x, start.y));
 
-    if (searchMap[end->x][end->y] == REACHED)
+    if (searchMap[end.x][end.y] == REACHED)
 	return true;
 
     return false;
@@ -78,7 +89,6 @@ bool Map::validate(){
 void Map::breadthFirstSearch(vector<vector<int> > *map, Cell start_cell){
     int x = start_cell.x;
     int y = start_cell.y;
-        
     map->at(x)[y] = REACHED;
 
     // Search left
@@ -154,10 +164,10 @@ bool Map::setStart(int x, int y){
 	returnBool = false;
     }    
    
-    if (start != nullptr)
-	*start = Cell(start->x, start->y, EMPTY);
+
+    setCell(start.x, start.y, EMPTY);
     setCell(Cell(x, y, START));
-    start = &(mapArray[x][y]);
+    start = (mapArray[x][y]);
     return returnBool;
  
 }
@@ -172,12 +182,11 @@ bool Map::setEnd(int x, int y){
 	y = 0;
 	returnBool = false;
     }
- 
-    if (end != nullptr)
-	*end = Cell(start->x, start->y, EMPTY);
+    
 
+    setCell(end.x, end.y, EMPTY);
     setCell(Cell(x, y, END));
-    end = &(mapArray[x][y]);
+    end = (mapArray[x][y]);
     return returnBool;
  
 }
@@ -187,8 +196,6 @@ Map::Map(){
     name = "";
     width = 2;
     height = 2;
-    start = nullptr;
-    end = nullptr;
     
     for (int x=0; x < width; x++){
 	vector<Cell> column (height);
@@ -210,8 +217,6 @@ Map::Map(int inp_width, int inp_height, string inp_name)
     name = inp_name;
     width = inp_width;
     height = inp_height;
-    start = nullptr;
-    end = nullptr;
     
     for (int x=0; x < width; x++){
 	vector<Cell> column (height);
@@ -226,6 +231,7 @@ Map::Map(int inp_width, int inp_height, string inp_name)
     setEnd(width - 1, height - 1);
 
 
+
 }
 
 
@@ -234,8 +240,6 @@ Map::Map(int inp_width, int inp_height)
     name = "Unnamed";
     width = inp_width;
     height = inp_height;
-    start = nullptr;
-    end = nullptr;
     
     for (int x=0; x < width; x++){
 	vector<Cell> column (height);

@@ -26,6 +26,35 @@ Map* Campaign::get(string name){
 }
 
 
+bool Campaign::swap(string map1, string map2){
+    bool foundFirst = false;
+    bool foundSecond = false;
+    std::list<Map>::iterator map1_it;
+    std::list<Map>::iterator map2_it;
+    for (map1_it = maps.begin(); map1_it != maps.end(); ++map1_it){
+	if (map1_it->getName() == map1){
+	    foundFirst = true;
+	    break;
+	}
+    }
+
+    for (map2_it = maps.begin(); map2_it != maps.end(); ++map2_it){
+	if (map2_it->getName() == map2){
+	    foundSecond = true;
+	    break;
+	}
+    }
+
+    if (foundFirst && foundSecond){
+	std::swap(*map1_it, *map2_it);
+	return true;
+    }
+
+    return false;
+
+
+}
+
 bool Campaign::insert(Map map, int index){
     if (index > maps.size()){
 	return false;
@@ -33,7 +62,11 @@ bool Campaign::insert(Map map, int index){
 
     std::list<Map>::iterator it = maps.begin();
     advance(it, index);
+    std::cout << "\nBefore insert:\n";
+    std::cout << maps.front().getName() << "<--list front\n";
     maps.insert(it, map);
+    std::cout << "After insert:\n";
+    std::cout << maps.front().getName() << "<--list front\n";
     return true;
 }
 
