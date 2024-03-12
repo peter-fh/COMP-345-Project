@@ -1,6 +1,6 @@
 #include "MapEditor.h"
 
-
+MapEditor::MapEditor(){}
 MapEditor::MapEditor(Map inp_map) : editedMap(inp_map) {
 }
 
@@ -48,6 +48,10 @@ bool MapEditor::drawSquare(int x1, int y1, int x2, int y2, int type){
 
 bool MapEditor::setStart(int x, int y){
     return editedMap.setStart(x, y);
+}
+
+bool MapEditor::setEnd(int x, int y){
+    return editedMap.setEnd(x, y);
 }
 
 Map MapEditor::saveMap(){

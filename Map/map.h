@@ -48,6 +48,7 @@ public:
     bool setEnd(int x, int y);
     bool checkBounds(int x, int y);
 
+    Map ();
     Map (Map *map);
     Map (int inp_width, int inp_height);
     Map (int inp_width, int inp_height, string inp_name);

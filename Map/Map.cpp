@@ -182,6 +182,29 @@ bool Map::setEnd(int x, int y){
  
 }
 
+
+Map::Map(){
+    name = "";
+    width = 2;
+    height = 2;
+    start = nullptr;
+    end = nullptr;
+    
+    for (int x=0; x < width; x++){
+	vector<Cell> column (height);
+	for (int y=0; y < height; y++){
+	    column.push_back(Cell(x, y, EMPTY));
+	}
+	mapArray.push_back(column);
+    }
+    
+    
+    setStart(0, 0);
+    setEnd(width - 1, height - 1);
+
+
+
+}
 Map::Map(int inp_width, int inp_height, string inp_name)
 {
     name = inp_name;
