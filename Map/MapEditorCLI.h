@@ -14,6 +14,7 @@ private:
     bool setEnd();
     bool moveMap();
     Map mapEditorLoop();
+    void campaignEditorLoop();
 public:
     MapEditorCLI();
     Campaign editorLoop(); 

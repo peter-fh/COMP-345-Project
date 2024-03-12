@@ -16,6 +16,7 @@ Map* Campaign::get(int index){
 
 Map* Campaign::get(string name){
     for (std::list<Map>::iterator it = maps.begin(); it != maps.end(); ++it){
+	std::cout << "Looping through maps";
 	if (it->getName() == name){
 	    return &*it;
 	}
