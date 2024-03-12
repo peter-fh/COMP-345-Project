@@ -12,6 +12,7 @@ class CharUI : public Observer {
     void checkEquipment();
     void nameCharacter();
     void setLast();
+    void statChecker();
 
   private:
     string name;
