@@ -1,106 +1,109 @@
 #include "CharUI.h"
 
-CharUI::CharUI(Character* c) : character(c){
-      if (character) {
-        character->Attach(this);
-    }
-    nameCharacter();
-    regDisplay();
-    statChecker();
+
+
+
+CharUI::CharUI(Character* c) : playerChar(c){
+            if (playerChar) {
+                  playerChar->Attach(this);
+                  nameCharacter();
+                  regDisplay();
+                  statChecker();
+            }
+            else{
+                  std::cout << "Failed attachment, please pass a reference to a character";
+      }
 }
 
 
-void CharUI::Update(const string& attribute, int newValue, int oldValue) {
-    cout << "Update: " << attribute << " changed from " << oldValue << " to " << newValue;
+void CharUI::Update(std::string attribute, int newValue, int oldValue) {
+    std::cout << "Update: " << attribute << " changed from " << oldValue << " to " << newValue;
 }
 
 void CharUI::statChecker(){
-      string selection, again;
-      cout << "Check stats? (y/n): ";
+      std::string selection, again;
+      std::cout << "Check stats? (y/n): ";
       getline(cin, selection);
-      selection = selection.strip();
       if (selection != "y" && selection != "Y" && selection != "n" && selection != "N"){ 
             do{
-                  cout << "\nInvalid, please try again"
-                  cout << "\nCheck stats? (y/n): ";
+                  std::cout << "\nInvalid, please try again";
+                  std::cout << "\nCheck stats? (y/n): ";
                   getline(cin, selection);
-            } while (selection != "y" && selection != "Y" && selection != "n" && selection != "N")
+            } while (selection != "y" && selection != "Y" && selection != "n" && selection != "N");
                   }
       if (selection == "y" || selection == "Y"){
             do{
                   selection = "";
                   again = "";
-                  cout << "Options\n \t1 - Check Attributes\n \t2 - Check Ability Scores\n \t3 - Check Equipment";
+                  std::cout << "Options\n \t1 - Check Attributes\n \t2 - Check Ability Scores\n \t3 - Check Equipment";
                   getline(cin, selection);
-                  selection = selection.strip();
                   if (selection != "1" && selection != "2" && selection != "3" && selection != "N"){ 
                   do{
-                        cout << "\nInvalid, please try again"
-                        cout << "Options\n \t1 - Check Attributes\n \t2 - Check Ability Scores\n \t3 - Check Equipment";
+                        std::cout << "\nInvalid, please try again";
+                        std::cout << "Options\n \t1 - Check Attributes\n \t2 - Check Ability Scores\n \t3 - Check Equipment";
                         getline(cin, selection);
-                        selection = selection.strip();
-                  } while (selection != "1" && selection != "2" && selection != "3")
+                  } while (selection != "1" && selection != "2" && selection != "3");
                   }
                   if (selection == "1") checkAttributes();
                   if (selection == "2") checkAbilityScores();
                   if (selection == "3") checkEquipment();
-                  cout << "Check another? (y/n): ";
+                  std::cout << "Check another? (y/n): ";
                   getline(cin, again);
-                  again = again.strip();
                   if (again != "y" && again != "Y" && again != "n" && again != "N"){ 
                         do{
-                              cout << "\nInvalid, please try again"
-                              cout << "\nCheck another? (y/n): ";
+                              std::cout << "\nInvalid, please try again";
+                              std::cout << "\nCheck another? (y/n): ";
                               getline(cin, again);
-                        } while (again != "y" && again != "Y" && again != "n" && again != "N")
+                        } while (again != "y" && again != "Y" && again != "n" && again != "N");
                   }
-            }while (again == "y" || again =="Y")
+            }while (again == "y" || again =="Y");
                   }
 }
 
 void CharUI::nameCharacter() {
-    cout << "Please enter your character's name: ";
-    character->getline(cin, name);
-    string selection = "n";
+    std::cout << "Please enter your character's name: ";
+    getline(cin, CharUI::name);
+    std::string selection = "n";
     do {
-        cout << "\nYou selected \"" << name << "\", is this correct? It cannot be changed later (y/n): ";
-        character->getline(cin, selection);
+        std::cout << "\nYou selected \"" << name << "\", is this correct? It cannot be changed later (y/n): ";
+        getline(cin, selection);
         // Assuming a strip() function exists or similar logic is implemented to trim whitespace
         if (selection == "y" || selection == "Y") break;
         else if (selection == "n" || selection == "N") {
-            cout << "\nPlease enter your character's name: ";
-            character->getline(cin, name);
+            std::cout << "\nPlease enter your character's name: ";
+            getline(cin, name);
         }
         else {
-            cout << "\nInvalid entry, please try again (y/n):";
+            std::cout << "\nInvalid entry, please try again (y/n):";
         }
     } while (selection != "Y" && selection != "y");
 }
-  void regDisplay(){
-    cout << "  Name:" << name;
-    cout << "Level: " << character->getLevel() << "\n";
-    cout << "Hit Points: " << character->getHitPoints() << "\n";
+
+  void CharUI::regDisplay(){
+    std::cout << "  Name:" << CharUI::name;
+    std::cout << "Level: " << playerChar->getLevel() << "\n";
+    std::cout << "Hit Points: " << playerChar->getHitPoints() << "\n";
   }
-  void checkAbilityScores(){
-    cout << "  Strength: " << character->getStrength() << " (Mod: " << character->getStrengthMod() << ")" << "\n";
-    cout << "  Dexterity: " << character->getDexterity() << " (Mod: " << character->getDexterityMod() << ")" << "\n";
-    cout << "  Constitution: " << character->getConstitution() << " (Mod: " << character->getConstitutionMod() << ")" << "\n";
-    cout << "  Intelligence: " << character->getIntelligence() << " (Mod: " << character->getIntelligenceMod() << ")" << "\n";
-    cout << "  Wisdom: " << character->getWisdom() << " (Mod: " << character->getWisdomMod() << ")" << "\n";
-    cout << "  Charisma: " << character->getCharisma() << " (Mod: " << character->getCharismaMod() << ")" << "\n";
+  void CharUI::checkAbilityScores(){
+    std::cout << "  Strength: " << playerChar->getStrength() << " (Mod: " << playerChar->getStrengthMod() << ")" << "\n";
+    std::cout << "  Dexterity: " << playerChar->getDexterity() << " (Mod: " << playerChar->getDexterityMod() << ")" << "\n";
+    std::cout << "  Constitution: " << playerChar->getConstitution() << " (Mod: " << playerChar->getConstitutionMod() << ")" << "\n";
+    std::cout << "  Intelligence: " << playerChar->getIntelligence() << " (Mod: " << playerChar->getIntelligenceMod() << ")" << "\n";
+    std::cout << "  Wisdom: " << playerChar->getWisdom() << " (Mod: " << playerChar->getWisdomMod() << ")" << "\n";
+    std::cout << "  Charisma: " << playerChar->getCharisma() << " (Mod: " << playerChar->getCharismaMod() << ")" << "\n";
     }
-  void checkAttributes(){
-    cout << "Level: " << character->getLevel() << "\n";
-    cout << "Hit Points: " << character->getHitPoints() << "\n";
-    cout << "Armor Class: " << character->getArmorClass() << "\n";
-    cout << "Attack Bonus: " << character->getAttackBonus() << "\n";
-    cout << "Damage Bonus: " << character->getDamageBonus() << "\n";
+  void CharUI::checkAttributes(){
+    std::cout << "Level: " << playerChar->getLevel() << "\n";
+    std::cout << "Hit Points: " << playerChar->getHitPoints() << "\n";
+    std::cout << "Armor Class: " << playerChar->getArmorClass() << "\n";
+    std::cout << "Attack Bonus: " << playerChar->getAttackBonus() << "\n";
+    std::cout << "Damage Bonus: " << playerChar->getDamageBonus() << "\n";
   }
-  void checkEquipment(){
-    cout << "  Armor: " << (getArmor().empty() ? "None" : character->getArmor()) << "\n";
-    cout << "  Shield: " << (getShield().empty() ? "None" : character->getShield()) << "\n";
-    cout << "  Weapon: " << (getWeapon().empty() ? "None" : character->getWeapon()) << "\n";
-    cout << "  Boots: " << (getBoots().empty() ? "None" : character->getBoots()) << "\n";
-    cout << "  Ring: " << (getRing().empty() ? "None" : character->getRing()) << "\n";
-    cout << "  Helmet: " << (getHelmet().empty() ? "None" : character->getHelmet()) << "\n";
+  void CharUI::checkEquipment(){
+    std::cout << "  Armor: " << (playerChar->getArmor().empty() ? "None" : playerChar->getArmor()) << "\n";
+    std::cout << "  Shield: " << (playerChar->getShield().empty() ? "None" : playerChar->getShield()) << "\n";
+    std::cout << "  Weapon: " << (playerChar->getWeapon().empty() ? "None" : playerChar->getWeapon()) << "\n";
+    std::cout << "  Boots: " << (playerChar->getBoots().empty() ? "None" : playerChar->getBoots()) << "\n";
+    std::cout << "  Ring: " << (playerChar->getRing().empty() ? "None" : playerChar->getRing()) << "\n";
+    std::cout << "  Helmet: " << (playerChar->getHelmet().empty() ? "None" : playerChar->getHelmet()) << "\n";
   }
