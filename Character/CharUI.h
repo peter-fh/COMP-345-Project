@@ -4,16 +4,21 @@
 #include <string>
 
 class CharUI : public Observer {
+  private:
+    Character* playerChar;
+  
   public:
+    std::string name;
     CharUI(Character* c);
-    void Update(string attribute, int newValue, int oldValue) override;
+    void Update(std::string attribute, int newValue, int oldValue) override;
+
     void checkAbilityScores();
     void checkAttributes();
     void checkEquipment();
     void nameCharacter();
     void setLast();
     void statChecker();
+    void regDisplay();
 
-  private:
-    string name;
-    Character* char;
+    
+    };
