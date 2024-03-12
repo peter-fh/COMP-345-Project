@@ -30,6 +30,7 @@ public:
     void Attach(Observer* observer);
     void Detach(Observer* observer);
     void Notify(string attribute, int newValue, int oldValue);
+
     Character(int level); // Constructor declaration
     void printCharacter(); // Method to print character details
     // equip gear
@@ -74,6 +75,13 @@ public:
     void increaseIntelligence(int intelligenceUp);
     void increaseWisdom(int wisdomUp);
     void increaseCharisma(int charismaUp);
+    void setLevel(int newLevel);
+    void setStrength(int newStrength);
+    void setDexterity(int newDexterity);
+    void setConstitution(int newConstitution);
+    void setIntelligence(int newIntelligence);
+    void setWisdom(int newWisdom);
+    void setCharisma(int newCharisma);
 
 private: // private!!!
     vector<Observer*> observers;
@@ -111,13 +119,7 @@ private: // private!!!
     int calculateAttackBonus(); // based level and strength modifiers and dexterity modifiers
     int calculateDamageBonus(); // based on strength modifier
     // setters
-    void setLevel(int newLevel);
-    void setStrength(int newStrength);
-    void setDexterity(int newDexterity);
-    void setConstitution(int newConstitution);
-    void setIntelligence(int newIntelligence);
-    void setWisdom(int newWisdom);
-    void setCharisma(int newCharisma);
+
     // Recalculate attributes that depend on level or modifiers
     void recalculateAttributes();
 };
