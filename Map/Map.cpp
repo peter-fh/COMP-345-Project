@@ -20,6 +20,7 @@ bool Map::setCell(int x, int y, int type){
 	return false;
 
     mapArray[inp_cell.x][inp_cell.y] = inp_cell;
+    Notify();
     return true;
 
 }
@@ -29,6 +30,7 @@ bool Map::setCell(Cell inp_cell){
 	return false;
 
     mapArray[inp_cell.x][inp_cell.y] = inp_cell;
+    Notify();
     return true;
 }
 
@@ -189,13 +191,8 @@ Map::Map(){
 	}
 	mapArray.push_back(column);
     }
-    
-    
     setStart(0, 0);
     setEnd(width - 1, height - 1);
-
-
-
 }
 Map::Map(int inp_width, int inp_height, string inp_name)
 {
@@ -209,14 +206,16 @@ Map::Map(int inp_width, int inp_height, string inp_name)
 	    column.push_back(Cell(x, y, EMPTY));
 	}
 	mapArray.push_back(column);
-    }
-    
+    }   
     
     setStart(0, 0);
     setEnd(width - 1, height - 1);
+<<<<<<< Updated upstream
 
 
 
+=======
+>>>>>>> Stashed changes
 }
 
 
@@ -232,9 +231,7 @@ Map::Map(int inp_width, int inp_height)
 	    column.push_back(Cell(x, y, EMPTY));
 	}
 	mapArray.push_back(column);
-    }
-    
-    
+    }    
     setStart(0, 0);
     setEnd(width - 1, height - 1);
 }
@@ -246,7 +243,6 @@ Map::Map(Map *map){
     start = map->start;
     end = map->end;
     mapArray = map->mapArray;
-
 }
 
 
