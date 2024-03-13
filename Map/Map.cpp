@@ -111,11 +111,11 @@ void Map::displaySearchMap(vector<vector<int> > *map){
 
 void Map::displayMap(){
     map<int, string> cell_map;
-    cell_map[EMPTY] = "0";
-    cell_map[WALL] = "W";
-    cell_map[OCCUPIED] = "1";
-    cell_map[START] = "S";
-    cell_map[END] = "E";
+    cell_map[EMPTY] = "□";
+    cell_map[WALL] = "■";
+    cell_map[OCCUPIED] = "▣";
+    cell_map[START] = "◰";
+    cell_map[END] = "◲";
     
 
     cout << "\n";
