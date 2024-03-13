@@ -1,4 +1,4 @@
-#include "MapEditor.h"
+#include "MapBuilder.cpp"
 
 class MapEditorCLI{
     Campaign campaign;
@@ -8,6 +8,7 @@ private:
     bool saveMapAs();
     Map createMap();
     bool loadMap();
+    Map* loadMapFromFile();
     bool setSquare();
     bool setCell();
     bool setStart();

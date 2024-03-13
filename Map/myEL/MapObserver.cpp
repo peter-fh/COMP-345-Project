@@ -1,4 +1,4 @@
-#include"../map.h"
+#include "../MapEditorCLI.h"
 #include <memory>
 using namespace std;
 
@@ -16,8 +16,8 @@ public:
 
 // to compile this code
 // g++ -o mapO Map/Map.cpp Map/myEL/MySubject.cpp Map/myEL/MyObserver.cpp Map/myEL/MapObserver.cpp
-
-int main() {
+ 
+/* int main() {
     cout<<"hello";
     // Create a map
     int mapSize = 10;
@@ -55,4 +55,4 @@ int main() {
     delete map;
 
     return 0;
-}
+}  */

@@ -21,6 +21,6 @@ class CharUI : public Observer {
     void setLast();
     void statChecker();
     void regDisplay();
-    void setName();
+    void setName(std::string given);
     
     };

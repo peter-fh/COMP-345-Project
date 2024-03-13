@@ -18,7 +18,7 @@ CharUI::CharUI(Character* c) : playerChar(c){
 CharUI::CharUI(Character* c, std::string given) : playerChar(c){
             if (playerChar) {
                         playerChar->Attach(this);
-                        setNmae(given);
+                        setName(given);
             }
             else{
                         std::cout << "Failed attachment, please pass a reference to a character";   

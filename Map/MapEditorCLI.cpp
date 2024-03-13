@@ -104,6 +104,33 @@ bool MapEditorCLI::setEnd(){
 }
 
 
+
+
+
+
+
+Map* MapEditorCLI::loadMapFromFile(){
+    cout << "Now loading map from file.\n";
+    string fileName;
+    cout << "Enter a file name: ";
+    cin >> fileName;
+
+    MapSavedBuilder *mapLoader = new MapSavedBuilder();
+    bool loadSuccess = mapLoader->loadMap(fileName);
+
+    if (loadSuccess){
+	mapLoader->getMap()->displayMap();
+	return mapLoader->getMap();
+    } else {
+	return nullptr;
+    }
+}
+
+
+
+
+
+
 bool MapEditorCLI::loadMap(){
     string name;
     cout << "Select a map.\n";
@@ -318,7 +345,25 @@ void MapEditorCLI::campaignEditorLoop(){
 		cout << "Failed to move map";
 	}
 	else if (userIn == 3){
-	    campaign.push_back(createMap());
+	    cout << "Would you like to \n(1) Load from file\n(2) Make map from scratch\n";
+	    int loadChoice;
+	    cin >> loadChoice;
+	    if (loadChoice == 1){
+		Map* inp_map = loadMapFromFile();
+			
+		if (inp_map != nullptr){
+		    cout << "Loaded map.\n";
+		    campaign.push_back(inp_map);
+		}
+
+		else {
+		    cout << "Couldn't find file.\n";
+		}
+	    }
+	    else if (loadChoice == 2) {
+		campaign.push_back(createMap());
+	    }
+
 	}
 	else if (userIn == 4){
 	     campaign.display_campaign();
@@ -338,7 +383,7 @@ Campaign MapEditorCLI::editorLoop(){
     cout << "\n\n\nWelcome to the campaign editor!\n";
     cout << "Your options are:\n";
     cout << "(1) Create new campaign\n";
-    cout << "(2) Load campaign from file\n";
+    //cout << "(2) Load campaign from file\n";
     int userInput;
     cout << "Selection: #";
     cin >> userInput;

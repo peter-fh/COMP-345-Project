@@ -1,68 +1,71 @@
-/**
- * @file main.cpp
- * @brief Driver file for initializing game components.
- *
- * This driver file serves as the entry point for a simple game, initializing objects
- * for characters, dice, maps, and items within an item container. It demonstrates
- * the creation and interaction of these objects, setting up a basic game environment.
- * The file showcases object initialization, random seed generation for dice rolling,
- * map setup with obstacles, and displaying item enchantments.
- *
- * Usage:
- * - Character initialization and display.
- * - Dice rolling mechanism.
- * - Map generation with obstacles and validation.
- * - Item enchantment display.
- *
- * @author Eric Liu
- * @date 2024-02-25
- */
-#include "Character/Character.h"
+#include "Map/MapEditorCLI.h"
+#include "Map/myEL/MySubject.h"
+#include "Character/CharUI.h"
 #include "Dice/Dice.h"
-#include "Map/map.h"
 #include "Item/Item.cpp"
 #include <iostream>
 using namespace std;
 
-// Main function to initialize all objects
-int main() {
-    srand(time(0)); // create random seed
 
-    // Code to initialize and demonstrate the functionality of game components.
+class MapObserver : public MyObserver {
+private:
+    Map* map_;
+public:
+    MapObserver(Map* map) : map_(map) {}
+    void Update() override {
+        map_->displayMap();
+    }
+};
 
-    // initializing a fighter Character
-    Character fighter(1);
-    fighter.printCharacter();
 
-    // initializing a dice
-    Dice::DiceInput();
-
-    // inializing a map
-    Map map(20, 20);
-    map.setStart(0, 0);
-    map.setEnd(19, 19);
+int main(){
     
-    for (int y = 0; y < map.height; y++)
-	map.setCell(14, y, WALL);
+    cout<<"hello";
+    // Create a map
+    int mapSize = 10;
 
-    map.setCell(14, 17,EMPTY);
-    map.displayMap();
-    cout << map.validate() << "\n";
+    Map* map = new Map(mapSize);
+    // Create an observer for the map
+    MapObserver* observer = new MapObserver(map);
+    // Attach the observer to the map
+    map->Attach(observer);
 
-    // inializing items
-    Helmet helmet1;
-    Armor armor1;
-    Shield shield1;
-    Ring ring1;
-    Belt belt1;
-    Boots boots1;
-    Weapon weapon1;
-    cout << helmet1.getType() << " gives:" << helmet1.getEnchantment() << endl;
-    cout << armor1.getType() << " gives:" << armor1.getEnchantment() << endl;
-    cout << shield1.getType() << " gives:" << shield1.getEnchantment() << endl;
-    cout << ring1.getType() << " gives:" << ring1.getEnchantment() << endl;
-    cout << belt1.getType() << " gives:" << belt1.getEnchantment() << endl;
-    cout << boots1.getType() << " gives:" << boots1.getEnchantment() << endl;
-    cout << weapon1.getType() << " gives:" << weapon1.getEnchantment() << endl;
+    // make some changes to the map
+    map->setCell(0, 0, START);
+    map->setCell(mapSize-1, mapSize-1, END);
+    // set some walls
+    for(int i=0;i<mapSize;i++){
+        for(int j=0;j<mapSize;j++){
+            if(i==j){
+                map->setCell(i, j, WALL);
+            }        
+        }
+    }
+    // make things occupied
+    for(int i=0;i<mapSize;i=i+2){
+        for(int j=0;j<mapSize;j=j+2){
+            if(i==mapSize-j){
+                map->setCell(i,j, OCCUPIED);
+            }        
+        }
+    }
+    
+    
+
+    // Clean up
+    delete observer;
+    delete map;
+
+ 
+    Character playerCharacter = Character(10);
+
+    CharUI playerUI(&playerCharacter);
+    playerCharacter.setStrength(18);
+
+
+    MapEditorCLI editor = MapEditorCLI();
+    editor.editorLoop();
+
+
     return 0;
 }
