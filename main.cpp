@@ -20,7 +20,7 @@ public:
 
 int main(){
     
-    cout<<"hello";
+    cout<<"\n\n\nDEMO FOR MAP OBSERVER\n\n";
     // Create a map
     int mapSize = 10;
 
@@ -56,13 +56,16 @@ int main(){
     delete observer;
     delete map;
 
- 
+
+
+    cout << "\n\n\nDEMO FOR CHARUI\n\n";
     Character playerCharacter = Character(10);
 
     CharUI playerUI(&playerCharacter);
     playerCharacter.setStrength(18);
 
 
+    cout << "\n\n\nDEMO FOR MAP EDITOR AND LOADER\n\n";
     MapEditorCLI editor = MapEditorCLI();
     editor.editorLoop();
 
