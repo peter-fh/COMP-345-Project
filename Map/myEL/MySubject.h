@@ -5,9 +5,9 @@ using namespace std;
 
 class MySubject{
     public:
-        virtual void Attach(MyObserver* o);
-        virtual void Dettach(MyObserver* o);
-        virtual void Notify();
+        virtual void Attach(MyObserver* o)=0;
+        virtual void Dettach(MyObserver* o)=0;
+        virtual void Notify()=0;
         MySubject();
         ~MySubject();
     private:

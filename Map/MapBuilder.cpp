@@ -23,7 +23,7 @@ public:
 
     bool loadMap(const std::string &filename) override
     {
-        ifstream inputFile("mapInfo.txt");
+        ifstream inputFile("../mapInfo.txt");
 	bool returnBool = true;
 
         // Check if the file is opened successfully

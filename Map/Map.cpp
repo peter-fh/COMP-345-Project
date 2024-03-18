@@ -3,13 +3,104 @@
 #include "map.h"
 using namespace std;
 
+//create empty square map
+Map::Map(int x){
+    name = "";
+    width = x;
+    height = x;
+
+    for (int x=0; x < width; x++){
+	vector<Cell> column (height);
+	for (int y=0; y < height; y++){
+	    column.push_back(Cell(x, y, EMPTY));
+	}
+	mapArray.push_back(column);
+    }
+
+}
+
+Map::Map(){
+    name = "";
+    width = 2;
+    height = 2;
+    
+    for (int x=0; x < width; x++){
+	vector<Cell> column (height);
+	for (int y=0; y < height; y++){
+	    column.push_back(Cell(x, y, EMPTY));
+	}
+	mapArray.push_back(column);
+    }
+    setStart(0, 0);
+    setEnd(width - 1, height - 1);
+}
+
+
+Map::Map(int inp_width, int inp_height, string inp_name){
+    name = inp_name;
+    width = inp_width;
+    height = inp_height;
+    
+    for (int x=0; x < width; x++){
+	vector<Cell> column (height);
+	for (int y=0; y < height; y++){
+	    column.push_back(Cell(x, y, EMPTY));
+	}
+	mapArray.push_back(column);
+    }   
+    
+    setStart(0, 0);
+    setEnd(width - 1, height - 1);
+}
+
+
+Map::Map(int inp_width, int inp_height)
+{
+    name = "Unnamed";
+    width = inp_width;
+    height = inp_height;
+    
+    for (int x=0; x < width; x++){
+	vector<Cell> column (height);
+	for (int y=0; y < height; y++){
+	    column.push_back(Cell(x, y, EMPTY));
+	}
+	mapArray.push_back(column);
+    }    
+    setStart(0, 0);
+    setEnd(width - 1, height - 1);
+}
+
+
+Map::Map(Map *map){
+    name = map->name;
+    width = map->width;
+    height = map->height;
+    start = map->start;
+    end = map->end;
+    mapArray = map->mapArray;
+}
+
+
 string Map::getName(){
     return name;
 }
 
-Cell Map::getCell(int x, int y){
-    return mapArray[x][y];
+
+void Map::setName(string inp_name){
+    name = inp_name;
 }
+
+
+int Map::getWidth(){
+    return width;
+}
+
+
+int Map::getHeight(){
+    return height;
+}
+
 
 bool Map::setCell(int x, int y, int type){
     Cell inp_cell = Cell(x, y, type);
@@ -22,6 +113,8 @@ bool Map::setCell(int x, int y, int type){
     return true;
 
 }
+
+
 bool Map::setCell(Cell inp_cell){
     int prev_cell_type = getCell(inp_cell.x, inp_cell.y).type;
     if (prev_cell_type  == START || prev_cell_type == END)
@@ -31,6 +124,76 @@ bool Map::setCell(Cell inp_cell){
     Notify();
     return true;
 }
+
+
+bool Map::setCell(int x, int y, int type, Character character){
+    int prev_cell_type = getCell(x, y).type;
+    if (prev_cell_type == START || prev_cell_type == END)
+	return false;
+
+    Cell new_cell = Cell(x, y, type, &character);
+    mapArray[x][y] = new_cell;
+
+    return true;
+}
+
+
+Cell Map::getCell(int x, int y){
+    return mapArray[x][y];
+}
+
+
+void Map::displayMap(){
+    map<int, string> cell_map;
+    cell_map[EMPTY] = "□";
+    cell_map[WALL] = "■";
+    cell_map[OCCUPIED] = "▣";
+    cell_map[START] = "◰";
+    cell_map[END] = "◲";
+    
+
+    cout << "\n";
+    for (int y=0; y < height; y++){
+	for (int x=0; x < width; x++){
+	    cout << cell_map[getCell(x, y).type] << " ";
+	}
+	cout << "\n";
+    }
+}
+
+bool Map::setStart(int x, int y){
+    bool returnBool;
+    returnBool = true;
+    if (x >= width || y >= height || x < 0 || y < 0){
+	cout << "Invalid start space given to map (line 144)\n";
+	x = 0;
+	y = 0;
+	returnBool = false;
+    }    
+   
+    mapArray[start.x][start.y] = Cell(start.x, start.y, EMPTY);
+    start = Cell(x, y, START);
+    mapArray[x][y] = start;
+    return returnBool;
+}
+
+
+bool Map::setEnd(int x, int y){
+    bool returnBool;
+    returnBool = true;
+    if (x >= width || y >= height || x < 0 || y < 0){
+	cout << "\nInvalid end space given to map.\n";
+	x = 0;
+	y = 0;
+	returnBool = false;
+    }
+    
+    mapArray[end.x][end.y] = Cell(end.x, end.y, EMPTY);
+    end = Cell(x, y, END);
+    mapArray[x][y] = end;
+    return returnBool;
+}
+
 
 bool Map::checkBounds(int x, int y){
     if (x >= width || x < 0 || y >= height || y < 0)
@@ -67,6 +230,7 @@ bool Map::validate(){
 
     return false;
 }
+
 
 void Map::breadthFirstSearch(vector<vector<int> > *map, Cell start_cell){
     int x = start_cell.x;
@@ -107,131 +271,6 @@ void Map::displaySearchMap(vector<vector<int> > *map){
 	}
 	cout << y << "\n";
     }
-}
-
-void Map::displayMap(){
-    map<int, string> cell_map;
-    cell_map[EMPTY] = "□";
-    cell_map[WALL] = "■";
-    cell_map[OCCUPIED] = "▣";
-    cell_map[START] = "◰";
-    cell_map[END] = "◲";
-    
-
-    cout << "\n";
-    for (int y=0; y < height; y++){
-	for (int x=0; x < width; x++){
-	    cout << cell_map[getCell(x, y).type] << " ";
-	}
-	cout << "\n";
-    }
-}
-
-bool Map::setStart(int x, int y){
-    bool returnBool;
-    returnBool = true;
-    if (x >= width || y >= height || x < 0 || y < 0){
-	cout << "Invalid start space given to map (line 144)\n";
-	x = 0;
-	y = 0;
-	returnBool = false;
-    }    
-   
-    mapArray[start.x][start.y] = Cell(start.x, start.y, EMPTY);
-    start = Cell(x, y, START);
-    mapArray[x][y] = start;
-    return returnBool;
-}
-
-bool Map::setEnd(int x, int y){
-    bool returnBool;
-    returnBool = true;
-    if (x >= width || y >= height || x < 0 || y < 0){
-	cout << "\nInvalid end space given to map.\n";
-	x = 0;
-	y = 0;
-	returnBool = false;
-    }
-    
-    mapArray[end.x][end.y] = Cell(end.x, end.y, EMPTY);
-    end = Cell(x, y, END);
-    mapArray[x][y] = end;
-    return returnBool;
-}
-
-//create empty square map
-Map::Map(int x){
-    name = "";
-    width = x;
-    height = x;
-    
-    for (int x=0; x < width; x++){
-	vector<Cell> column (height);
-	for (int y=0; y < height; y++){
-	    column.push_back(Cell(x, y, EMPTY));
-	}
-	mapArray.push_back(column);
-    }
-
-}
-
-Map::Map(){
-    name = "";
-    width = 2;
-    height = 2;
-    
-    for (int x=0; x < width; x++){
-	vector<Cell> column (height);
-	for (int y=0; y < height; y++){
-	    column.push_back(Cell(x, y, EMPTY));
-	}
-	mapArray.push_back(column);
-    }
-    setStart(0, 0);
-    setEnd(width - 1, height - 1);
-}
-Map::Map(int inp_width, int inp_height, string inp_name)
-{
-    name = inp_name;
-    width = inp_width;
-    height = inp_height;
-    
-    for (int x=0; x < width; x++){
-	vector<Cell> column (height);
-	for (int y=0; y < height; y++){
-	    column.push_back(Cell(x, y, EMPTY));
-	}
-	mapArray.push_back(column);
-    }   
-    
-    setStart(0, 0);
-    setEnd(width - 1, height - 1);
-}
-
-Map::Map(int inp_width, int inp_height)
-{
-    name = "Unnamed";
-    width = inp_width;
-    height = inp_height;
-    
-    for (int x=0; x < width; x++){
-	vector<Cell> column (height);
-	for (int y=0; y < height; y++){
-	    column.push_back(Cell(x, y, EMPTY));
-	}
-	mapArray.push_back(column);
-    }    
-    setStart(0, 0);
-    setEnd(width - 1, height - 1);
-}
-
-Map::Map(Map *map){
-    name = map->name;
-    width = map->width;
-    height = map->height;
-    start = map->start;
-    end = map->end;
-    mapArray = map->mapArray;
 }
 
 

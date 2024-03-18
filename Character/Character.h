@@ -67,6 +67,7 @@ public:
     string getBoots() const;
     string getRing() const;
     string getHelmet() const;
+    string getName() const;
     //increase (buff and debuff)
     void increaseLevel(int levelUp);
     void increaseStrength(int strengthUp);
@@ -82,6 +83,7 @@ public:
     void setIntelligence(int newIntelligence);
     void setWisdom(int newWisdom);
     void setCharisma(int newCharisma);
+    void setName(string name);
 
 private: // private!!!
     vector<Observer*> observers;
@@ -111,6 +113,7 @@ private: // private!!!
     string boots;
     string ring;
     string helmet;
+    string name;
 
     int generateAbilityScores(); // generated randomly
     int calculateModifiers(int points); // default to 1
