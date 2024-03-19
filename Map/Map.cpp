@@ -3,21 +3,6 @@
 #include "map.h"
 using namespace std;
 
-//create empty square map
-Map::Map(int x){
-    name = "";
-    width = x;
-    height = x;
-
-    for (int x=0; x < width; x++){
-	vector<Cell> column (height);
-	for (int y=0; y < height; y++){
-	    column.push_back(Cell(x, y, EMPTY));
-	}
-	mapArray.push_back(column);
-    }
-
-}
 
 Map::Map(){
     name = "";
@@ -122,18 +107,6 @@ bool Map::setCell(Cell inp_cell){
 
     mapArray[inp_cell.x][inp_cell.y] = inp_cell;
     Notify();
-    return true;
-}
-
-
-bool Map::setCell(int x, int y, int type, Character character){
-    int prev_cell_type = getCell(x, y).type;
-    if (prev_cell_type == START || prev_cell_type == END)
-	return false;
-
-    Cell new_cell = Cell(x, y, type, &character);
-    mapArray[x][y] = new_cell;
-
     return true;
 }
 
@@ -274,15 +247,3 @@ void Map::displaySearchMap(vector<vector<int> > *map){
 }
 
 
-// int main(){
-//
-//     Map map (20, 20, Cell(0, 0), Cell(19, 19));
-// 	
-//     for (int y = 0; y < map.height; y++)
-//     map.setCell(Cell(14, y), WALL);
-//
-//     map.setCell(Cell(14, 17), EMPTY);
-//     map.displayMap();
-//     cout << map.validate() << "\n";
-//     return 0;
-// }
