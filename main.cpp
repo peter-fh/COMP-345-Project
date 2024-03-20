@@ -1,5 +1,4 @@
 #include "Map/MapEditorCLI.h"
-#include "Map/myEL/MySubject.h"
 #include "Character/CharUI.h"
 #include "Dice/Dice.h"
 #include "Item/Item.cpp"
@@ -7,12 +6,12 @@
 using namespace std;
 
 
-class MapObserver : public MyObserver {
+class MapObserver : public Observer{
 private:
     Map* map_;
 public:
     MapObserver(Map* map) : map_(map) {}
-    void Update() override {
+    void Update() {
         map_->displayMap();
     }
 };
@@ -24,11 +23,11 @@ int main(){
     // Create a map
     int mapSize = 10;
 
-    Map* map = new Map(mapSize);
+    Map* map = new Map(mapSize, mapSize);
     // Create an observer for the map
-    MapObserver* observer = new MapObserver(map);
+    //MapObserver* observer = new MapObserver(map);
     // Attach the observer to the map
-    map->Attach(observer);
+    //map->Attach(observer);
 
     // make some changes to the map
     map->setCell(0, 0, START);
@@ -53,7 +52,7 @@ int main(){
     
 
     // Clean up
-    delete observer;
+    //delete observer;
     delete map;
 
 

@@ -21,7 +21,6 @@
 #define CHARACTER_H
 #include <string>
 #include <vector>
-#include "../Subject/Subject.h"
 #include "../Observer/Observer.h"
 using std::string;
 

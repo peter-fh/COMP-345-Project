@@ -1,6 +1,5 @@
 #include <iostream>
 #include <vector>
-#include "../Map/myEL/MySubject.h"
 #include "../Character/Character.h"
 
 
@@ -53,7 +52,7 @@ struct Cell {
 typedef struct Cell Cell;
 
 
-class Map : public MySubject{
+class Map : public Subject {
     string name;
     Cell start;
     Cell end; 
