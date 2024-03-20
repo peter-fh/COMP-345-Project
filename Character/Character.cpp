@@ -18,7 +18,6 @@
 #include <stdexcept>
 #include <math.h>
 #include "Character.h"
-#include "../Observer/Observer.h"
 
 using namespace std;
 

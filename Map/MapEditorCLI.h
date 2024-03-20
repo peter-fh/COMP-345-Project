@@ -1,4 +1,4 @@
-#include "MapBuilder.cpp"
+#include "MapEditor.h"
 
 class MapEditorCLI{
     Campaign campaign;

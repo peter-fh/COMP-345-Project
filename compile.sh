@@ -1,1 +1,0 @@
-g++ -o driver.out main.cpp Map/MyEL/MyObserver.cpp Map/MyEL/MapObserver.cpp Map/MyEL/MySubject.cpp Subject/Subject.cpp Observer/Observer.cpp Item/Item.cpp Dice/Dice.cpp Map/Map.cpp Map/Campaign.cpp Map/MapEditor.cpp Map/MapEditorCLI.cpp Character/Character.cpp Character/CharacterObserver.cpp Character/PlayerCharacter.cpp Character/CharUI.cpp 

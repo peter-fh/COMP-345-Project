@@ -21,6 +21,7 @@
 #define CHARACTER_H
 #include <string>
 #include <vector>
+#include "../Observer/Observer.h"
 using std::string;
 
 class Character : public Subject{
@@ -84,7 +85,7 @@ public:
     void setName(string name);
 
 private: // private!!!
-    vector<Observer*> observers;
+    std::vector<Observer*> observers;
     int level; // assigned at the beginning
     int hitPoints; // based on constitution modifier and level
     int armorClass; // based on dexterity modifier
