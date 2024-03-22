@@ -51,12 +51,6 @@ Character::Character(int setLevel){
         throw invalid_argument("Level must be positive");
     }
 }
-
-
-
-
-
-
 void Character::Attach(Observer* observer) {
     observers.push_back(observer);
 }
@@ -74,6 +68,8 @@ void Character::Detach(Observer* observer) {
         }
     }
 }
+
+
 int Character::generateAbilityScores(){
     int n = 4;
     int roll[4];
@@ -326,9 +322,9 @@ void testPrint() {
 }
 
 // Optionally, the commented main function can be used for quick testing or demonstration.
-int main() {
-    srand(time(0)); // create random seed
-    Character fighter(1);
-    fighter.printCharacter();
-    return 0;
-}
+// int main() {
+//     srand(time(0)); // create random seed
+//     Character fighter(1);
+//     fighter.printCharacter();
+//     return 0;
+// }

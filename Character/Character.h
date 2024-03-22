@@ -77,6 +77,9 @@ public:
     void increaseWisdom(int wisdomUp);
     void increaseCharisma(int charismaUp);
     void setLevel(int newLevel);
+    void setHP(int newHP){
+        hitPoints = newHP;
+    }
     void setStrength(int newStrength);
     void setDexterity(int newDexterity);
     void setConstitution(int newConstitution);
@@ -151,11 +154,11 @@ public:
         strategy = setStrategy;
     }
 
-    void performMoveAction(Character movingChar, Map currentMap, Cell destination){
-        strategy->move(movingChar, currentMap, destination);
+    void performMoveAction(Character movingChar, Map currentMap){
+        strategy->move(movingChar, currentMap);
     }
-    void performAttackAction(Cell toAttack){
-        strategy->attack(toAttack);
+    void performAttackAction(Cell toAttack, int dmg){
+        strategy->attack(toAttack, dmg);
     }
     void performFreeAction(){
         strategy->freeAction();
@@ -165,10 +168,10 @@ public:
 //*************************
 
 void setLocation(Cell destination){
-        currentLocation = destination;
+    currentLocation = destination;
 }
 Cell getLocation(){
-        return currentLocation;
+    return currentLocation;
 }
 private: // private!!!
     Strategy *strategy;
