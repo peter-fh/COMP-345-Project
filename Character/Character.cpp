@@ -321,10 +321,23 @@ void testPrint() {
     cout << "testPrint passed\n";
 }
 
-// // Optionally, the commented main function can be used for quick testing or demonstration.
-// int main() {
-//     srand(time(0)); // create random seed
-//     Character fighter(1);
-//     fighter.printCharacter();
-//     return 0;
-// }
+// Optionally, the commented main function can be used for quick testing or demonstration.
+int main() {
+    srand(time(0)); // create random seed
+    
+    HumanPlayerStrategy hs;
+    AggressorStrategy as;
+    FriendlyStrategy fs;
+
+    Character char1(&hs);
+
+    Character char2(&hs);
+
+    Character char3(&hs);
+
+
+
+
+
+    return 0;
+}

@@ -80,7 +80,7 @@ public:
     void setLevel(int newLevel);
     void setHP(int newHP){
         // if(newHP<hitPoints){
-        //     if(*strategy.getStrategyName() == "FriendlyStrategy"){
+        //     if(this.getStrategyName() == "FriendlyStrategy"){
         //         switchToAggressive();
         //     }
         // }
@@ -95,83 +95,27 @@ public:
     void setCharisma(int newCharisma);
     void setName(string name);
 
-    Character(int lvl, Strategy *initStrategy, Cell location){
-        if (lvl > 0){
-        level = lvl;
-
-        strength = generateAbilityScores();
-        dexterity = generateAbilityScores();
-        constitution = generateAbilityScores();
-        intelligence = generateAbilityScores();
-        wisdom = generateAbilityScores();
-        charisma = generateAbilityScores();
-
-        strengthMod = calculateModifiers(strength);
-        dexterityMod = calculateModifiers(dexterity);
-        constitutionMod = calculateModifiers(constitution);
-        intelligenceMod = calculateModifiers(intelligence);
-        wisdomMod = calculateModifiers(wisdom);
-        charismaMod = calculateModifiers(charisma);
-
-        hitPoints = calculateHitPoints();
-        armorClass = calculateArmorClass();
-        attackBonus = calculateAttackBonus();
-        damageBonus = calculateDamageBonus();
-
-        this->strategy = initStrategy;
-        currentLocation = location;
-        }
-        else{
-            throw invalid_argument("Level must be positive");
-        }
-    }
-
 //*************************
 //FOR STRATEGY
-    Character(int lvl, Strategy *initStrategy){
-        if (lvl > 0){
-        level = lvl;
-
-        strength = generateAbilityScores();
-        dexterity = generateAbilityScores();
-        constitution = generateAbilityScores();
-        intelligence = generateAbilityScores();
-        wisdom = generateAbilityScores();
-        charisma = generateAbilityScores();
-
-        strengthMod = calculateModifiers(strength);
-        dexterityMod = calculateModifiers(dexterity);
-        constitutionMod = calculateModifiers(constitution);
-        intelligenceMod = calculateModifiers(intelligence);
-        wisdomMod = calculateModifiers(wisdom);
-        charismaMod = calculateModifiers(charisma);
-
-        hitPoints = calculateHitPoints();
-        armorClass = calculateArmorClass();
-        attackBonus = calculateAttackBonus();
-        damageBonus = calculateDamageBonus();
-
+    Character(Strategy *initStrategy){
         this->strategy = initStrategy;
-        }
-        else{
-            throw invalid_argument("Level must be positive");
-        }
     }
+
     void setStrategy(Strategy *setStrategy){
         strategy = setStrategy;
     }
 
-    void performMoveAction(Character movingChar, Map currentMap){
-        strategy->move(movingChar, currentMap);
+    void performMoveAction(){
+        strategy->move();
     }
-    void performAttackAction(Character atkingChar, Map currentMap, int dmg){
-        strategy->attack(atkingChar, currentMap, dmg);
+    void performAttackAction(){
+        strategy->attack();
     }
     void performFreeAction(){
         strategy->freeAction();
     }
     void switchToAggressive() {
-        setStrategy(new AggressorStrategy(this));
+        setStrategy(new AggressorStrategy());
     }
 
 
@@ -179,15 +123,9 @@ public:
 //FOR STRATEGY^
 //*************************
 
-void setLocation(Cell destination){
-    currentLocation = destination;
-}
-Cell getLocation(){
-    return currentLocation;
-}
+
 private: // private!!!
     Strategy *strategy;
-    Cell currentLocation;
 
     vector<Observer*> observers;
     int level; // assigned at the beginning
