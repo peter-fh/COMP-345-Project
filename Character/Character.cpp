@@ -321,7 +321,7 @@ void testPrint() {
     cout << "testPrint passed\n";
 }
 
-// Optionally, the commented main function can be used for quick testing or demonstration.
+// // Optionally, the commented main function can be used for quick testing or demonstration.
 // int main() {
 //     srand(time(0)); // create random seed
 //     Character fighter(1);

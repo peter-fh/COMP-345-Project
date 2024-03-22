@@ -20,6 +20,7 @@
 #pragma once
 #include <string>
 #include <vector>
+#include <cstring>
 #include "../Observer/Observer.h"
 #include "Strategy.h"
 using std::string;
@@ -78,7 +79,13 @@ public:
     void increaseCharisma(int charismaUp);
     void setLevel(int newLevel);
     void setHP(int newHP){
+        // if(newHP<hitPoints){
+        //     if(*strategy.getStrategyName() == "FriendlyStrategy"){
+        //         switchToAggressive();
+        //     }
+        // }
         hitPoints = newHP;
+        
     }
     void setStrength(int newStrength);
     void setDexterity(int newDexterity);
@@ -157,12 +164,17 @@ public:
     void performMoveAction(Character movingChar, Map currentMap){
         strategy->move(movingChar, currentMap);
     }
-    void performAttackAction(Cell toAttack, int dmg){
-        strategy->attack(toAttack, dmg);
+    void performAttackAction(Character atkingChar, Map currentMap, int dmg){
+        strategy->attack(atkingChar, currentMap, dmg);
     }
     void performFreeAction(){
         strategy->freeAction();
     }
+    void switchToAggressive() {
+        setStrategy(new AggressorStrategy(this));
+    }
+
+
     
 //FOR STRATEGY^
 //*************************
@@ -216,6 +228,4 @@ private: // private!!!
 
     // Recalculate attributes that depend on level or modifiers
     void recalculateAttributes();
-
-    
 };
