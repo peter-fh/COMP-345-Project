@@ -17,11 +17,11 @@
  * @author Eric Liu
  * @date 2024-02-25
  */
-#ifndef CHARACTER_H
-#define CHARACTER_H
+#pragma once
 #include <string>
 #include <vector>
 #include "../Observer/Observer.h"
+#include "Strategy.h"
 using std::string;
 
 class Character : public Subject{
@@ -31,6 +31,7 @@ public:
     void Notify(string attribute, int newValue, int oldValue);
 
     Character(int level); // Constructor declaration
+    ~Character() = default;
     void printCharacter(); // Method to print character details
     // equip gear
     void equipArmor(string newArmor);
@@ -84,7 +85,95 @@ public:
     void setCharisma(int newCharisma);
     void setName(string name);
 
+    Character(int lvl, Strategy *initStrategy, Cell location){
+        if (lvl > 0){
+        level = lvl;
+
+        strength = generateAbilityScores();
+        dexterity = generateAbilityScores();
+        constitution = generateAbilityScores();
+        intelligence = generateAbilityScores();
+        wisdom = generateAbilityScores();
+        charisma = generateAbilityScores();
+
+        strengthMod = calculateModifiers(strength);
+        dexterityMod = calculateModifiers(dexterity);
+        constitutionMod = calculateModifiers(constitution);
+        intelligenceMod = calculateModifiers(intelligence);
+        wisdomMod = calculateModifiers(wisdom);
+        charismaMod = calculateModifiers(charisma);
+
+        hitPoints = calculateHitPoints();
+        armorClass = calculateArmorClass();
+        attackBonus = calculateAttackBonus();
+        damageBonus = calculateDamageBonus();
+
+        this->strategy = initStrategy;
+        currentLocation = location;
+        }
+        else{
+            throw invalid_argument("Level must be positive");
+        }
+    }
+
+//*************************
+//FOR STRATEGY
+    Character(int lvl, Strategy *initStrategy){
+        if (lvl > 0){
+        level = lvl;
+
+        strength = generateAbilityScores();
+        dexterity = generateAbilityScores();
+        constitution = generateAbilityScores();
+        intelligence = generateAbilityScores();
+        wisdom = generateAbilityScores();
+        charisma = generateAbilityScores();
+
+        strengthMod = calculateModifiers(strength);
+        dexterityMod = calculateModifiers(dexterity);
+        constitutionMod = calculateModifiers(constitution);
+        intelligenceMod = calculateModifiers(intelligence);
+        wisdomMod = calculateModifiers(wisdom);
+        charismaMod = calculateModifiers(charisma);
+
+        hitPoints = calculateHitPoints();
+        armorClass = calculateArmorClass();
+        attackBonus = calculateAttackBonus();
+        damageBonus = calculateDamageBonus();
+
+        this->strategy = initStrategy;
+        }
+        else{
+            throw invalid_argument("Level must be positive");
+        }
+    }
+    void setStrategy(Strategy *setStrategy){
+        strategy = setStrategy;
+    }
+
+    void performMoveAction(Character movingChar, Map currentMap, Cell destination){
+        strategy->move(movingChar, currentMap, destination);
+    }
+    void performAttackAction(Cell toAttack){
+        strategy->attack(toAttack);
+    }
+    void performFreeAction(){
+        strategy->freeAction();
+    }
+    
+//FOR STRATEGY^
+//*************************
+
+void setLocation(Cell destination){
+        currentLocation = destination;
+}
+Cell getLocation(){
+        return currentLocation;
+}
 private: // private!!!
+    Strategy *strategy;
+    Cell currentLocation;
+
     vector<Observer*> observers;
     int level; // assigned at the beginning
     int hitPoints; // based on constitution modifier and level
@@ -124,5 +213,6 @@ private: // private!!!
 
     // Recalculate attributes that depend on level or modifiers
     void recalculateAttributes();
+
+    
 };
-#endif // CHARACTER_H

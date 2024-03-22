@@ -16,6 +16,7 @@
 #include <iostream>
 #include <string>
 #include <stdexcept>
+#include <bits/stdc++.h>
 #include <math.h>
 #include "Character.h"
 #include "../Observer/Observer.h"
@@ -50,6 +51,12 @@ Character::Character(int setLevel){
         throw invalid_argument("Level must be positive");
     }
 }
+
+
+
+
+
+
 void Character::Attach(Observer* observer) {
     observers.push_back(observer);
 }
@@ -67,8 +74,6 @@ void Character::Detach(Observer* observer) {
         }
     }
 }
-
-
 int Character::generateAbilityScores(){
     int n = 4;
     int roll[4];
@@ -77,7 +82,7 @@ int Character::generateAbilityScores(){
         int low = 1;
         roll[i] = rand() % (high - low) + low;
     }
-    //sort(roll, roll + n); // dropping the lowest roll
+    sort(roll, roll + n); // dropping the lowest roll
     return roll[1]+roll[2]+roll[3]; // summing the 3 highest rolls
 }
 int Character::calculateModifiers(int points){
@@ -321,9 +326,9 @@ void testPrint() {
 }
 
 // Optionally, the commented main function can be used for quick testing or demonstration.
-// int main() {
-//     srand(time(0)); // create random seed
-//     Character fighter(1);
-//     fighter.printCharacter();
-//     return 0;
-// }
+int main() {
+    srand(time(0)); // create random seed
+    Character fighter(1);
+    fighter.printCharacter();
+    return 0;
+}
