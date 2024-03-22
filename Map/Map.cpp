@@ -132,8 +132,9 @@ bool Map::setCell(int x, int y, int type, Character character){
 	return false;
 
     Cell new_cell = Cell(x, y, type, &character);
+    character.setLocation(new_cell);
     mapArray[x][y] = new_cell;
-
+    Notify();
     return true;
 }
 

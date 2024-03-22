@@ -17,11 +17,12 @@
  * @author Eric Liu
  * @date 2024-02-25
  */
-#ifndef CHARACTER_H
-#define CHARACTER_H
+#pragma once
 #include <string>
 #include <vector>
+#include <cstring>
 #include "../Observer/Observer.h"
+#include "Strategy.h"
 using std::string;
 
 class Character : public Subject{
@@ -32,6 +33,7 @@ public:
     void Notify();
 
     Character(int level); // Constructor declaration
+    ~Character() = default;
     void printCharacter(); // Method to print character details
     string toString();
     // equip gear
@@ -78,6 +80,15 @@ public:
     void increaseWisdom(int wisdomUp);
     void increaseCharisma(int charismaUp);
     void setLevel(int newLevel);
+    void setHP(int newHP){
+        // if(newHP<hitPoints){
+        //     if(this.getStrategyName() == "FriendlyStrategy"){
+        //         switchToAggressive();
+        //     }
+        // }
+        hitPoints = newHP;
+        
+    }
     void setStrength(int newStrength);
     void setDexterity(int newDexterity);
     void setConstitution(int newConstitution);
@@ -86,7 +97,38 @@ public:
     void setCharisma(int newCharisma);
     void setName(string name);
 
+//*************************
+//FOR STRATEGY
+    Character(Strategy *initStrategy){
+        this->strategy = initStrategy;
+    }
+
+    void setStrategy(Strategy *setStrategy){
+        strategy = setStrategy;
+    }
+
+    void performMoveAction(){
+        strategy->move();
+    }
+    void performAttackAction(){
+        strategy->attack();
+    }
+    void performFreeAction(){
+        strategy->freeAction();
+    }
+    void switchToAggressive() {
+        setStrategy(new AggressorStrategy());
+    }
+
+
+    
+//FOR STRATEGY^
+//*************************
+
+
 private: // private!!!
+    Strategy *strategy;
+
     vector<Observer*> observers;
     int level; // assigned at the beginning
     int hitPoints; // based on constitution modifier and level
@@ -127,4 +169,3 @@ private: // private!!!
     // Recalculate attributes that depend on level or modifiers
     void recalculateAttributes();
 };
-#endif // CHARACTER_H

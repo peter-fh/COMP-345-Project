@@ -16,6 +16,7 @@
 #include <iostream>
 #include <string>
 #include <stdexcept>
+#include <bits/stdc++.h>
 #include <math.h>
 #include "Character.h"
 #include "../Observer/Observer.h"
@@ -79,7 +80,7 @@ int Character::generateAbilityScores(){
         int low = 1;
         roll[i] = rand() % (high - low) + low;
     }
-    //sort(roll, roll + n); // dropping the lowest roll
+    sort(roll, roll + n); // dropping the lowest roll
     return roll[1]+roll[2]+roll[3]; // summing the 3 highest rolls
 }
 int Character::calculateModifiers(int points){
@@ -351,9 +352,22 @@ void testPrint() {
 }
 
 // Optionally, the commented main function can be used for quick testing or demonstration.
-// int main() {
-//     srand(time(0)); // create random seed
-//     Character fighter(1);
-//     fighter.printCharacter();
-//     return 0;
-// }
+int main() {
+    srand(time(0)); // create random seed
+    
+    HumanPlayerStrategy hs;
+    AggressorStrategy as;
+    FriendlyStrategy fs;
+
+    Character char1(&hs);
+
+    Character char2(&hs);
+
+    Character char3(&hs);
+
+
+
+
+
+    return 0;
+}
