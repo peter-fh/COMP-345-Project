@@ -1,3 +1,4 @@
+#pragma once
 #include "MapEditor.h"
 
 class MapEditorCLI{

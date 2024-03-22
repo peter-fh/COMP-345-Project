@@ -1,3 +1,4 @@
+#pragma once
 #include "../Observer/Observer.h"
 #include "Character.h"
 #include <iostream>

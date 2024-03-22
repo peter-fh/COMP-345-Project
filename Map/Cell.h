@@ -1,6 +1,7 @@
+#pragma once
 #include <iostream>
 #include <vector>
-#include "../Character/Character.h"
+#include "../Character/CharUI.h"
 
 
 const int EMPTY = 0;

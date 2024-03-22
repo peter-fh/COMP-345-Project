@@ -54,9 +54,7 @@ class HumanPlayerStrategy : public Strategy {
             cout<<"Human player decided to "<<options[choice]<<endl;
         }
 };
-int sign(int num) {
-    return (num > 0) - (num < 0);
-}
+
 
 class AggressorStrategy : public Strategy {
     public:
