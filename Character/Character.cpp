@@ -58,6 +58,8 @@ void Character::Notify(string attribute, int newValue, int oldValue) {
             observer->Update(attribute, newValue, oldValue);
         }
     }
+
+void Character::Notify(){}
 void Character::Detach(Observer* observer) {
     for (auto it = observers.begin(); it != observers.end(); ) {
         if (*it == observer) {
@@ -249,6 +251,34 @@ string Character::getBoots() const{return boots;}
 string Character::getRing() const{return ring;}
 string Character::getHelmet() const{return helmet;}
 
+string Character::toString(){
+    string output = "";
+    // Print attributes
+    output += "Level: " + to_string(getLevel()) + "\n";
+    output += "Hit Points: " + to_string(getHitPoints()) + "\n";
+    output += "Armor Class: " + to_string(getArmorClass()) + "\n";
+    output += "Attack Bonus: " + to_string(getAttackBonus()) + "\n";
+    output += "Damage Bonus: " + to_string(getDamageBonus())+ "\n";
+    // Print ability scores
+    output += "Ability Scores:";
+    output += "\n";
+    output   += "  Strength: " + to_string(getStrength()) + " (Mod: " + to_string(getStrengthMod()) + ")" + "\n";
+    output   += "  Dexterity: " + to_string(getDexterity()) + " (Mod: " + to_string(getDexterityMod()) + ")"+  "\n";
+    output   += "  Constitution: " + to_string(getConstitution())  + " (Mod: "  + to_string(getConstitutionMod()) +  ")"  + "\n";
+    output   += "  Intelligence: " + to_string(getIntelligence())  + " (Mod: "  + to_string(getIntelligenceMod())  + ")"  + "\n";
+    output   += "  Wisdom: " + to_string(getWisdom())  + " (Mod: "  + to_string(getWisdomMod())  + ")"  + "\n";
+    output   += "  Charisma: " + to_string(getCharisma())  + " (Mod: "  + to_string(getCharismaMod())  + ")"  + "\n";
+    // Print equipment
+    output   += "Equipment:";
+    output += "\n";
+    output+=    "  Armor: " + (getArmor().empty() ? "None" : getArmor())  + "\n";
+    output   += "  Shield: " + (getShield().empty() ? "None" : getShield())  + "\n";
+    output+=  "  Weapon: " + (getWeapon().empty() ? "None" : getWeapon())  + "\n";
+    output+=  "  Boots: " + (getBoots().empty() ? "None" : getBoots())  + "\n";
+    output+=  "  Ring: " + (getRing().empty() ? "None" : getRing())  + "\n";
+    output+=  "  Helmet: " + (getHelmet().empty() ? "None" : getHelmet())  + "\n";
+    return output;
+}
 void Character::printCharacter(){
     // Print attributes
     cout << "Level: " << getLevel() << "\n";

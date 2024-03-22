@@ -4,6 +4,7 @@
 class CharacterObserver : public Observer{
   public:
     void Update(std::string attribute, int oldValue, int newValue){
-    std::cout << attribute << " Updated: " << oldValue << " --> " << newValue;
+	std::cout << attribute << " Updated: " << oldValue << " --> " << newValue;
     }
+
 };

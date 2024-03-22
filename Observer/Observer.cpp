@@ -4,6 +4,8 @@ Observer::~Observer(){}
 
 Observer::Observer(){}
 
+void Observer::Update(string attribute, int newValue, int oldValue){}
+
 Subject::Subject(){
     _observers = new list<Observer*>;
 }

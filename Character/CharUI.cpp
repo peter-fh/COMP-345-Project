@@ -31,6 +31,10 @@ void CharUI::Update(std::string attribute, int newValue, int oldValue) {
     std::cout << "\nUpdate: " << attribute << " changed from " << newValue << " to " << oldValue;
 }
 
+void CharUI::Update(Subject* subject){
+    
+}
+
 void CharUI::setName(std::string given){
             name = given;
 }

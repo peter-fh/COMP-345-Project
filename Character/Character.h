@@ -29,9 +29,11 @@ public:
     void Attach(Observer* observer);
     void Detach(Observer* observer);
     void Notify(string attribute, int newValue, int oldValue);
+    void Notify();
 
     Character(int level); // Constructor declaration
     void printCharacter(); // Method to print character details
+    string toString();
     // equip gear
     void equipArmor(string newArmor);
     void equipShield(string newShield);

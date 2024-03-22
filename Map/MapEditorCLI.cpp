@@ -108,7 +108,7 @@ bool MapEditorCLI::setEnd(){
 
 
 
-
+/* 
 Map* MapEditorCLI::loadMapFromFile(){
     cout << "Now loading map from file.\n";
     string fileName;
@@ -124,8 +124,11 @@ Map* MapEditorCLI::loadMapFromFile(){
     } else {
 	return nullptr;
     }
-}
+} */
 
+Map* MapEditorCLI::loadMapFromFile(){
+    return nullptr;
+}
 
 
 
@@ -144,6 +147,8 @@ bool MapEditorCLI::loadMap(){
     mapEditor = MapEditor(*map);
     return true;
 }
+
+
 
 
 bool MapEditorCLI::saveMap(){

@@ -1,13 +1,16 @@
 #pragma once
+#include <cmath>
 #include <string>
 #include <list>
 
+class Subject;
 
 class Observer{
-    public:
-        virtual ~Observer();
-        Observer();
-        virtual void Update(std::string attribute, int newValue, int oldValue) = 0;      
+public:
+    virtual ~Observer();
+    Observer();
+    virtual void Update(Subject* subject) = 0;      
+    virtual void Update(std::string attribute, int newValue, int oldValue);
 };
 
 using namespace std;

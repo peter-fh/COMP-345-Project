@@ -1,6 +1,6 @@
 #include <iostream>
 #include <map>
-#include "map.h"
+#include "Map.h"
 using namespace std;
 
 //create empty square map
@@ -142,8 +142,8 @@ Cell Map::getCell(int x, int y){
     return mapArray[x][y];
 }
 
-
-void Map::displayMap(){
+string Map::toString(){
+    string output = "";
     map<int, string> cell_map;
     cell_map[EMPTY] = "□";
     cell_map[WALL] = "■";
@@ -152,13 +152,20 @@ void Map::displayMap(){
     cell_map[END] = "◲";
     
 
-    cout << "\n";
+    output += "\n";
     for (int y=0; y < height; y++){
 	for (int x=0; x < width; x++){
-	    cout << cell_map[getCell(x, y).type] << " ";
+	    output += cell_map[getCell(x, y).type] + " ";
 	}
-	cout << "\n";
+	output += "\n";
     }
+
+    return output;
+}
+
+
+void Map::displayMap(){
+    cout << toString();
 }
 
 bool Map::setStart(int x, int y){
