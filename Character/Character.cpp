@@ -16,7 +16,6 @@
 #include <iostream>
 #include <string>
 #include <stdexcept>
-#include <bits/stdc++.h>
 #include <math.h>
 #include "Character.h"
 #include "../Observer/Observer.h"
