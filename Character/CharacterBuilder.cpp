@@ -95,9 +95,6 @@ public:
 
     void buildAbilityScores() override
     {
-        // Generate ability scores randomly
-        // Assign ability scores for a Tank fighter
-        // For example:
         character->setConstitution(generateAbilityScore());
         character->setDexterity(generateAbilityScore());
         character->setStrength(generateAbilityScore());
