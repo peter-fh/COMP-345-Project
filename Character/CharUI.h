@@ -12,9 +12,9 @@ class CharUI : public Observer {
     std::string name;
     CharUI(Character* c);
     CharUI(Character* c, std::string name);
-    void Update(std::string attribute, int newValue, int oldValue);
-    void Update(Subject* subject);
-
+    void Update(std::string attribute, int newValue, int oldValue) override;
+    void Update(Subject* subject) override;
+    void Update(std::string message) override;
 
     void checkAbilityScores();
     void checkAttributes();
@@ -24,5 +24,6 @@ class CharUI : public Observer {
     void statChecker();
     void regDisplay();
     void setName(std::string given);
+    
     
     };
