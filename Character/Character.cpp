@@ -59,7 +59,11 @@ void Character::Notify(string attribute, int newValue, int oldValue) {
         }
     }
 
-void Character::Notify(){}
+void Character::Notify(){
+    for (auto& observer: observers){
+	observer->Update(this);
+    }
+}
 void Character::Detach(Observer* observer) {
     for (auto it = observers.begin(); it != observers.end(); ) {
         if (*it == observer) {
@@ -116,12 +120,18 @@ int Character::calculateAttackBonus(){
 int Character::calculateDamageBonus(){
     return getStrengthMod();
 }
+
+void Character::setName(string newName){
+    name = newName;
+    Notify();
+}
 // Setter for level
 void Character::setLevel(int newLevel){
     Notify("Level", level, newLevel);
     if (newLevel > 0){
         level = newLevel;
         recalculateAttributes();
+	Notify();
     }
     else{
         throw invalid_argument("Level must be positive");
@@ -168,6 +178,8 @@ void Character::increaseLevel(int levelUp){
     if (level+levelUp > 0){
         level+=levelUp;
         recalculateAttributes(); // attributes are recalculated after a level change
+	cout << "Correct function\n";
+	Notify();
     }
     else{
         throw invalid_argument("New Level must be positive");
@@ -254,6 +266,7 @@ string Character::getHelmet() const{return helmet;}
 string Character::toString(){
     string output = "";
     // Print attributes
+    output += "Character: " + name + "\n";
     output += "Level: " + to_string(getLevel()) + "\n";
     output += "Hit Points: " + to_string(getHitPoints()) + "\n";
     output += "Armor Class: " + to_string(getArmorClass()) + "\n";

@@ -87,6 +87,7 @@ public:
         //     }
         // }
         hitPoints = newHP;
+	Notify();
         
     }
     void setStrength(int newStrength);

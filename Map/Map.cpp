@@ -154,7 +154,6 @@ string Map::toString(){
     cell_map[END] = "◲";
     
 
-    output += "\n";
     for (int y=0; y < height; y++){
 	for (int x=0; x < width; x++){
 	    output += cell_map[getCell(x, y).type] + " ";

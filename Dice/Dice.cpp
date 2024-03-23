@@ -70,6 +70,7 @@ int Dice::Roll(){
     int value = (rand() % sides + 1);
     cout << "Your roll was: " << value;
     roll = value;
+    Notify();
     return value;
     }
 
