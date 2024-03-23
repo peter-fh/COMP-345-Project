@@ -3,7 +3,7 @@
 Corpse::Corpse(Character* c)
 {
     eulogy = "Corpse of " + c->getName() + ", perished at level: " + std::to_string(c->getLevel());
-    inventory = c->inventory;
+    //inventory = c->inventory;
 }
 std::string Corpse::getEulogy(){
     return eulogy;
