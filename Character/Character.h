@@ -81,11 +81,14 @@ public:
     void increaseCharisma(int charismaUp);
     void setLevel(int newLevel);
     void setHP(int newHP){
-        // if(newHP<hitPoints){
-        //     if(this.getStrategyName() == "FriendlyStrategy"){
-        //         switchToAggressive();
-        //     }
-        // }
+        if(newHP<hitPoints){
+            // if(this->strategy != nullptr){
+            //     if(strategy.getStrategyName() == "FriendlyStrategy"){
+            //         switchToAggressive();
+            //     }
+                
+            // }
+        }
         hitPoints = newHP;
         
     }

@@ -16,6 +16,7 @@
 #include <iostream>
 #include <string>
 #include <stdexcept>
+#include <bits/stdc++.h>
 #include <math.h>
 #include "Character.h"
 #include "../Observer/Observer.h"
@@ -350,23 +351,28 @@ void testPrint() {
     cout << "testPrint passed\n";
 }
 
-/* // Optionally, the commented main function can be used for quick testing or demonstration.
-int main() {
-    srand(time(0)); // create random seed
+// // Optionally, the commented main function can be used for quick testing or demonstration.
+// int main() {
+//     srand(time(0)); // create random seed
     
-    HumanPlayerStrategy hs;
-    AggressorStrategy as;
-    FriendlyStrategy fs;
+//     //testing Character Strategy
+//     HumanPlayerStrategy hs;
+//     AggressorStrategy as;
+//     FriendlyStrategy fs;
 
-    Character char1(&hs);
+//     Character char1(&hs);
+//     char1.performMoveAction();
+//     char1.performAttackAction();
+//     char1.performFreeAction();
 
-    Character char2(&hs);
+//     char1.setStrategy(&as);
+//     char1.performMoveAction();
+//     char1.performAttackAction();
+//     char1.performFreeAction();
 
-    Character char3(&hs);
-
-
-
-
-
-    return 0;
-} */
+//     char1.setStrategy(&fs);
+//     char1.performMoveAction();
+//     char1.performAttackAction();
+//     char1.performFreeAction();
+//     return 0;
+// }

@@ -1,6 +1,5 @@
 #pragma once
 #include <iostream>
-#include <cmath>
 
 using namespace std;
 
@@ -178,7 +177,6 @@ class FriendlyStrategy : public Strategy {
         }
         void attack() override{
             cout<<"Friendly Does not Attack"<<endl;
-
         }
         void freeAction() override{
             cout<<"Friendly Has No Free Action"<<endl;
