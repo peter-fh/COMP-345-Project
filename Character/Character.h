@@ -244,7 +244,7 @@ public:
     void unequip(Item* I);
     void setPants();
     void setChestplate();
-    void setPants();
+    void setHelmet();
     void setBoots();
     void takeDamage(int dmg) override;
 };
