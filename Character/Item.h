@@ -12,7 +12,7 @@ class Item{
         bool held = false;
         void pickup();
         void drop();
-        virtual std::string getName();
+        virtual std::string getItemName();
         virtual void equip();
 };
 
