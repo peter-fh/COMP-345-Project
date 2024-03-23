@@ -5,7 +5,11 @@
 
 
 Logger::Logger(){
-    Logger("log.txt");
+    sources = Sources();
+    map = nullptr;
+    character = nullptr;
+    dice = nullptr;
+    logFile = "log.txt";
 }
 
 
@@ -14,7 +18,6 @@ Logger::Logger(std::string file_name){
     map = nullptr;
     character = nullptr;
     dice = nullptr;
-    std::string log_file_name =  file_name;
     logFile = file_name;
 }
 
@@ -48,7 +51,6 @@ void Logger::attachDice(Dice* new_dice){
 
 
 void Logger::Update(Subject* subject){
-    std::cout << "In logger.cpp: Update()\n";
     if (subject == map){
 	logMap();
 	return;
@@ -69,9 +71,6 @@ void Logger::Update(Subject* subject){
 void Logger::logMap(){
     ofstream log;
     log.open(logFile.c_str(), std::ios_base::app);
-    if (!log){
-	std::cout << "lololol\n\n\n";
-    }
     log << map->toString();
     log.flush();
     log.close();
@@ -79,7 +78,7 @@ void Logger::logMap(){
 
 void Logger::logCharacter(){
     ofstream log;
-    log.open(logFile.c_str(), 'a');
+    log.open(logFile.c_str(), std::ios_base::app);
     log << character->toString();
     log.flush();
     log.close();
@@ -88,7 +87,7 @@ void Logger::logCharacter(){
 
 void Logger::logDice(){
     ofstream log;
-    log.open(logFile.c_str(), 'a');
+    log.open(logFile.c_str(), std::ios_base::app);
     log << dice->toString();
     log.flush();
     log.close();
