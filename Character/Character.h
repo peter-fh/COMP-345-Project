@@ -28,10 +28,33 @@ using std::string;
 class Character : public Subject
 {
 public:
+
+
+    std::vector<Item*> inventory;
+    std::string name;
+    void setName(std::string name);
+    std::string getName();
+    int inventorySize;
+    bool alive;
+    int currHP;
+    void kill();
+    void equip(int pos);
+    void equip(Item* i);
+    void pickup(Item* i);
+    void drop(int pos);
+    Weapon* equippedWeapon;
+    Armor* equippedHelmet;
+    Armor* equippedChestplate;
+    Armor* equippedPants;
+    Armor* equippedBoots;
     void Attach(Observer *observer);
     void Detach(Observer *observer);
     void Notify(string attribute, int newValue, int oldValue);
     void Notify();
+    void Notify(string message);
+    virtual void takeDamage(int damage);
+    virtual int attack();
+    int armorLevel;
 
     Character(int level); // Constructor declaration
     ~Character() = default;
@@ -190,4 +213,48 @@ private: // private!!!
 
     // Recalculate attributes that depend on level or modifiers
     void recalculateAttributes();
+};
+class CharacterDecorator : public Character {
+protected:
+    Character* character;
+
+public:
+    CharacterDecorator(Character* character) : character(character) {}
+
+    virtual void equip(Item* i);
+    virtual void unequip() = 0;
+};
+
+class CharacterArmor : public CharacterDecorator {
+private:
+    Armor* equippedHelmet; 
+    Armor* equippedChestpiece;
+    Armor* equippedPants;
+    Armor* equippedBoots;
+
+public:
+    CharacterArmor(Character* character) : CharacterDecorator(character), 
+        equippedHelmet(nullptr), equippedChestpiece(nullptr), 
+        equippedPants(nullptr), equippedBoots(nullptr) {}
+
+    void equip(Item* i);
+    void unequip() override;
+    void setPants();
+    void setChestplate();
+    void setPants();
+    void setBoots();
+    void takeDamage(int dmg) override;
+};
+
+class CharacterWeapon : public CharacterDecorator {
+private:
+    Weapon* equippedWeapon;
+
+public:
+    CharacterWeapon(Character* character) : CharacterDecorator(character), equippedWeapon(nullptr) {}
+
+    void equip(Item* i);
+    void setWeapon();
+    void unequip() override;
+    int attack() override;
 };
