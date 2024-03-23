@@ -23,6 +23,10 @@
 #include <cstring>
 #include "../Observer/Observer.h"
 #include "Strategy.h"
+#include "Item.h"
+#include "Consumable.h"
+#include "Weapon.h"
+#include "Armor.h"
 using std::string;
 
 class Character : public Subject
