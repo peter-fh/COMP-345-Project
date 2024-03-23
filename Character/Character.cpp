@@ -359,20 +359,26 @@ void testPrint() {
 //     HumanPlayerStrategy hs;
 //     AggressorStrategy as;
 //     FriendlyStrategy fs;
-
+//     //HumanPlayerStrategy
 //     Character char1(&hs);
 //     char1.performMoveAction();
 //     char1.performAttackAction();
 //     char1.performFreeAction();
-
+//     //AggressorStrategy
 //     char1.setStrategy(&as);
 //     char1.performMoveAction();
 //     char1.performAttackAction();
 //     char1.performFreeAction();
-
+//     //FriendlyStrategy
 //     char1.setStrategy(&fs);
 //     char1.performMoveAction();
 //     char1.performAttackAction();
 //     char1.performFreeAction();
+//     //Changing from FriendlyStrategy to AggressorStrategy
+//     char1.takeDmg(1);
+//     char1.performMoveAction();
+//     char1.performAttackAction();
+//     char1.performFreeAction();
+
 //     return 0;
 // }

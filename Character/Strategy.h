@@ -10,9 +10,7 @@ class Strategy {
         virtual void move() = 0;
         virtual void attack() = 0;
         virtual void freeAction() = 0;
-        string getStrategyName() const{
-            return "Null Strategy";
-        };
+        virtual string getStrategyName() const;
         
     protected:
         Character* character;

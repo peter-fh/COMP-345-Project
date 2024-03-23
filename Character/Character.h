@@ -81,16 +81,20 @@ public:
     void increaseCharisma(int charismaUp);
     void setLevel(int newLevel);
     void setHP(int newHP){
-        if(newHP<hitPoints){
-            // if(this->strategy != nullptr){
-            //     if(strategy.getStrategyName() == "FriendlyStrategy"){
-            //         switchToAggressive();
-            //     }
-                
-            // }
+        hitPoints = newHP;        
+    }
+    void takeDmg(int hit){
+        if(hit<1){
+            cout<<"The hit was inneffective"<<endl;
         }
-        hitPoints = newHP;
-        
+        else{
+            if(this->strategy != nullptr){
+                if(strategy->getStrategyName() == "FriendlyStrategy"){
+                    switchToAggressive();
+                }                
+            }
+        }
+        this->setHP(this->getHitPoints()-hit);
     }
     void setStrength(int newStrength);
     void setDexterity(int newDexterity);
