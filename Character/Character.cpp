@@ -28,18 +28,18 @@ Character::Character(){}
 void CharacterWeapon::equip(Item* i){
     Weapon* W = dynamic_cast<Weapon*>(i);
     if (equippedWeapon = nullptr){
-        Notify("Equipped " + W->getName() + " (" + std::to_string(W->getDamage()) + ")");
+        Notify("Equipped " + W->getItemName() + " (" + std::to_string(W->getDamage()) + ")");
         equippedWeapon = W;
     }
     else{
         unequip(equippedWeapon);
-        Notify("Equipped " + W->getName() + " (" + std::to_string(W->getDamage()) + ")");
+        Notify("Equipped " + W->getItemName() + " (" + std::to_string(W->getDamage()) + ")");
         equippedWeapon = W;
     }
 }
 
 void CharacterWeapon::unequip(Item* i){
-    Notify("Unequipped " + equippedWeapon->getName() + " (" + std::to_string(equippedWeapon->getDamage()) + ")");
+    Notify("Unequipped " + equippedWeapon->getItemName() + " (" + std::to_string(equippedWeapon->getDamage()) + ")");
     equippedWeapon = nullptr;
 }
 
@@ -47,53 +47,53 @@ void CharacterArmor::equip(Item* i){
     Armor* A = dynamic_cast<Armor*>(i);
     if (A-> getType() == "Boots"){
         if (equippedBoots == nullptr){
-            Notify("Equipped " + A->getName() + " (" + std::to_string(A->getDefence()) + ")");
+            Notify("Equipped " + A->getItemName() + " (" + std::to_string(A->getDefence()) + ")");
             character->armorLevel += A->getDefence();
             equippedBoots = A;
         }
         else{
             unequip(equippedBoots);
-            Notify("Equipped " + A->getName() + " (" + std::to_string(A->getDefence()) + ")");
+            Notify("Equipped " + A->getItemName() + " (" + std::to_string(A->getDefence()) + ")");
             character->armorLevel += A->getDefence();
             equippedBoots = A;
         }}
 
     if (A-> getType() == "Pants"){
         if (equippedPants == nullptr){
-            Notify("Equipped " + A->getName() + " (" + std::to_string(A->getDefence()) + ")");
+            Notify("Equipped " + A->getItemName() + " (" + std::to_string(A->getDefence()) + ")");
             character->armorLevel += A->getDefence();
             equippedPants = A;
         }
         else{
             Notify("Swapped pants");
             unequip(equippedPants);
-            Notify("Equipped " + A->getName() + " (" + std::to_string(A->getDefence()) + ")");
+            Notify("Equipped " + A->getItemName() + " (" + std::to_string(A->getDefence()) + ")");
             character->armorLevel += A->getDefence();
             equippedPants = A;
         }}
     if (A-> getType() == "Chestplate"){
         if (equippedChestpiece == nullptr){
-            Notify("Equipped " + A->getName() + " (" + std::to_string(A->getDefence()) + ")");
+            Notify("Equipped " + A->getItemName() + " (" + std::to_string(A->getDefence()) + ")");
             character->armorLevel += A->getDefence();
             equippedChestpiece = A;
         }
         else{
             Notify("Swapped chestplate");
             unequip(equippedChestpiece);
-            Notify("Equipped " + A->getName() + " (" + std::to_string(A->getDefence()) + ")");
+            Notify("Equipped " + A->getItemName() + " (" + std::to_string(A->getDefence()) + ")");
             character->armorLevel += A->getDefence();
             equippedChestpiece = A;
         }}
     if (A-> getType() == "Helmet"){
         if (equippedHelmet == nullptr){
-            Notify("Equipped " + A->getName() + " (" + std::to_string(A->getDefence()) + ")");
+            Notify("Equipped " + A->getItemName() + " (" + std::to_string(A->getDefence()) + ")");
             character->armorLevel += A->getDefence();
             equippedHelmet = A;
         }
         else{
             Notify("Swapped helmet");
             unequip(equippedHelmet);
-            Notify("Equipped " + A->getName() + " (" + std::to_string(A->getDefence()) + ")");
+            Notify("Equipped " + A->getItemName() + " (" + std::to_string(A->getDefence()) + ")");
             character->armorLevel += A->getDefence();
             equippedHelmet = A;
         }}
@@ -114,22 +114,22 @@ int CharacterWeapon::attack(){
 void CharacterArmor::unequip(Item* i){
     Armor* A = dynamic_cast<Armor*>(i);
     if (A-> getType() == "Helmet"){
-        Notify("Unequipped " + equippedHelmet->getName() + " (" + std::to_string(equippedHelmet->getDefence()) + ")");
+        Notify("Unequipped " + equippedHelmet->getItemName() + " (" + std::to_string(equippedHelmet->getDefence()) + ")");
         character->armorLevel -= equippedHelmet->getDefence();
         equippedHelmet = nullptr;
     }
     if (A-> getType() == "Chestplate"){
-        Notify("Unequipped " + equippedChestpiece->getName() + " (" + std::to_string(equippedChestpiece->getDefence()) + ")");
+        Notify("Unequipped " + equippedChestpiece->getItemName() + " (" + std::to_string(equippedChestpiece->getDefence()) + ")");
         character->armorLevel -= equippedChestpiece->getDefence();
         equippedChestpiece = nullptr;
     }
     if (A-> getType() == "Pants"){
-        Notify("Unequipped " + equippedPants->getName() + " (" + std::to_string(equippedPants->getDefence()) + ")");
+        Notify("Unequipped " + equippedPants->getItemName() + " (" + std::to_string(equippedPants->getDefence()) + ")");
         character->armorLevel -= equippedPants->getDefence();
         equippedPants = nullptr;
     }
     if (A-> getType() == "Boots"){
-        Notify("Unequipped " + equippedBoots->getName() + " (" + std::to_string(equippedBoots->getDefence()) + ")");
+        Notify("Unequipped " + equippedBoots->getItemName() + " (" + std::to_string(equippedBoots->getDefence()) + ")");
         character->armorLevel -= equippedBoots->getDefence();
         equippedBoots = nullptr;
     }
@@ -157,9 +157,9 @@ void Character::kill(){
 
 
 void Character::pickup(Item* i){
-    if (inventory.size() >= inventorySize) Notify("Cannot pickup " + i->getName() + " inventory full.");
+    if (inventory.size() >= inventorySize) Notify("Cannot pickup " + i->getItemName() + " inventory full.");
     else{
-        Notify("Picked up " + i->getName() + "!");
+        Notify("Picked up " + i->getItemName() + "!");
         inventory.push_back(i);
         i->pickup();
         //inventorySize++;
@@ -190,13 +190,13 @@ void Character::equip(Item* i){
     Weapon* W = dynamic_cast<Weapon*>(i);
     if (W) {
          if (equippedWeapon == nullptr){
-            Notify("Equipped " + W->getName() + " (" + std::to_string(W->getDamage()) + ")");
+            Notify("Equipped " + W->getItemName() + " (" + std::to_string(W->getDamage()) + ")");
             equippedWeapon = W;
             W->equip();
             return;
          }
          else{
-            Notify("Unequipped " + equippedWeapon->getName() + " (" + std::to_string(equippedWeapon->getDamage()) + ") Equipped " + W->getName() + " (" + std::to_string(W->getDamage()) + ")");
+            Notify("Unequipped " + equippedWeapon->getItemName() + " (" + std::to_string(equippedWeapon->getDamage()) + ") Equipped " + W->getItemName() + " (" + std::to_string(W->getDamage()) + ")");
             equippedWeapon->unEquip();
             equippedWeapon = W;
             W->equip();
@@ -207,14 +207,14 @@ void Character::equip(Item* i){
     if (A){
         if (A-> getType() == "Chestplate"){
             if (equippedChestplate == nullptr){
-                Notify("Equipped " + A->getName() + " (" + std::to_string(A->getDefence()) + ")");
+                Notify("Equipped " + A->getItemName() + " (" + std::to_string(A->getDefence()) + ")");
                 equippedChestplate = A;
                 A->equip();
                 armorLevel += A->getDefence();
                 return;
             }
             else{
-                Notify("Unequipped " + equippedChestplate->getName() + " (" + std::to_string(equippedChestplate->getDefence()) + ") Equipped " + A->getName() + " (" + std::to_string(A->getDefence()) + ")");
+                Notify("Unequipped " + equippedChestplate->getItemName() + " (" + std::to_string(equippedChestplate->getDefence()) + ") Equipped " + A->getItemName() + " (" + std::to_string(A->getDefence()) + ")");
                 armorLevel -= equippedChestplate->getDefence();
 		armorLevel += A->getDefence();
                 equippedChestplate->unEquip();
@@ -226,14 +226,14 @@ void Character::equip(Item* i){
         }
         if (A-> getType() == "Helmet"){
             if (equippedHelmet == nullptr){
-                Notify("Equipped " + A->getName() + " (" + std::to_string(A->getDefence()) + ")");
+                Notify("Equipped " + A->getItemName() + " (" + std::to_string(A->getDefence()) + ")");
                 equippedHelmet = A;
 		armorLevel += A->getDefence();
                 A->equip();
                 return;
             }
             else{
-                Notify("Unequipped " + equippedHelmet->getName() + " (" + std::to_string(equippedHelmet->getDefence()) + ") Equipped " + A->getName() + " (" + std::to_string(A->getDefence()) + ")");
+                Notify("Unequipped " + equippedHelmet->getItemName() + " (" + std::to_string(equippedHelmet->getDefence()) + ") Equipped " + A->getItemName() + " (" + std::to_string(A->getDefence()) + ")");
                 armorLevel -= equippedHelmet->getDefence();
 		equippedHelmet->unEquip();
 		armorLevel += A->getDefence();
@@ -244,14 +244,14 @@ void Character::equip(Item* i){
         }
         if (A-> getType() == "Pants"){
             if (equippedPants == nullptr){
-                Notify("Equipped " + A->getName() + " (" + std::to_string(A->getDefence()) + ")");
+                Notify("Equipped " + A->getItemName() + " (" + std::to_string(A->getDefence()) + ")");
                 equippedPants = A;
 		armorLevel += A->getDefence();
                 A->equip();
                 return;
             }
             else{
-                Notify("Unequipped " + equippedPants->getName() + " (" + std::to_string(equippedPants->getDefence()) + ") Equipped " + A->getName() + " (" + std::to_string(A->getDefence()) + ")");
+                Notify("Unequipped " + equippedPants->getItemName() + " (" + std::to_string(equippedPants->getDefence()) + ") Equipped " + A->getItemName() + " (" + std::to_string(A->getDefence()) + ")");
                 armorLevel -= equippedPants->getDefence();
 		equippedPants->unEquip();
 		armorLevel += A->getDefence();
@@ -262,14 +262,14 @@ void Character::equip(Item* i){
         }
         if (A-> getType() == "Boots"){
             if (equippedBoots == nullptr){
-                Notify("Equipped " + A->getName() + " (" + std::to_string(A->getDefence()) + ")");
+                Notify("Equipped " + A->getItemName() + " (" + std::to_string(A->getDefence()) + ")");
                 equippedBoots = A;
 		armorLevel += A->getDefence();
                 A->equip();
                 return;
             }
             else{
-                Notify("Unequipped " + equippedBoots->getName() + " (" + std::to_string(equippedBoots->getDefence()) + ") Equipped " + A->getName() + " (" + std::to_string(A->getDefence()) + ")");
+                Notify("Unequipped " + equippedBoots->getItemName() + " (" + std::to_string(equippedBoots->getDefence()) + ") Equipped " + A->getItemName() + " (" + std::to_string(A->getDefence()) + ")");
                 armorLevel -= equippedBoots->getDefence();
 		equippedBoots->unEquip();
 		armorLevel += A->getDefence();
@@ -300,13 +300,13 @@ void Character::equip(int pos){
     Weapon* W = dynamic_cast<Weapon*>(i);
     if (W) {
          if (equippedWeapon == nullptr){
-            Notify("Equipped " + W->getName() + " (" + std::to_string(W->getDamage()) + ")");
+            Notify("Equipped " + W->getItemName() + " (" + std::to_string(W->getDamage()) + ")");
             equippedWeapon = W;
             W->equip();
             return;
          }
          else{
-            Notify("Unequipped " + equippedWeapon->getName() + " (" + std::to_string(equippedWeapon->getDamage()) + ") Equipped " + W->getName() + " (" + std::to_string(W->getDamage()) + ")");
+            Notify("Unequipped " + equippedWeapon->getItemName() + " (" + std::to_string(equippedWeapon->getDamage()) + ") Equipped " + W->getItemName() + " (" + std::to_string(W->getDamage()) + ")");
             equippedWeapon->unEquip();
             equippedWeapon = W;
             W->equip();
@@ -317,14 +317,14 @@ void Character::equip(int pos){
     if (A){
         if (A-> getType() == "Chestplate"){
             if (equippedChestplate == nullptr){
-                Notify("Equipped " + A->getName() + " (" + std::to_string(A->getDefence()) + ")");
+                Notify("Equipped " + A->getItemName() + " (" + std::to_string(A->getDefence()) + ")");
                 equippedChestplate = A;
 		armorLevel += A->getDefence();
                 A->equip();
                 return;
             }
             else{
-                Notify("Unequipped " + equippedChestplate->getName() + " (" + std::to_string(equippedChestplate->getDefence()) + ") Equipped " + A->getName() + " (" + std::to_string(A->getDefence()) + ")");
+                Notify("Unequipped " + equippedChestplate->getItemName() + " (" + std::to_string(equippedChestplate->getDefence()) + ") Equipped " + A->getItemName() + " (" + std::to_string(A->getDefence()) + ")");
                 armorLevel -= equippedChestplate->getDefence();
 		equippedChestplate->unEquip();
 		armorLevel += A->getDefence();
@@ -335,14 +335,14 @@ void Character::equip(int pos){
         }
         if (A-> getType() == "Helmet"){
             if (equippedHelmet == nullptr){
-                Notify("Equipped " + A->getName() + " (" + std::to_string(A->getDefence()) + ")");
+                Notify("Equipped " + A->getItemName() + " (" + std::to_string(A->getDefence()) + ")");
                 equippedHelmet = A;
 		armorLevel += A->getDefence();
                 A->equip();
                 return;
             }
             else{
-                Notify("Unequipped " + equippedHelmet->getName() + " (" + std::to_string(equippedHelmet->getDefence()) + ") Equipped " + A->getName() + " (" + std::to_string(A->getDefence()) + ")");
+                Notify("Unequipped " + equippedHelmet->getItemName() + " (" + std::to_string(equippedHelmet->getDefence()) + ") Equipped " + A->getItemName() + " (" + std::to_string(A->getDefence()) + ")");
                 armorLevel -= equippedHelmet->getDefence();
 		equippedHelmet->unEquip();
                 equippedHelmet = A;
@@ -353,14 +353,14 @@ void Character::equip(int pos){
         }
         if (A-> getType() == "Pants"){
             if (equippedPants == nullptr){
-                Notify("Equipped " + A->getName() + " (" + std::to_string(A->getDefence()) + ")");
+                Notify("Equipped " + A->getItemName() + " (" + std::to_string(A->getDefence()) + ")");
                 equippedPants = A;
 		armorLevel += A->getDefence();
                 A->equip();
                 return;
             }
             else{
-                Notify("Unequipped " + equippedPants->getName() + " (" + std::to_string(equippedPants->getDefence()) + ") Equipped " + A->getName() + " (" + std::to_string(A->getDefence()) + ")");
+                Notify("Unequipped " + equippedPants->getItemName() + " (" + std::to_string(equippedPants->getDefence()) + ") Equipped " + A->getItemName() + " (" + std::to_string(A->getDefence()) + ")");
                 armorLevel -= equippedPants->getDefence();
 		equippedPants->unEquip();
                 equippedPants = A;
@@ -371,14 +371,14 @@ void Character::equip(int pos){
         }
         if (A-> getType() == "Boots"){
             if (equippedBoots == nullptr){
-                Notify("Equipped " + A->getName() + " (" + std::to_string(A->getDefence()) + ")");
+                Notify("Equipped " + A->getItemName() + " (" + std::to_string(A->getDefence()) + ")");
                 equippedBoots = A;
 		armorLevel += A->getDefence();
                 A->equip();
                 return;
             }
             else{
-                Notify("Unequipped " + equippedBoots->getName() + " (" + std::to_string(equippedBoots->getDefence()) + ") Equipped " + A->getName() + " (" + std::to_string(A->getDefence()) + ")");
+                Notify("Unequipped " + equippedBoots->getItemName() + " (" + std::to_string(equippedBoots->getDefence()) + ") Equipped " + A->getItemName() + " (" + std::to_string(A->getDefence()) + ")");
                 armorLevel -= equippedBoots->getDefence();
 		equippedBoots->unEquip();
                 equippedBoots = A;
