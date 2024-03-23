@@ -6,14 +6,14 @@
  * getters for character attributes and equipment, and methods for increasing character abilities.
  * The class represents a character in a DND game, encapsulating attributes such as
  * strength, dexterity, intelligence, as well as character equipment like armor and weapons.
- * 
+ *
  * Design Description:
  * - The Character class encapsulates a character's attributes, equipment, and actions like equipping gear and stat increases.
  * - Attributes affect combat outcomes, simulated through methods calculating bonuses and hit points.
- * 
+ *
  * Libraries Used:
  * - <string> for representing character names and equipment. Chosen for comprehensive support for string operations.
- * 
+ *
  * @author Eric Liu
  * @date 2024-02-25
  */
@@ -25,10 +25,11 @@
 #include "Strategy.h"
 using std::string;
 
-class Character : public Subject{
+class Character : public Subject
+{
 public:
-    void Attach(Observer* observer);
-    void Detach(Observer* observer);
+    void Attach(Observer *observer);
+    void Detach(Observer *observer);
     void Notify(string attribute, int newValue, int oldValue);
     void Notify();
 
@@ -71,7 +72,7 @@ public:
     string getRing() const;
     string getHelmet() const;
     string getName() const;
-    //increase (buff and debuff)
+    // increase (buff and debuff)
     void increaseLevel(int levelUp);
     void increaseStrength(int strengthUp);
     void increaseDexterity(int dexterityUp);
@@ -80,15 +81,30 @@ public:
     void increaseWisdom(int wisdomUp);
     void increaseCharisma(int charismaUp);
     void setLevel(int newLevel);
-    void setHP(int newHP){
-        // if(newHP<hitPoints){
-        //     if(this.getStrategyName() == "FriendlyStrategy"){
-        //         switchToAggressive();
-        //     }
-        // }
+    void Notify();
+    void setHP(int newHP)
+    
+    {
         hitPoints = newHP;
-	Notify();
-        
+}
+    void takeDmg(int hit)
+    {
+        if (hit < 1)
+        {
+            cout << "The hit was inneffective" << endl;
+        }
+        else
+        {
+            if (this->strategy != nullptr)
+            {
+                if (strategy->getStrategyName() == "FriendlyStrategy")
+                {
+                    switchToAggressive();
+                }
+            }
+        }
+        this->setHP(this->getHitPoints() - hit);
+
     }
     void setStrength(int newStrength);
     void setDexterity(int newDexterity);
@@ -98,44 +114,48 @@ public:
     void setCharisma(int newCharisma);
     void setName(string name);
 
-//*************************
-//FOR STRATEGY
-    Character(Strategy *initStrategy){
+    //*************************
+    // FOR STRATEGY
+    Character(Strategy *initStrategy)
+    {
         this->strategy = initStrategy;
     }
 
-    void setStrategy(Strategy *setStrategy){
+    void setStrategy(Strategy *setStrategy)
+    {
         strategy = setStrategy;
     }
 
-    void performMoveAction(){
+    void performMoveAction()
+    {
         strategy->move();
     }
-    void performAttackAction(){
+    void performAttackAction()
+    {
         strategy->attack();
     }
-    void performFreeAction(){
+    void performFreeAction()
+    {
         strategy->freeAction();
     }
-    void switchToAggressive() {
+    void switchToAggressive()
+    {
         setStrategy(new AggressorStrategy());
     }
 
-
-    
-//FOR STRATEGY^
-//*************************
-
+    // FOR STRATEGY^
+    //*************************
 
 private: // private!!!
     Strategy *strategy;
 
-    vector<Observer*> observers;
-    int level; // assigned at the beginning
-    int hitPoints; // based on constitution modifier and level
-    int armorClass; // based on dexterity modifier
+    vector<Observer *> observers;
+    int level;       // assigned at the beginning
+    int hitPoints;   // based on constitution modifier and level
+    int armorClass;  // based on dexterity modifier
     int attackBonus; // based level and strength/dexterity modifiers
-    int damageBonus; //based on strength modifier
+    int damageBonus; // based on strength modifier
+    int attackPerRound;
     // ability score
     int strength;
     int dexterity;
@@ -159,13 +179,14 @@ private: // private!!!
     string helmet;
     string name;
 
-    int generateAbilityScores(); // generated randomly
+    int generateAbilityScores();        // generated randomly
     int calculateModifiers(int points); // default to 1
-    int calculateHitPoints(); // based on constitution modifier and level
-    int calculateArmorClass(); // based on dexterity modifier
-    int calculateAttackBonus(); // based level and strength modifiers and dexterity modifiers
-    int calculateDamageBonus(); // based on strength modifier
+    int calculateHitPoints();           // based on constitution modifier and level
+    int calculateArmorClass();          // based on dexterity modifier
+    int calculateAttackBonus();         // based level and strength modifiers and dexterity modifiers
+    int calculateDamageBonus();         // based on strength modifier
     // setters
+    int calculateAttackPerRound();
 
     // Recalculate attributes that depend on level or modifiers
     void recalculateAttributes();

@@ -1,6 +1,5 @@
 #pragma once
 #include <iostream>
-#include <cmath>
 
 using namespace std;
 
@@ -11,9 +10,7 @@ class Strategy {
         virtual void move() = 0;
         virtual void attack() = 0;
         virtual void freeAction() = 0;
-        string getStrategyName() const{
-            return "Null Strategy";
-        };
+        virtual string getStrategyName() const;
         
     protected:
         Character* character;
@@ -178,7 +175,6 @@ class FriendlyStrategy : public Strategy {
         }
         void attack() override{
             cout<<"Friendly Does not Attack"<<endl;
-
         }
         void freeAction() override{
             cout<<"Friendly Has No Free Action"<<endl;
