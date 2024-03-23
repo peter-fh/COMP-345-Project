@@ -81,10 +81,12 @@ public:
     void increaseWisdom(int wisdomUp);
     void increaseCharisma(int charismaUp);
     void setLevel(int newLevel);
+    void Notify();
     void setHP(int newHP)
+    
     {
         hitPoints = newHP;
-    }
+}
     void takeDmg(int hit)
     {
         if (hit < 1)
@@ -102,6 +104,7 @@ public:
             }
         }
         this->setHP(this->getHitPoints() - hit);
+
     }
     void setStrength(int newStrength);
     void setDexterity(int newDexterity);
