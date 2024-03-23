@@ -1,4 +1,28 @@
-Character changed at Fri Mar 22 22:08:37 2024
+Map changed at Fri Mar 22 22:29:38 2024
+
+□ □ □ □ □ 
+□ □ □ □ □ 
+□ □ □ □ □ 
+□ □ □ □ □ 
+□ □ □ □ ◲ 
+
+Map changed at Fri Mar 22 22:29:38 2024
+
+□ □ □ □ □ 
+□ □ □ □ □ 
+□ □ □ □ □ 
+□ □ □ □ □ 
+◰ □ □ □ ◲ 
+
+Map changed at Fri Mar 22 22:29:38 2024
+
+□ □ □ □ ◲ 
+□ □ □ □ □ 
+□ □ □ □ □ 
+□ □ □ □ □ 
+◰ □ □ □ □ 
+
+Character changed at Fri Mar 22 22:29:38 2024
 
 Character: 
 Level: 1
@@ -21,7 +45,7 @@ Equipment:
   Ring: None
   Helmet: None
 
-Character changed at Fri Mar 22 22:08:37 2024
+Character changed at Fri Mar 22 22:29:38 2024
 
 Character: 
 Level: 2
@@ -44,30 +68,7 @@ Equipment:
   Ring: None
   Helmet: None
 
-Character changed at Fri Mar 22 22:08:37 2024
-
-Character: 
-Level: 2
-Hit Points: 15
-Armor Class: 1
-Attack Bonus: 4
-Damage Bonus: 1
-Ability Scores:
-  Strength: 13 (Mod: 1)
-  Dexterity: 12 (Mod: 1)
-  Constitution: 10 (Mod: 0)
-  Intelligence: 10 (Mod: 0)
-  Wisdom: 11 (Mod: 0)
-  Charisma: 14 (Mod: 2)
-Equipment:
-  Armor: None
-  Shield: None
-  Weapon: None
-  Boots: None
-  Ring: None
-  Helmet: None
-
-Character changed at Fri Mar 22 22:08:37 2024
+Character changed at Fri Mar 22 22:29:38 2024
 
 Character: John
 Level: 2
@@ -90,9 +91,9 @@ Equipment:
   Ring: None
   Helmet: None
 
-Dice changed at Fri Mar 22 22:08:37 2024
+Dice changed at Fri Mar 22 22:29:38 2024
 
 6sided dice rolled 0
-Dice changed at Fri Mar 22 22:08:37 2024
+Dice changed at Fri Mar 22 22:29:38 2024
 
 6sided dice rolled 4

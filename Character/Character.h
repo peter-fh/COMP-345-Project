@@ -81,7 +81,6 @@ public:
     void increaseWisdom(int wisdomUp);
     void increaseCharisma(int charismaUp);
     void setLevel(int newLevel);
-    void Notify();
     void setHP(int newHP)
     
     {
