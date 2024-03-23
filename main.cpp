@@ -50,6 +50,22 @@ int main(){
     character->setHP(15);
     character->setName("John");
 
+    CharUI playerUI(&character);
+
+    Weapon w1 = Weapon(10, "Sword");
+    Weapon w2 = Weapon(15, "Hammer");
+    Armor Chestpiece = Armor("Iron Chestplate", "Chestplate", 20);
+
+    character.pickup(&w1);
+    character.pickup(&w2);
+    character.pickup(&Chestpiece);
+
+    character.equip(0);
+    character.equip(1);
+    character.equip(2);
+    character.equip(0);
+
+
     
     Dice* dice;
     dice = new Dice(6);
