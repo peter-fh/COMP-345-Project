@@ -241,7 +241,7 @@ public:
         equippedPants(nullptr), equippedBoots(nullptr) {}
 
     void equip(Item* i);
-    void unequip() override;
+    void unequip(Item* I) override;
     void setPants();
     void setChestplate();
     void setPants();
@@ -257,8 +257,7 @@ public:
     CharacterWeapon(Character* character) : CharacterDecorator(character), equippedWeapon(nullptr) {}
 
     void equip(Item* i);
-    void setWeapon();
-    void unequip() override;
+    void unequip(Item* I) override;
     int attack() override;
 };
 
