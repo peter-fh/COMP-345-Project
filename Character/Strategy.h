@@ -18,7 +18,7 @@ class Strategy {
 
 class HumanPlayerStrategy : public Strategy {
     public:
-        string getStrategyName() const {
+        string getStrategyName() const override {
             return "HumanPlayerStrategy";
         }
 
@@ -55,7 +55,7 @@ class HumanPlayerStrategy : public Strategy {
 
 class AggressorStrategy : public Strategy {
     public:
-        string getStrategyName() const {
+        string getStrategyName() const override {
             return "AggressorStrategy";
         }
 
@@ -130,7 +130,7 @@ class AggressorStrategy : public Strategy {
 
 class FriendlyStrategy : public Strategy {
     public:
-        string getStrategyName() const {
+        string getStrategyName() const override {
             return "FriendlyStrategy";
         }
 

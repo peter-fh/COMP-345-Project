@@ -34,27 +34,18 @@ int main(){
   */   
 
     Logger logger;
+    Map* map;
+    map = new Map(5, 5);
+    logger.attachMap(map);
+    map->Attach(&logger);
+    map->setStart(0, 4);
+    map->setEnd(4, 0);
 
 
-    // Map* map;
-    // map = new Map(5, 5);
     Character* character;
     character = new Character(1);
-    //Dice dice;
-    //Map* mapPtr = &map;
-
-    // logger.attachMap(map);
-    // map->Attach(&logger);
     logger.attachCharacter(character);
-
     character->Attach(&logger);
-    //dice.Attach(&logger);
-
-    //logger.attachDice(&dice);
-    
-    // map->setStart(0, 4);
-    // map->setEnd(4, 0);
-
     character->increaseLevel(1);
     character->setHP(15);
     character->setName("John");
@@ -62,10 +53,8 @@ int main(){
     
     Dice* dice;
     dice = new Dice(6);
-
     logger.attachDice(dice);
     dice->Attach(&logger);
-
     dice->Roll();
 
 }

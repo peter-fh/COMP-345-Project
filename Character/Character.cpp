@@ -390,7 +390,7 @@ int Character::calculateAttackPerRound()
 
     if (level % 5 == 0)
     {
-        attackPerRound + 1;
+        attackPerRound ++;
     }
 
     return attackPerRound;
