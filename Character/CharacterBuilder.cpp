@@ -108,46 +108,4 @@ public:
         return character;
     }
 };
-
-int main()
-{
-    // Create a Bully fighter
-    CharacterBuilder *bullyBuilder = new BullyCharacterBuilder(1);
-    bullyBuilder->buildAbilityScores();
-    Character *bully = bullyBuilder->getCharacter();
-
-    // Create a Nimble fighter
-    CharacterBuilder *nimbleBuilder = new NimbleCharacterBuilder(1);
-    nimbleBuilder->buildAbilityScores();
-    Character *nimble = nimbleBuilder->getCharacter();
-
-    // Create a Tank fighter
-    CharacterBuilder *tankBuilder = new TankCharacterBuilder(1);
-    tankBuilder->buildAbilityScores();
-    Character *tank = tankBuilder->getCharacter();
-
-    // Print details of each character
-    std::cout << "Bully Fighter:\n";
-    bully->printCharacter();
-    std::cout << "\n\n";
-
-    std::cout << "Nimble Fighter:\n";
-    nimble->printCharacter();
-    std::cout << "\n\n";
-
-    std::cout << "Tank Fighter:\n";
-    tank->printCharacter();
-    std::cout << "\n\n";
-
-    // Clean up memory
-    delete bullyBuilder;
-    delete bully;
-    delete nimbleBuilder;
-    delete nimble;
-    delete tankBuilder;
-    delete tank;
-
-    return 0;
-}
-
 #endif // CHARACTER_BUILDER_H

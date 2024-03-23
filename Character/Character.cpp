@@ -31,9 +31,6 @@ void Character::takeDamage(int damage){
     }
 }
 
-void Character::setName(std::string newName){
-    name = newName;
-}
 std::string Character::getName(){return name;}
 
 void Character::kill(){

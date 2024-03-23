@@ -27,6 +27,7 @@
 #include "Consumable.h"
 #include "Weapon.h"
 #include "Armor.h"
+#include "Corpse.h"
 using std::string;
 
 class Character : public Subject
@@ -138,7 +139,6 @@ public:
     void setIntelligence(int newIntelligence);
     void setWisdom(int newWisdom);
     void setCharisma(int newCharisma);
-    void setName(string name);
 
     //*************************
     // FOR STRATEGY
@@ -203,7 +203,6 @@ private: // private!!!
     string boots;
     string ring;
     string helmet;
-    string name;
 
     int generateAbilityScores();        // generated randomly
     int calculateModifiers(int points); // default to 1

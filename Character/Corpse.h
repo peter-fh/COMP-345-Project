@@ -1,7 +1,12 @@
+
+#pragma once
 #include <string>
 #include <vector>
 #include "Item.h"
-#include "Character.h"
+
+
+class Character;
+
 
 class Corpse{
     public:
