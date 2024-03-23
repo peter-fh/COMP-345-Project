@@ -23,6 +23,7 @@
 using namespace std;
 
 
+Character::Character(){}
 
 void CharacterWeapon::equip(Item* i){
     Weapon* W = dynamic_cast<Weapon*>(i);
