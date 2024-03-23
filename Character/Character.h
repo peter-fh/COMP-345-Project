@@ -34,7 +34,7 @@ class Character : public Subject
 {
 public:
 
-
+    Character();
     std::vector<Item*> inventory;
     std::string name;
     void setName(std::string name);
