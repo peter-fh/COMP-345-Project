@@ -7,7 +7,8 @@ Character UI/observer, attaches to character, displays stats, notifies of change
 CharUI::CharUI(Character* c) : playerChar(c){
             if (playerChar) {
                   playerChar->Attach(this);
-                  nameCharacter();
+                        
+                  //nameCharacter();
                   regDisplay();
                   statChecker();
             }
