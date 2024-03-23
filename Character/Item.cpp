@@ -2,7 +2,7 @@
 
 
 
-std::string Item::getName(){return itemName;}
+std::string Item::getItemName(){return itemName;}
 void Item::drop(){held = false;}
 void Item::pickup(){held = true;}
 
