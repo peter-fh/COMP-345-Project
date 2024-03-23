@@ -217,7 +217,7 @@ private: // private!!!
     // Recalculate attributes that depend on level or modifiers
     void recalculateAttributes();
 };
-/*
+
 class CharacterDecorator : public Character {
 protected:
     Character* character;
@@ -262,4 +262,4 @@ public:
     void unequip() override;
     int attack() override;
 };
-*/
+
