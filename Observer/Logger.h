@@ -1,3 +1,4 @@
+#pragma once
 #include <fstream>
 #include "Observer.h"
 #include "../Dice/Dice.h"
@@ -23,7 +24,11 @@ public:
     
     Logger();
     Logger(std::string file_name);
+    ~Logger();
     void Update(Subject* subject);
+    void attachMap(Map* map);
+    void attachCharacter(Character* character);
+    void attachDice(Dice* dice);
     void Update();
     void logMap();
     void logCharacter();
@@ -35,5 +40,5 @@ private:
     Map* map;
     Character* character;
     Dice* dice;
-    ofstream logFile;
+    string logFile;
 };

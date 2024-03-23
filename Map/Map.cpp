@@ -89,6 +89,7 @@ string Map::getName(){
 
 void Map::setName(string inp_name){
     name = inp_name;
+    Notify();
 }
 
 
@@ -182,6 +183,7 @@ bool Map::setStart(int x, int y){
     mapArray[start.x][start.y] = Cell(start.x, start.y, EMPTY);
     start = Cell(x, y, START);
     mapArray[x][y] = start;
+    Notify();
     return returnBool;
 }
 
@@ -199,6 +201,7 @@ bool Map::setEnd(int x, int y){
     mapArray[end.x][end.y] = Cell(end.x, end.y, EMPTY);
     end = Cell(x, y, END);
     mapArray[x][y] = end;
+    Notify();
     return returnBool;
 }
 
