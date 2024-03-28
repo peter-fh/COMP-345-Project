@@ -6,7 +6,8 @@
 #include "Character/CharacterBuilder.cpp"
 
 
-int main(){
+
+void testCharacterStrategy(){
 /*     //testing Character Strategy
     HumanPlayerStrategy hs;
     AggressorStrategy as;
@@ -31,9 +32,11 @@ int main(){
     char1.performMoveAction();
     char1.performAttackAction();
     char1.performFreeAction();
-  */   
+ */
+}
 
 
+void testCharacterBuilder(){
     // Create a Bully fighter
     BullyCharacterBuilder *bullyBuilder = new BullyCharacterBuilder(1);
     bullyBuilder->buildAbilityScores();
@@ -71,6 +74,10 @@ int main(){
     delete tank;
 
 
+}
+
+
+void testLogger(){
     Logger logger;
     Map* map;
     map = new Map(5, 5);
@@ -93,25 +100,39 @@ int main(){
     logger.attachDice(dice);
     dice->Attach(&logger);
     dice->Roll();
+ 
+}
 
+
+void testInventory(){
     Character character2(1);
-
+    
     CharUI playerUI(&character2);
-
+   
     Weapon w1 = Weapon(10, "Sword");
     Weapon w2 = Weapon(15, "Hammer");
     Armor Chestpiece = Armor("Iron Chestplate", "Chestplate", 20);
-
+    
     character2.pickup(&w1);
     character2.pickup(&w2);
     character2.pickup(&Chestpiece);
-
+    
     character2.equip(0);
     character2.equip(1);
     character2.equip(2);
     character2.equip(0);
+  
+ 
+}
 
 
+int main(){
+    testCharacterBuilder();
+    // testCharacterStrategy(); // Linker failure
+    // testInventory(); // Segmentation fault
+    testLogger();
+
+ 
     
 
 }

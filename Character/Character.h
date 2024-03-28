@@ -22,7 +22,7 @@
 #include <vector>
 #include <cstring>
 #include "../Observer/Observer.h"
-#include "Strategy.h"
+#include "Strategy.cpp"
 #include "Item.h"
 #include "Consumable.h"
 #include "Weapon.h"
@@ -224,7 +224,7 @@ protected:
 public:
     CharacterDecorator(Character* character) : character(character) {}
 
-    virtual void equip(Item* i);
+    virtual void equip(Item* i) = 0;
     virtual void unequip() = 0;
 };
 
@@ -244,7 +244,6 @@ public:
     void unequip(Item* I);
     void setPants();
     void setChestplate();
-    void setPants();
     void setBoots();
     void takeDamage(int dmg) override;
 };

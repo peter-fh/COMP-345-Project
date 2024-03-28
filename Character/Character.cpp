@@ -151,7 +151,7 @@ std::string Character::getName(){return name;}
 void Character::kill(){
     Notify("Your character has taken too much damage and perished");
     alive = false;
-    Corpse characterCorpse(this);
+    //Corpse characterCorpse(this);
     //Probably remove observers here
 }
 
@@ -433,6 +433,11 @@ void Character::Notify(string attribute, int newValue, int oldValue)
     {
         observer->Update(attribute, newValue, oldValue);
     }
+}
+
+
+void Character::Notify(string message){
+
 }
 
 

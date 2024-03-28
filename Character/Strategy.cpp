@@ -1,8 +1,8 @@
 #pragma once
 #include <iostream>
 
-using namespace std;
 
+using namespace std;
 class Character;
 class Strategy {
     public:
