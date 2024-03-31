@@ -175,7 +175,7 @@ public:
 private: // private!!!
     Strategy *strategy;
 
-    vector<Observer *> observers;
+    std::vector<CharUI*> observers;
     int level;       // assigned at the beginning
     int hitPoints;   // based on constitution modifier and level
     int armorClass;  // based on dexterity modifier
