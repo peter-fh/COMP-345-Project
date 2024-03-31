@@ -24,6 +24,7 @@ using namespace std;
 
 
 Character::Character(){}
+std::vector<CharUI*> observers;
 
 void Character::takeDamage(int damage){
     currHP -= damage;
