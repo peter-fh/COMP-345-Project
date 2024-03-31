@@ -330,6 +330,13 @@ void Character::Notify(){
 	observer->Update(this);
     }
 }
+void Character::Notify(std::string attribute)
+{
+    for (auto &observer : observers)
+    {
+        observer->Update(attribute);
+    }
+}
 
 void Character::Detach(Observer *observer)
 {
