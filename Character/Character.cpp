@@ -20,12 +20,12 @@
 #include "Character.h"
 #include "../Observer/Observer.h"
 
+
 using namespace std;
 
 
 Character::Character(){}
-std::vector<CharUI*> observers;
-
+std::vector<Observer*> observers;
 void Character::takeDamage(int damage){
     currHP -= damage;
     if (currHP <= 0){
@@ -40,7 +40,7 @@ std::string Character::getName(){return name;}
 void Character::kill(){
     Notify("Your character has taken too much damage and perished");
     alive = false;
-    Corpse characterCorpse(this);
+    //Corpse characterCorpse(this);
     //Probably remove observers here
 }
 
@@ -312,22 +312,15 @@ Character::Character(int setLevel)
         throw invalid_argument("Level must be positive");
     }
 }
-void Character::Attach(Observer *observer)
+void Character::Attach(Observer* observer)
 {
     observers.push_back(observer);
 }
-void Character::Notify(string attribute, int newValue, int oldValue)
+void Character::Notify(std::string attribute, int newValue, int oldValue)
 {
     for (auto &observer : observers)
     {
         observer->Update(attribute, newValue, oldValue);
-    }
-}
-
-
-void Character::Notify(){
-    for (auto& observer: observers){
-	observer->Update(this);
     }
 }
 void Character::Notify(std::string attribute)
@@ -335,6 +328,13 @@ void Character::Notify(std::string attribute)
     for (auto &observer : observers)
     {
         observer->Update(attribute);
+    }
+}
+
+
+void Character::Notify(){
+    for (auto& observer: observers){
+	observer->Update();
     }
 }
 
@@ -363,7 +363,7 @@ int Character::generateAbilityScores()
         int low = 1;
         roll[i] = rand() % (high - low) + low;
     }
-    sort(roll, roll + n);               // dropping the lowest roll
+    //sort(roll, roll + n);               // dropping the lowest roll
     return roll[1] + roll[2] + roll[3]; // summing the 3 highest rolls
 }
 int Character::calculateModifiers(int points)
@@ -412,7 +412,6 @@ int Character::calculateDamageBonus()
 
 void Character::setName(string newName){
     name = newName;
-    Notify();
 }
 
 int Character::calculateAttackPerRound()
@@ -615,35 +614,35 @@ string Character::toString()
 void Character::printCharacter()
 {
     // Print attributes
-    cout << "Level: " << getLevel() << "\n";
-    cout << "Hit Points: " << getHitPoints() << "\n";
-    cout << "Armor Class: " << getArmorClass() << "\n";
-    cout << "Attack Bonus: " << getAttackBonus() << "\n";
-    cout << "Damage Bonus: " << getDamageBonus() << "\n";
+    std::cout << "Level: " << getLevel() << "\n";
+    std::cout << "Hit Points: " << getHitPoints() << "\n";
+    std::cout << "Armor Class: " << getArmorClass() << "\n";
+    std::cout << "Attack Bonus: " << getAttackBonus() << "\n";
+    std::cout << "Damage Bonus: " << getDamageBonus() << "\n";
     // Print ability scores
-    cout << "Ability Scores:"
+    std::cout << "Ability Scores:"
          << "\n";
-    cout << "  Strength: " << getStrength() << " (Mod: " << getStrengthMod() << ")"
+    std::cout << "  Strength: " << getStrength() << " (Mod: " << getStrengthMod() << ")"
          << "\n";
-    cout << "  Dexterity: " << getDexterity() << " (Mod: " << getDexterityMod() << ")"
+    std::cout << "  Dexterity: " << getDexterity() << " (Mod: " << getDexterityMod() << ")"
          << "\n";
-    cout << "  Constitution: " << getConstitution() << " (Mod: " << getConstitutionMod() << ")"
+    std::cout << "  Constitution: " << getConstitution() << " (Mod: " << getConstitutionMod() << ")"
          << "\n";
-    cout << "  Intelligence: " << getIntelligence() << " (Mod: " << getIntelligenceMod() << ")"
+    std::cout << "  Intelligence: " << getIntelligence() << " (Mod: " << getIntelligenceMod() << ")"
          << "\n";
-    cout << "  Wisdom: " << getWisdom() << " (Mod: " << getWisdomMod() << ")"
+    std::cout << "  Wisdom: " << getWisdom() << " (Mod: " << getWisdomMod() << ")"
          << "\n";
-    cout << "  Charisma: " << getCharisma() << " (Mod: " << getCharismaMod() << ")"
+    std::cout << "  Charisma: " << getCharisma() << " (Mod: " << getCharismaMod() << ")"
          << "\n";
     // Print equipment
-    cout << "Equipment:"
+    std::cout << "Equipment:"
          << "\n";
-    cout << "  Armor: " << (getArmor().empty() ? "None" : getArmor()) << "\n";
-    cout << "  Shield: " << (getShield().empty() ? "None" : getShield()) << "\n";
-    cout << "  Weapon: " << (getWeapon().empty() ? "None" : getWeapon()) << "\n";
-    cout << "  Boots: " << (getBoots().empty() ? "None" : getBoots()) << "\n";
-    cout << "  Ring: " << (getRing().empty() ? "None" : getRing()) << "\n";
-    cout << "  Helmet: " << (getHelmet().empty() ? "None" : getHelmet()) << "\n";
+    std::cout << "  Armor: " << (getArmor().empty() ? "None" : getArmor()) << "\n";
+    std::cout << "  Shield: " << (getShield().empty() ? "None" : getShield()) << "\n";
+    std::cout << "  Weapon: " << (getWeapon().empty() ? "None" : getWeapon()) << "\n";
+    std::cout << "  Boots: " << (getBoots().empty() ? "None" : getBoots()) << "\n";
+    std::cout << "  Ring: " << (getRing().empty() ? "None" : getRing()) << "\n";
+    std::cout << "  Helmet: " << (getHelmet().empty() ? "None" : getHelmet()) << "\n";
 }
 
 // Test constructor and level initialization
@@ -659,7 +658,7 @@ void testConstructor()
     assert(testCharacter.getIntelligence() > 2);
     assert(testCharacter.getWisdom() > 2);
     assert(testCharacter.getCharisma() > 2);
-    cout << "testConstructor passed\n";
+    std::cout << "testConstructor passed\n";
 }
 
 // Test increasing level
@@ -668,7 +667,7 @@ void testIncreaseLevel()
     Character testCharacter(1);
     testCharacter.increaseLevel(1);
     assert(testCharacter.getLevel() == 2);
-    cout << "testIncreaseLevel passed\n";
+    std::cout << "testIncreaseLevel passed\n";
 }
 
 // Test strength attribute and modifier
@@ -678,7 +677,7 @@ void testStrengthAttribute()
     int initialStrength = testCharacter.getStrength();
     testCharacter.increaseStrength(5);
     assert(testCharacter.getStrength() == initialStrength + 5);
-    cout << "testStrengthAttribute passed\n";
+    std::cout << "testStrengthAttribute passed\n";
 }
 
 // Test armor equipment
@@ -687,14 +686,14 @@ void testEquipArmor()
     Character testCharacter(1);
     testCharacter.equipArmor("Chain Mail");
     assert(testCharacter.getArmor() == "Chain Mail");
-    cout << "testEquipArmor passed\n";
+    std::cout << "testEquipArmor passed\n";
 }
 
 void testPrint()
 {
     Character testCharacter(1);
     testCharacter.printCharacter();
-    cout << "testPrint passed\n";
+    std::cout << "testPrint passed\n";
 }
 
 // // Optionally, the commented main function can be used for quick testing or demonstration.
