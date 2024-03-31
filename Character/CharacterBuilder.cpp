@@ -1,7 +1,6 @@
 #ifndef CHARACTER_BUILDER_H
 #define CHARACTER_BUILDER_H
 
-#pragma once
 #include "Character.h"
 #include <iostream>
 
