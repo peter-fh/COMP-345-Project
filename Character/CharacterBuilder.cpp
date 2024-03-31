@@ -1,8 +1,8 @@
 #ifndef CHARACTER_BUILDER_H
 #define CHARACTER_BUILDER_H
 
+#pragma once
 #include "Character.h"
-#include "Character.cpp"
 #include <iostream>
 
 using namespace std;

@@ -334,7 +334,7 @@ void Character::Notify(std::string attribute)
 
 void Character::Notify(){
     for (auto& observer: observers){
-	observer->Update();
+	observer->Update(this);
     }
 }
 
