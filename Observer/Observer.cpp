@@ -5,7 +5,9 @@ Observer::~Observer(){}
 
 Observer::Observer(){}
 
-void Observer::Update(string attribute, int newValue, int oldValue){}
+void Observer::Update(std::string attribute, int newValue, int oldValue){}
+void Observer::Update() {}
+void Observer::Update(std::string attribute){}
 
 Subject::Subject(){
     _observers = new list<Observer*>;
