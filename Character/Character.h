@@ -28,12 +28,13 @@
 #include "Weapon.h"
 #include "Armor.h"
 #include "Corpse.h"
+class CharUI;
 using std::string;
 
 class Character : public Subject
 {
 public:
-
+    
     Character();
     std::vector<Item*> inventory;
     std::string name;
@@ -55,8 +56,8 @@ public:
     void Attach(Observer *observer);
     void Detach(Observer *observer);
     void Notify(string attribute, int newValue, int oldValue);
-    void Notify();
     void Notify(string message);
+    void Notify();
     virtual void takeDamage(int damage);
     virtual int attack();
     int armorLevel;
@@ -99,7 +100,6 @@ public:
     string getBoots() const;
     string getRing() const;
     string getHelmet() const;
-    string getName() const;
     // increase (buff and debuff)
     void increaseLevel(int levelUp);
     void increaseStrength(int strengthUp);
@@ -118,7 +118,7 @@ public:
     {
         if (hit < 1)
         {
-            cout << "The hit was inneffective" << endl;
+            std::cout << "The hit was inneffective" << endl;
         }
         else
         {
@@ -174,8 +174,7 @@ public:
 
 private: // private!!!
     Strategy *strategy;
-
-    std::vector<CharUI*> observers;
+    std::vector<Observer*> observers;
     int level;       // assigned at the beginning
     int hitPoints;   // based on constitution modifier and level
     int armorClass;  // based on dexterity modifier

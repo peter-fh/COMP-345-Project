@@ -2,7 +2,6 @@
 #define CHARACTER_BUILDER_H
 
 #include "Character.h"
-#include "Character.cpp"
 #include <iostream>
 
 using namespace std;
