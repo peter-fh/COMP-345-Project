@@ -1,5 +1,3 @@
-#include "Dice.h"
-#include <iostream>
 #include <string>
 #include <cstdlib>
 #include <stdexcept>
@@ -7,109 +5,34 @@ using namespace std;
 
 //Jackson Abbott
 
-Dice::Dice(){
-    sides = 6;
-}
+Dice::Dice() : Dice(6){}
+
 Dice::Dice(int diceSides){
-    if (Valid(diceSides)) sides = diceSides;
-    else sides = 6;
+    std::random_device rd;
+    gen = std::mt19937(rd());
+    distr = std::uniform_int_distribution<>(1, diceSides);
 }
-bool Dice::Valid(int d){
-    //checks to see if the dice entered was one of the valid ones. split only to test calling functions from functions
-    int valid[] = {4, 6, 8, 10, 12, 20, 100};
-    for (int i= 0; i<7; i++){
-	if(valid[i] == d){
-	    return true;
-	}
-    }
-    return false;
-}
-int Dice::Roll(int numOfRolls, int diceSize, int plus){
-    //callouts for function
-    int curr = 0;
-    int sum = 0;
-    sides = diceSize;
-    for(int i = 0; i < numOfRolls; i++){
-	    curr = rand() % sides + 1;
-	    sum = sum + curr;
-	    cout << "Roll " << (i+1) << " is " << curr << "\n";
-	}
-	
-	cout << "The sum of your rolls was: " << sum + plus;
-	roll = sum + plus;
-	return sum + plus;
-}
-int Dice::Roll(int numOfRolls, int diceSize){
-    int sum = 0;
-    int curr = 0;
-    for(int i = 0; i < numOfRolls; i++){
-	curr = rand() % sides + 1;
-	cout << "Roll " << (i+1) << " is " << curr << "\n";
-	sum = sum + curr;
-    }
-    cout << "The sum of your rolls was: " << sum;
-    roll = sum;
-    return sum;
-    }
 
 int Dice::Roll(int numOfRolls){
     int sum = 0;
     int curr = 0;
     for(int i = 0; i < numOfRolls; i++){
-	curr = rand() % sides + 1;
-	cout << "Roll " << (i+1) << " is " << curr << "\n";
-	sum = sum + curr;
+        curr = distr(gen);
+	    cout << "Roll " << (i+1) << " is " << curr << "\n";
+	    sum = sum + curr;
     }
     cout << "The sum of your rolls was: " << sum;
-    roll = sum;
     return sum;
     }
 
 int Dice::Roll(){
-
-    int value = (rand() % sides + 1);
-    cout << "Your roll was: " << value;
-    roll = value;
+    roll = distr(gen);
     Notify();
-    return value;
+    return roll;
     }
-
-bool Dice::Parse(string s){
-    //Parses string and calls function with variables
-    int n, b, plus, d = 0;
-    int dLoc = s.find('d');
-    int oB = s.find('[');
-    int cB = s.find(']');
-
-    if (dLoc == -1) return false;
-
-    string first = s.substr(0, dLoc);
-    string second;
-    string third = "";
-    if (oB != string::npos && cB!= string::npos) {
-	//verifies that all elements were in the string
-	second = s.substr(dLoc + 1, oB - dLoc - 1);
-	third = s.substr(oB + 1, cB - oB - 1);
-    } else {
-	second = s.substr(dLoc + 1);
-    }
-    try{
-	n = stoi(first);
-	b = stoi(second);
-	if (!Valid(b)){
-	    return false;
-	}
-	sides = b;
-	if (!third.empty()) {
-	    plus = stoi(third);
-    }
-    }catch(exception err){
-	return false;
-    }
-    Roll(n, b, plus);
-
-    return true;
-
+std::string Dice::toString(){
+    return "A regular d" + to_string(sides);
+}
     
 
 }
