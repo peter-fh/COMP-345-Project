@@ -4,6 +4,8 @@
 #include "Dice/Dice.h"
 #include "Observer/Logger.h"
 #include "Character/CharacterBuilder.cpp"
+#include "Character/Character.h"
+#include <iostream>
 
 
 int main(){
@@ -70,30 +72,6 @@ int main(){
     delete tankBuilder;
     delete tank;
 
-
-    Logger logger;
-    Map* map;
-    map = new Map(5, 5);
-    logger.attachMap(map);
-    map->Attach(&logger);
-    map->setStart(0, 4);
-    map->setEnd(4, 0);
-
-
-    Character* character;
-    character = new Character(1);
-    logger.attachCharacter(character);
-    character->Attach(&logger);
-    character->increaseLevel(1);
-    character->setHP(15);
-    character->setName("John");
-
-    Dice* dice;
-    dice = new Dice(6);
-    logger.attachDice(dice);
-    dice->Attach(&logger);
-    dice->Roll();
-
     Character character2(1);
 
     CharUI playerUI(&character2);
@@ -110,8 +88,4 @@ int main(){
     character2.equip(1);
     character2.equip(2);
     character2.equip(0);
-
-
-    
-
 }
