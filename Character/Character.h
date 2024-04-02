@@ -28,6 +28,7 @@
 #include "Weapon.h"
 #include "Armor.h"
 #include "Corpse.h"
+#include "../Dice/Dice.h"
 #include <iostream>
 class CharUI;
 using std::string;
@@ -39,6 +40,7 @@ public:
     Character();
     std::vector<Item*> inventory;
     std::string name;
+    void inventoryCheck();
     void setName(std::string name);
     std::string getName();
     int inventorySize;
