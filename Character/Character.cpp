@@ -25,6 +25,18 @@ using namespace std;
 Character::Character(){}
 std::vector<Observer*> observers;
 
+void Character::inventoryCheck(){
+    if (inventory.size() == 0){
+        Notify("  Empty Inventory");
+        return;
+    }
+    int index = 1;
+    for (Item* item : Character::inventory) {
+        if (item != nullptr) {
+            Notify("  " + to_string(index++) + ": " + item->getItemName());
+        }
+}}
+
 void Character::takeDamage(int damage){
     currHP -= damage;
     if (currHP <= 0){
@@ -63,13 +75,15 @@ void Character::drop(int pos){
 
 
 int Character::attack(){
-    return strength + equippedWeapon->getDamage();
-    //use a damage modifier based on dice in the future
+    Dice d20 = Dice(20);
+    float modifier = static_cast<float>(d20.Roll()) / 20.0f;
+    int damage = (modifier * (strength + equippedWeapon->getDamage()));
+    Notify("Attacked for " + std::to_string(damage) + " damage!");
+    return damage;
 }
 
 
 void Character::equip(Item* i){
-    Notify("hit");
     Consumable* C = dynamic_cast<Consumable*>(i);
     if (C) {
         currHP += C->getValue();
@@ -95,7 +109,6 @@ void Character::equip(Item* i){
     Armor* A = dynamic_cast<Armor*>(i);
     if (A){
         if (A->getType() == "Chestplate"){
-            Notify("past getType()");
             if (equippedChestplate == nullptr){
                 Notify("Equipped " + A->getItemName() + " (" + std::to_string(A->getDefence()) + ")");
                 equippedChestplate = A;
@@ -179,7 +192,6 @@ void Character::equip(Item* i){
 
 
 void Character::equip(int pos){
-    Notify("Hit");
     Item* i = inventory[pos];
     Consumable* C = dynamic_cast<Consumable*>(i);
     if (C) {
@@ -225,7 +237,6 @@ void Character::equip(int pos){
                 A->equip();
                 return;
          }
-         Notify("othersidde");
         }
         if (A->getType() == "Helmet"){
             if (equippedHelmet == nullptr){
@@ -290,6 +301,11 @@ Character::Character(int setLevel)
 {
     std::vector<Item*> inventory;
     inventorySize = 10;
+    equippedChestplate = nullptr;
+    equippedBoots = nullptr;
+    equippedPants = nullptr;
+    equippedHelmet = nullptr;
+    equippedWeapon = nullptr;
 
     if (setLevel > 0)
     {
