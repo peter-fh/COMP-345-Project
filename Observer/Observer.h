@@ -11,8 +11,8 @@ public:
     Observer();
     virtual void Update(Subject* subject) = 0;      
     virtual void Update(std::string attribute, int newValue, int oldValue);
-	virtual void Update(std::string message);
-	    virtual void Update() {}
+    virtual void Update(std::string message);
+    virtual void Update();
 };
 
 using namespace std;

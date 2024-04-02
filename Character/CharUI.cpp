@@ -36,6 +36,10 @@ void CharUI::Update(Subject* subject){
     
 }
 
+void CharUI::Update(string name){}
+
+void CharUI::Update(){}
+
 void CharUI::setName(std::string given){
             name = given;
 }

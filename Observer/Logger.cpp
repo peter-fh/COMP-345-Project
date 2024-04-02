@@ -53,7 +53,7 @@ void Logger::attachDice(Dice* new_dice){
     logDice();
 }
 
-
+void Logger::Update(){}
 void Logger::Update(Subject* subject){
     if (subject == map){
 	logMap();
