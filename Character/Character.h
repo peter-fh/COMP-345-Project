@@ -28,6 +28,8 @@
 #include "Weapon.h"
 #include "Armor.h"
 #include "Corpse.h"
+#include "../Dice/Dice.h"
+#include <iostream>
 class CharUI;
 using std::string;
 
@@ -38,6 +40,7 @@ public:
     Character();
     std::vector<Item*> inventory;
     std::string name;
+    void inventoryCheck();
     void setName(std::string name);
     std::string getName();
     int inventorySize;
@@ -58,8 +61,8 @@ public:
     void Notify(string attribute, int newValue, int oldValue);
     void Notify(string message);
     void Notify();
-    virtual void takeDamage(int damage);
-    virtual int attack();
+    void takeDamage(int damage);
+    int attack();
     int armorLevel;
 
     Character(int level); // Constructor declaration

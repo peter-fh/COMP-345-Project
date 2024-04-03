@@ -12,7 +12,7 @@ class CharacterBuilder
 public:
     virtual void buildAbilityScores() = 0;
     virtual Character *getCharacter() = 0;
-    virtual ~CharacterBuilder() {}
+    ~CharacterBuilder() {}
 
     static int generateAbilityScore()
     {
@@ -22,7 +22,7 @@ public:
         { // rolling 4d6
             roll[i] = std::rand() % (6 - 1) + 1;
         }
-        std::sort(roll, roll + n);
+        //std::sort(roll, roll + n);
         return roll[1] + roll[2] + roll[3];
     }
 };

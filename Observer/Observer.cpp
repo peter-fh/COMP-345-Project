@@ -7,6 +7,7 @@ Observer::Observer(){}
 
 void Observer::Update(string attribute, int newValue, int oldValue){}
 void Observer::Update(string message){}
+void Observer::Update() {}
 
 Subject::Subject(){
     _observers = new list<Observer*>;
