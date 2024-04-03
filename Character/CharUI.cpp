@@ -51,12 +51,12 @@ void CharUI::setName(std::string given){
 void CharUI::statChecker(){
       std::string selection, again;
       std::cout << "Check stats? (y/n): ";
-      std::std::getline(cin, selection);
+      std::getline(cin, selection);
       if (selection != "y" && selection != "Y" && selection != "n" && selection != "N"){ 
             do{
                   std::cout << "\nInvalid, please try again";
                   std::cout << "\nCheck stats? (y/n): ";
-                  std::std::getline(cin, selection);
+                  std::getline(cin, selection);
             } while (selection != "y" && selection != "Y" && selection != "n" && selection != "N");
                   }
       if (selection == "y" || selection == "Y"){
