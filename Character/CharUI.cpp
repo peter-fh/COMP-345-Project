@@ -16,6 +16,12 @@ CharUI::CharUI(Character* c) : playerChar(c){
                   std::cout << "Failed attachment, please pass a reference to a character";
       }
 }
+
+void CharUI::checkInventory(){
+      std::cout << playerChar->getName() << "'s inventory!\n";
+      playerChar->inventoryCheck();
+}
+
 CharUI::CharUI(Character* c, std::string given) : playerChar(c){
             if (playerChar) {
                         playerChar->Attach(this);
@@ -45,12 +51,12 @@ void CharUI::setName(std::string given){
 void CharUI::statChecker(){
       std::string selection, again;
       std::cout << "Check stats? (y/n): ";
-      getline(cin, selection);
+      std::std::getline(cin, selection);
       if (selection != "y" && selection != "Y" && selection != "n" && selection != "N"){ 
             do{
                   std::cout << "\nInvalid, please try again";
                   std::cout << "\nCheck stats? (y/n): ";
-                  getline(cin, selection);
+                  std::std::getline(cin, selection);
             } while (selection != "y" && selection != "Y" && selection != "n" && selection != "N");
                   }
       if (selection == "y" || selection == "Y"){
@@ -58,24 +64,24 @@ void CharUI::statChecker(){
                   selection = "";
                   again = "";
                   std::cout << "Options\n \t1 - Check Attributes\n \t2 - Check Ability Scores\n \t3 - Check Equipment";
-                  getline(cin, selection);
+                  std::getline(cin, selection);
                   if (selection != "1" && selection != "2" && selection != "3" && selection != "N"){ 
                   do{
                         std::cout << "\nInvalid, please try again";
                         std::cout << "Options\n \t1 - Check Attributes\n \t2 - Check Ability Scores\n \t3 - Check Equipment";
-                        getline(cin, selection);
+                        std::getline(cin, selection);
                   } while (selection != "1" && selection != "2" && selection != "3");
                   }
                   if (selection == "1") checkAttributes();
                   if (selection == "2") checkAbilityScores();
                   if (selection == "3") checkEquipment();
                   std::cout << "Check another? (y/n): ";
-                  getline(cin, again);
+                  std::getline(cin, again);
                   if (again != "y" && again != "Y" && again != "n" && again != "N"){ 
                         do{
                               std::cout << "\nInvalid, please try again";
                               std::cout << "\nCheck another? (y/n): ";
-                              getline(cin, again);
+                              std::getline(cin, again);
                         } while (again != "y" && again != "Y" && again != "n" && again != "N");
                   }
             }while (again == "y" || again =="Y");
@@ -84,16 +90,16 @@ void CharUI::statChecker(){
 
 void CharUI::nameCharacter() {
     std::cout << "Please enter your character's name: ";
-    getline(cin, CharUI::name);
+    std::getline(cin, CharUI::name);
     std::string selection = "n";
     do {
         std::cout << "\nYou selected \"" << name << "\", is this correct? It cannot be changed later (y/n): ";
-        getline(cin, selection);
+        std::getline(cin, selection);
         // Assuming a strip() function exists or similar logic is implemented to trim whitespace
         if (selection == "y" || selection == "Y") break;
         else if (selection == "n" || selection == "N") {
             std::cout << "\nPlease enter your character's name: ";
-            getline(cin, name);
+            std::getline(cin, name);
         }
         else {
             std::cout << "\nInvalid entry, please try again (y/n):";
