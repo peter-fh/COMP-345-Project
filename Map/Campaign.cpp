@@ -84,6 +84,10 @@ void Campaign::push_back(Map map){
 }
 
 
+int Campaign::len(){
+	return maps.size();
+}
+
 void Campaign::display_names(){
     std::cout << "Campaign Maps:\n";
     int i=0;

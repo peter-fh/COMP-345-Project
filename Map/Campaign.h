@@ -4,8 +4,6 @@
 #include <optional>
 
 class Campaign {
-    std::list<Map> maps;
-    string name;
 public:
     Campaign();
     string getName();
@@ -20,6 +18,10 @@ public:
     void push_back(Map map);
     void display_campaign();
     void display_names();
+    int len();
+private:
+    std::list<Map> maps;
+    string name;
 };
 
 
