@@ -5,9 +5,9 @@ Observer::~Observer(){}
 
 Observer::Observer(){}
 
-void Observer::Update(std::string attribute, int newValue, int oldValue){}
+void Observer::Update(string attribute, int newValue, int oldValue){}
+void Observer::Update(string message){}
 void Observer::Update() {}
-void Observer::Update(std::string attribute){}
 
 Subject::Subject(){
     _observers = new list<Observer*>;
@@ -22,6 +22,7 @@ void Subject::Detach(Observer* o){
 void Subject::Attach(Observer* o){
     _observers->push_back(o);
 }
+
 
 void Subject::Notify(){
 
