@@ -2,6 +2,8 @@
 #include <cstdlib>
 #include <stdexcept>
 using namespace std;
+#include "Dice.h"
+
 
 //Jackson Abbott
 
@@ -30,33 +32,6 @@ int Dice::Roll(){
     Notify();
     return roll;
     }
-std::string Dice::toString(){
-    return "A regular d" + to_string(sides);
-}
-    
-
-}
-void Dice::DiceInput() {
-	Dice one;
-	string parse, selection = "y";
-	do {
-		cout << "\nPlease Enter Your Roll in the Format xdy[z] \n \t - x is the amount of times you want to roll\n \t - y is the dice you want to roll\n \t - z is an optional addition to the sum of rolls \n";
-	    getline(cin, parse);
-    if (one.Parse(parse)) {
-	cout << "\nWould you like to roll again? (y/n): ";
-	getline(cin, selection);
-    } else {
-	cout << "Invalid selection, please type y if you would like to try and roll again? (y/n): ";
-	getline(cin, selection);
-    }
-
-    while (selection[0] != 'y' && selection[0] != 'Y' && selection[0] != 'n' && selection[0] != 'N') {
-	cout << "Invalid entry, would you like to roll again? (y/n): ";
-	getline(cin, selection);
-    }
-    } while (selection == "Y" || selection == "y");
-}
-
 
 string Dice::toString(){
     string output = to_string(sides) + "sided dice rolled " + to_string(roll);
