@@ -72,6 +72,9 @@ void Logger::Update(Subject* subject){
 }
 
 
+void Logger::Update(){}
+
+
 void Logger::logMap(){
     ofstream log;
     log.open(logFile.c_str(), std::ios_base::app);

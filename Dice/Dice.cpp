@@ -1,3 +1,4 @@
+#include <iostream>
 #include <string>
 #include <cstdlib>
 #include <stdexcept>
@@ -7,7 +8,11 @@ using namespace std;
 
 //Jackson Abbott
 
-Dice::Dice() : Dice(6){}
+Dice::Dice() {
+    std::random_device rd;
+    gen = std::mt19937(rd());
+    distr = std::uniform_int_distribution<>(1, 6);
+}
 
 Dice::Dice(int diceSides){
     std::random_device rd;
