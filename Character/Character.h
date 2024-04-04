@@ -23,11 +23,11 @@
 #include <cstring>
 #include "../Observer/Observer.h"
 #include "Strategy.h"
-#include "Item.h"
-#include "Consumable.h"
-#include "Weapon.h"
-#include "Armor.h"
-#include "Corpse.h"
+#include "../Item/Item.h"
+#include "../Item/Consumable.h"
+#include "../Item/Weapon.h"
+#include "../Item/Armor.h"
+#include "../Enemy/Corpse.h"
 #include "../Dice/Dice.h"
 #include <iostream>
 class CharUI;
