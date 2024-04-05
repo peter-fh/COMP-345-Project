@@ -1,3 +1,4 @@
+
 #pragma once
 #include "Item.h"
 
@@ -9,4 +10,5 @@ class Weapon : public Item{
         void equip() override;
         int getDamage();
         void unEquip();
+        std::string getItemName() override;
 };
