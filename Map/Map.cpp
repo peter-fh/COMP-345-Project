@@ -89,7 +89,7 @@ string Map::getName(){
 
 void Map::setName(string inp_name){
     name = inp_name;
-    Notify();
+    //Notify();
 }
 
 
@@ -110,7 +110,7 @@ bool Map::setCell(int x, int y, int type){
 	return false;
 
     mapArray[inp_cell.x][inp_cell.y] = inp_cell;
-    Notify();
+    //Notify();
     return true;
 
 }
@@ -122,20 +122,20 @@ bool Map::setCell(Cell inp_cell){
 	return false;
 
     mapArray[inp_cell.x][inp_cell.y] = inp_cell;
-    Notify();
+    //Notify();
     return true;
 }
 
 
-bool Map::setCell(int x, int y, int type, Character character){
+bool Map::setCell(int x, int y, int type, Character* character){
     int prev_cell_type = getCell(x, y).type;
     if (prev_cell_type == START || prev_cell_type == END)
 	return false;
 
-    Cell new_cell = Cell(x, y, type, &character);
+    Cell new_cell = Cell(x, y, type, character);
     //character.setLocation(new_cell);
     mapArray[x][y] = new_cell;
-    Notify();
+    //Notify();
     return true;
 }
 
@@ -147,6 +147,7 @@ Cell Map::getCell(int x, int y){
 string Map::toString(){
     string output = "";
     map<int, string> cell_map;
+    vector<vector<int> > reachable = fillValidateMap();
     cell_map[EMPTY] = "□";
     cell_map[WALL] = "■";
     cell_map[OCCUPIED] = "▣";
@@ -156,7 +157,12 @@ string Map::toString(){
 
     for (int y=0; y < height; y++){
 	for (int x=0; x < width; x++){
-	    output += cell_map[getCell(x, y).type] + " ";
+	    int type = getCell(x, y).type;
+	    if (reachable[x][y] || type != EMPTY){
+		output += cell_map[type] + " ";
+	    } else {
+		output += "  ";
+	    }
 	}
 	output += "\n";
     }
@@ -166,6 +172,7 @@ string Map::toString(){
 
 
 void Map::displayMap(){
+    cout << "\n";
     cout << toString();
 }
 
@@ -182,7 +189,7 @@ bool Map::setStart(int x, int y){
     mapArray[start.x][start.y] = Cell(start.x, start.y, EMPTY);
     start = Cell(x, y, START);
     mapArray[x][y] = start;
-    Notify();
+    //Notify();
     return returnBool;
 }
 
@@ -200,7 +207,7 @@ bool Map::setEnd(int x, int y){
     mapArray[end.x][end.y] = Cell(end.x, end.y, EMPTY);
     end = Cell(x, y, END);
     mapArray[x][y] = end;
-    Notify();
+    //Notify();
     return returnBool;
 }
 
@@ -239,6 +246,20 @@ bool Map::validate(){
 	return true;
 
     return false;
+}
+
+vector<vector<int> > Map::fillValidateMap(){
+    vector<vector<int> > searchMap;
+    // Fill entire map with unreached
+    for (int x = 0; x < width; x++){
+	vector<int> column (height);
+	fill(column.begin(), column.end(), UNREACHED);
+	searchMap.push_back(column);
+    }
+
+    breadthFirstSearch(&searchMap, Cell(start.x, start.y));
+
+    return searchMap;
 }
 
 
@@ -283,16 +304,38 @@ void Map::displaySearchMap(vector<vector<int> > *map){
     }
 }
 
+bool Map::addChar(Character myChar){
+    int x = myChar.getXlocation();
+    int y = myChar.getYlocation();
+    if(this->passable(x,y)){
+        this->setCell(x,y,OCCUPIED, &myChar);
+        return true;
+    }
+    return false;
+}
 
-// int main(){
-//
-//     Map map (20, 20, Cell(0, 0), Cell(19, 19));
-// 	
-//     for (int y = 0; y < map.height; y++)
-//     map.setCell(Cell(14, y), WALL);
-//
-//     map.setCell(Cell(14, 17), EMPTY);
-//     map.displayMap();
-//     cout << map.validate() << "\n";
-//     return 0;
-// }
+//main to test characters moving on the map
+int main(){
+
+    Map imamap = Map(10,10);
+    // imamap.displayMap();
+    Character nice = Character(1);
+    Character to = Character(2);
+    Character meet = Character(3);
+    Character you = Character(4);
+
+    nice.setLocation(1,4);
+    to.setLocation(5,2);
+    meet.setLocation(5,8);
+    you.setLocation(3,4);
+
+    imamap.addChar(nice);
+    imamap.addChar(to);
+    imamap.addChar(meet);
+    imamap.addChar(you);
+    imamap.displayMap();
+
+    imamap.displayMap();
+
+    return 0;
+}

@@ -4,19 +4,7 @@
 using namespace std;
 
 
-class Map : public Subject {
-    string name;
-    Cell start;
-    Cell end; 
-    bool initialized;
-    int width;
-    int height; 
-
-    vector< vector<Cell> > mapArray;
-    vector< Cell *> characterCells;
-
-    void breadthFirstSearch(vector <vector<int> > *map, Cell start_cell);
-    void displaySearchMap(vector <vector<int> > *map);
+class Map  : public Subject{
  
 public:
 
@@ -33,7 +21,7 @@ public:
     int getHeight();
 
     bool setCell(int x, int y, int type);
-    bool setCell(int x, int y, int type, Character character);
+    bool setCell(int x, int y, int type, Character* character);
     bool setCell(Cell inp_cell);
     Cell getCell(int x, int y);    
 
@@ -47,7 +35,25 @@ public:
 
     bool validate();
     string toString();
+
     void displayMap();
 
+    //moving a character on the map
+    bool addChar(Character myChar);
+
+private:
+    string name;
+    Cell start;
+    Cell end; 
+    bool initialized;
+    int width;
+    int height; 
+
+    vector< vector<Cell> > mapArray;
+    //vector< Cell *> characterCells;
+
+    void breadthFirstSearch(vector <vector<int> > *map, Cell start_cell);
+    void displaySearchMap(vector <vector<int> > *map);
+    vector<vector<int> > fillValidateMap();
 };
 

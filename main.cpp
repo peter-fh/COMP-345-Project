@@ -1,4 +1,5 @@
 #include <cassert>
+#include <iostream>
 #include "Map/MapEditorCLI.h"
 #include "Character/CharUI.h"
 #include "Dice/Dice.h"
@@ -8,6 +9,7 @@
 #include "Enemy/Enemy.h"
 #include "Enemy/Combat.h"
 #include <iostream>
+#include "Game/Game.h"
 
 
 int main(){
@@ -36,4 +38,7 @@ int main(){
     Combat(&character2, &e1);
 
     system("pause");
+    cout << "thank fucking god it compiled\n";
+    Game game;
+    game.load("test_campaign"); 
 }

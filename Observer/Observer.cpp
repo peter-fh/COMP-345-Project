@@ -13,7 +13,13 @@ Subject::Subject(){
     _observers = new list<Observer*>;
 }
 Subject::~Subject(){
-    delete _observers;
+    list<Observer *>::iterator it = _observers->begin();
+    for (;it != _observers->end(); it++){
+	delete *it;
+    } 
+
+    // WARNING: caused seg fault in Map
+    // delete _observers;
 }
 
 void Subject::Detach(Observer* o){

@@ -6,12 +6,12 @@ class CampaignLoader {
 public:
     CampaignLoader();
     ~CampaignLoader();
-    bool writeCampaign();
+    bool saveCampaign();
     bool loadCampaign();
 
 private:
-    bool writeMap(Map* map);
+    bool writeMap(Map* map, std::string directory);
     Campaign* campaign;
-    std::string directory = "Campaigns/";
+    std::string directory;
 
 };

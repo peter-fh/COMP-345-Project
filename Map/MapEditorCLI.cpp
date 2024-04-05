@@ -144,7 +144,7 @@ bool MapEditorCLI::loadMap(){
     if (map == nullptr)
 	return false;
 
-    mapEditor = MapEditor(*map);
+    mapEditor = MapEditor(map);
     return true;
 }
 
@@ -288,7 +288,7 @@ Map MapEditorCLI::mapEditorLoop(){
 		cout << "Failed to set end. Check that given point is within bounds.\n";
 	}
 	else if (userChoice == DISPLAY){
-	    mapEditor.saveMap().displayMap();
+	    mapEditor.saveMap()->displayMap();
 	}
 	else if (userChoice == EXIT){
 	    Map final_map = mapEditor.saveMap();
@@ -335,7 +335,7 @@ void MapEditorCLI::campaignEditorLoop(){
 	    cin >> userInMap;
 	    Map* userMap = campaign.get(userInMap);
 	    if (userMap != nullptr){
-		mapEditor = MapEditor(*userMap);
+		mapEditor = MapEditor(userMap);
 		campaign.replace(mapEditorLoop());
 	    }
 	    else 
