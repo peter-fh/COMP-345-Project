@@ -7,7 +7,7 @@ void testMapEditor(){
     map.setStart(0, 0);
     map.setEnd(7, 7);
 
-    MapEditor mapEditor = MapEditor(map);    
+    MapEditor mapEditor(&map);
 
     bool squareSuccess = mapEditor.drawSquare(1, 1, 8, 8, WALL);
     map.displayMap();

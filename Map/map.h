@@ -32,6 +32,8 @@ public:
 
     bool checkBounds(int x, int y);
     bool passable(int x, int y); 
+    bool isOccupied(int x, int y);
+    Cell getNearbyUnnocupied(int x, int y);
 
     bool validate();
     string toString();
@@ -40,6 +42,7 @@ public:
 
     //moving a character on the map
     bool addChar(Character myChar);
+    bool insertCharacters(std::list<Character> characters);
 
 private:
     string name;

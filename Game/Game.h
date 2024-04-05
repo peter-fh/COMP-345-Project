@@ -12,16 +12,20 @@
 class Game {
 public:
     Game();
-    bool load(string campaign_name);
+    bool loadCampaign(string campaign_name);
+    bool loadNextMap();
     bool save();
     void startGameLoop();
     void addCharacter();
 private:
-    Campaign* campaign;
-    Map* map;
+
+    int map_index;
+    Campaign campaign;
+    Map map;
     std::list<Character> characters;
     //std::list<Enemy> enemies;
     void userTurn(Character* character);
+    void initiativePhase();
     //void enemyTurn(Enemy* enemy);
     Dice d20;
 };

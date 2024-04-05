@@ -186,6 +186,7 @@ public:
     void setLocation(int newX, int newY);
 
     bool attackThere(int targetX, int targetY, Map* currentMap, int dmg); // wip
+    int initiativeRoll;
 
 private: // private!!!
     int xLocation;

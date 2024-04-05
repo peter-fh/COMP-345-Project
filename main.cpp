@@ -13,6 +13,16 @@
 
 
 int main(){
+
+    Game game;
+    game.loadCampaign("test_campaign"); 
+    game.loadNextMap();
+    game.startGameLoop();
+    
+    
+
+
+
     Character character2(12);
     character2.setName("Jeff");
 

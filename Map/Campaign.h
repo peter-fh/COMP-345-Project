@@ -23,7 +23,6 @@ public:
 
 private:
     std::list<Map> maps;
-    std::list<int> fuckoff;
     string name;
 };
 
