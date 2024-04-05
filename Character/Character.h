@@ -33,6 +33,9 @@
 class CharUI;
 using std::string;
 
+// Forward declaration
+class Map;
+
 class Character : public Subject
 {
 public:
@@ -174,10 +177,24 @@ public:
 
     // FOR STRATEGY^
     //*************************
+    //MOVING CHARACTER
+    bool moveTo(int newX, int newY, Map* currentMap);
+    int getXlocation();
+    int getYlocation();
+    void setXLocation(int newX);
+    void setYLocation(int newY);
+    void setLocation(int newX, int newY);
+
+    bool attackThere(int targetX, int targetY, Map* currentMap, int dmg); // wip
 
 private: // private!!!
+    int xLocation;
+    int yLocation;
+
     Strategy *strategy;
+
     std::vector<Observer*> observers;
+    
     int level;       // assigned at the beginning
     int hitPoints;   // based on constitution modifier and level
     int armorClass;  // based on dexterity modifier

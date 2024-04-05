@@ -2,6 +2,8 @@
 #include <iostream>
 #include <vector>
 #include "../Character/CharUI.h"
+#include "Character.h"
+
 
 
 const int EMPTY = 0;
