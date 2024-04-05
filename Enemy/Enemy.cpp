@@ -3,54 +3,53 @@
 
 
 
-Enemy::Enemy(){
-    //Random
+Enemy::Enemy() {
+    Dice coinflip = Dice(2);
     std::vector<Item*> inventory;
+
     inventory.push_back(Loot::generateWeapon());
     equippedWeapon = dynamic_cast<Weapon*>(inventory[0]);
+
+
     inventory.push_back(Loot::generateChestplate());
     equippedChestplate = dynamic_cast<Armor*>(inventory[1]);
+
     inventory.push_back(Loot::generateBoots());
     equippedBoots = dynamic_cast<Armor*>(inventory[2]);
 
-    Dice coinflip = Dice(2);
-    if (coinflip.Roll() == 2){
-        inventory.push_back(Loot::generatePants());
-        equippedBoots = dynamic_cast<Armor*>(inventory[2]);
-    }
-    else{
-        Armor b1 = Armor("Tatterred Pants", "Pants", 1);
-        inventory.push_back(&b1);
 
+    if (coinflip.Roll() == 2) {
+        inventory.push_back(Loot::generatePants());
+        equippedPants = dynamic_cast<Armor*>(inventory.back());
+    } else {
+        Armor* b1 = new Armor("Tattered Pants", "Pants", 1);
+        inventory.push_back(b1);
+        equippedPants = b1;
     }
-    if (coinflip.Roll() == 2){
+
+    if (coinflip.Roll() == 2) {
         inventory.push_back(Loot::generateHelmet());
-        equippedBoots = dynamic_cast<Armor*>(inventory[2]);
-    }
-    else{
+        equippedHelmet = dynamic_cast<Armor*>(inventory.back()); 
+    } else {
         equippedHelmet = nullptr;
     }
 
-    //ADJUST HP Here
-    Dice HPMax = Dice(5);
-    maxHP = 20 + HPMax.Roll();
+    Dice lvl = Dice(5);
+    level = lvl.Roll();
+    maxHP = 5 + level;
+    currentHP = maxHP;
 
-    Dice species = Dice(5);
-    //just giving some variety to enemy
+    Dice speciesDice = Dice(5);
     std::string races[] = {"Goblin", "Human", "Orc", "Elf", "Dwarf"};
-    name = races[species.Roll()];
+    name = races[speciesDice.Roll()];
 }
+
 
 std::string Enemy::status(){
-    return name + ": " + std::to_string(currentHP) + "/" + std::to_string(maxHP);
-}
-
-void takeDamage(){
-
+    return "\n" + name + ": " + std::to_string(currentHP) + "/" + std::to_string(maxHP);
 }
 
 Corpse Enemy::kill(){
-    alive = false;
     return Corpse(this);
 }
 void Enemy::playerFlee(){
@@ -58,14 +57,27 @@ void Enemy::playerFlee(){
 }
 
 int Enemy::Attack(float modifier){
-    int damage = (modifier * ((equippedWeapon->getDamage())/5));
-    std::cout << "\n" << name << "attacked for " + std::to_string(damage) + " damage!";
+    int damage = (modifier * ((equippedWeapon->getDamage()))/2);
+    if (damage == 0){
+        std::cout << "\nAttack missed";
+    }
+    else{
+        std::cout << "\n" << name << " attacked for " + std::to_string(damage) + " damage!\n";
+    }
     return damage;
+}
+void Enemy::equipment(){
+    std::cout << "Equipment\n" << equippedWeapon->getItemName()  << "\n";
+    if (equippedHelmet != nullptr){
+        std::cout << equippedHelmet->getItemName() << "\n";
+    }
+    std::cout << equippedChestplate->getItemName() << "\n" << equippedPants->getItemName() << "\n" << equippedBoots->getItemName();
 }
 
 void Enemy::takeDamage(int damage){
     currentHP -= damage;
     if (currentHP <= 0){
         std::cout << "\n" << name << " slain";
+        alive = false;
     }
 }
