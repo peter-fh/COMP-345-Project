@@ -17,6 +17,8 @@
 #include <math.h>
 #include "Character.h"
 #include "../Observer/Observer.h"
+#include "map.h"
+
 
 
 using namespace std;
@@ -719,34 +721,67 @@ void testPrint()
     std::cout << "testPrint passed\n";
 }
 
-// // Optionally, the commented main function can be used for quick testing or demonstration.
-// int main() {
-//     srand(time(0)); // create random seed
+//********************************************
+//FOR MOVING CHARACTER
+int Character::getXlocation(){
+    return this->xLocation;
+}
+int Character::getYlocation(){
+    return this->yLocation;
+}
 
-//     //testing Character Strategy
-//     HumanPlayerStrategy hs;
-//     AggressorStrategy as;
-//     FriendlyStrategy fs;
-//     //HumanPlayerStrategy
-//     Character char1(&hs);
-//     char1.performMoveAction();
-//     char1.performAttackAction();
-//     char1.performFreeAction();
-//     //AggressorStrategy
-//     char1.setStrategy(&as);
-//     char1.performMoveAction();
-//     char1.performAttackAction();
-//     char1.performFreeAction();
-//     //FriendlyStrategy
-//     char1.setStrategy(&fs);
-//     char1.performMoveAction();
-//     char1.performAttackAction();
-//     char1.performFreeAction();
-//     //Changing from FriendlyStrategy to AggressorStrategy
-//     char1.takeDmg(1);
-//     char1.performMoveAction();
-//     char1.performAttackAction();
-//     char1.performFreeAction();
+void Character::setXLocation(int newX){
+    this->xLocation = newX;
+}
+void Character::setYLocation(int newY){
+    this->yLocation = newY;
+}
+void Character::setLocation(int newX, int newY){
+    this->setXLocation(newX);
+    this->setYLocation(newY);
+}
 
-//     return 0;
-// }
+bool Character::moveTo(int newX, int newY, Map* currentMap){
+    int currentX = this->getXlocation();
+    int currentY = this->getYlocation();
+    if(currentMap->passable(newX,newY)){
+        currentMap->setCell(newX,newX,OCCUPIED, this);
+        this->setLocation(newX,newX);
+        currentMap->setCell(currentX,currentY,EMPTY);
+        return true;
+    }
+    return false;
+}
+
+bool Character::attackThere(int targetX, int targetY, Map* currentMap, int dmg){
+    // int currentX = this->getXlocation();
+    // int currentY = this->getYlocation();
+    // const int LARGE_NUM = 2147483647;
+    // float distance=LARGE_NUM, currentDist;
+    // int x,y,destinationX,destinationY,stepX,stepY;
+    // for(x=0;x<currentMap->getWidth();x++){
+    //     for(y=0;y<currentMap->getHeight();y++){
+    //         if(currentMap->getCell(x,y).character != nullptr){
+    //             currentDist = pow((x-currentX),2)+pow((y-currentY),2);
+    //             if(currentDist<distance){
+    //                 distance = currentDist;
+    //                 destinationX = x;
+    //                 destinationY = y;
+    //             }
+    //         }
+    //     }
+    // }
+    Character enemy = *currentMap->getCell(targetX,targetY).character;
+    if(currentMap->getCell(targetX,targetY).character){
+        enemy.setHP(enemy.getHitPoints()-dmg-this->getStrengthMod()); //doesnt work
+        cout<<"Attack Successful"<<endl;
+        return true;
+    }
+    else{
+        cout<<"Not a Valid Target"<<endl;
+        return false;
+    }
+}
+
+//FOR MOVING CHARACTER
+//********************************************

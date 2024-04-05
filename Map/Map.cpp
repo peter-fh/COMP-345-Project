@@ -127,12 +127,12 @@ bool Map::setCell(Cell inp_cell){
 }
 
 
-bool Map::setCell(int x, int y, int type, Character character){
+bool Map::setCell(int x, int y, int type, Character* character){
     int prev_cell_type = getCell(x, y).type;
     if (prev_cell_type == START || prev_cell_type == END)
 	return false;
 
-    Cell new_cell = Cell(x, y, type, &character);
+    Cell new_cell = Cell(x, y, type, character);
     //character.setLocation(new_cell);
     mapArray[x][y] = new_cell;
     //Notify();
@@ -304,16 +304,38 @@ void Map::displaySearchMap(vector<vector<int> > *map){
     }
 }
 
+bool Map::addChar(Character myChar){
+    int x = myChar.getXlocation();
+    int y = myChar.getYlocation();
+    if(this->passable(x,y)){
+        this->setCell(x,y,OCCUPIED, &myChar);
+        return true;
+    }
+    return false;
+}
 
-// int main(){
-//
-//     Map map (20, 20, Cell(0, 0), Cell(19, 19));
-// 	
-//     for (int y = 0; y < map.height; y++)
-//     map.setCell(Cell(14, y), WALL);
-//
-//     map.setCell(Cell(14, 17), EMPTY);
-//     map.displayMap();
-//     cout << map.validate() << "\n";
-//     return 0;
-// }
+//main to test characters moving on the map
+int main(){
+
+    Map imamap = Map(10,10);
+    // imamap.displayMap();
+    Character nice = Character(1);
+    Character to = Character(2);
+    Character meet = Character(3);
+    Character you = Character(4);
+
+    nice.setLocation(1,4);
+    to.setLocation(5,2);
+    meet.setLocation(5,8);
+    you.setLocation(3,4);
+
+    imamap.addChar(nice);
+    imamap.addChar(to);
+    imamap.addChar(meet);
+    imamap.addChar(you);
+    imamap.displayMap();
+
+    imamap.displayMap();
+
+    return 0;
+}

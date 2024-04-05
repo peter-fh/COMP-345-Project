@@ -21,7 +21,7 @@ public:
     int getHeight();
 
     bool setCell(int x, int y, int type);
-    bool setCell(int x, int y, int type, Character character);
+    bool setCell(int x, int y, int type, Character* character);
     bool setCell(Cell inp_cell);
     Cell getCell(int x, int y);    
 
@@ -37,6 +37,10 @@ public:
     string toString();
 
     void displayMap();
+
+    //moving a character on the map
+    bool addChar(Character myChar);
+
 private:
     string name;
     Cell start;
