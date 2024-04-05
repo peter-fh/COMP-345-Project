@@ -13,4 +13,5 @@ class Armor : public Item{
         void unEquip();
         std::string getType();
         int getDefence();
+        std::string getItemName() override;
 };

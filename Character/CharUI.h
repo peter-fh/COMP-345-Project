@@ -15,11 +15,11 @@ class CharUI : public Observer {
     void Update(std::string attribute, int newValue, int oldValue) override;
     void Update(Subject* subject) override;
     void Update(std::string message) override;
-
+  
     void checkAbilityScores();
-    void checkInventory();
     void checkAttributes();
     void checkEquipment();
+    void checkInventory();
     void nameCharacter();
     void statChecker();
     void regDisplay();
@@ -27,3 +27,4 @@ class CharUI : public Observer {
     
     
     };
+

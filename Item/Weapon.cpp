@@ -11,3 +11,7 @@ bool Weapon::equipped(){return held;}
 
 int Weapon::getDamage(){return baseDamage;
 }
+
+std::string Weapon::getItemName(){
+    return itemName + " (" + std::to_string(baseDamage) + ")";
+}
