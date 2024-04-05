@@ -80,6 +80,7 @@ bool Campaign::set(Map map, int index){
 
 
 void Campaign::push_back(Map map){
+    cout << "got here at least";
     maps.push_back(map);
 }
 

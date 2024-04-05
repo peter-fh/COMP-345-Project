@@ -5,18 +5,6 @@ using namespace std;
 
 
 class Map : public Subject {
-    string name;
-    Cell start;
-    Cell end; 
-    bool initialized;
-    int width;
-    int height; 
-
-    vector< vector<Cell> > mapArray;
-    vector< Cell *> characterCells;
-
-    void breadthFirstSearch(vector <vector<int> > *map, Cell start_cell);
-    void displaySearchMap(vector <vector<int> > *map);
  
 public:
 
@@ -47,7 +35,21 @@ public:
 
     bool validate();
     string toString();
-    void displayMap();
 
+    void displayMap();
+private:
+    string name;
+    Cell start;
+    Cell end; 
+    bool initialized;
+    int width;
+    int height; 
+
+    vector< vector<Cell> > mapArray;
+    vector< Cell *> characterCells;
+
+    void breadthFirstSearch(vector <vector<int> > *map, Cell start_cell);
+    void displaySearchMap(vector <vector<int> > *map);
+    vector<vector<int> > fillValidateMap();
 };
 

@@ -147,6 +147,7 @@ Cell Map::getCell(int x, int y){
 string Map::toString(){
     string output = "";
     map<int, string> cell_map;
+    vector<vector<int> > reachable = fillValidateMap();
     cell_map[EMPTY] = "□";
     cell_map[WALL] = "■";
     cell_map[OCCUPIED] = "▣";
@@ -156,7 +157,12 @@ string Map::toString(){
 
     for (int y=0; y < height; y++){
 	for (int x=0; x < width; x++){
-	    output += cell_map[getCell(x, y).type] + " ";
+	    int type = getCell(x, y).type;
+	    if (reachable[x][y] || type != EMPTY){
+		output += cell_map[type] + " ";
+	    } else {
+		output += "  ";
+	    }
 	}
 	output += "\n";
     }
@@ -239,6 +245,20 @@ bool Map::validate(){
 	return true;
 
     return false;
+}
+
+vector<vector<int> > Map::fillValidateMap(){
+    vector<vector<int> > searchMap;
+    // Fill entire map with unreached
+    for (int x = 0; x < width; x++){
+	vector<int> column (height);
+	fill(column.begin(), column.end(), UNREACHED);
+	searchMap.push_back(column);
+    }
+
+    breadthFirstSearch(&searchMap, Cell(start.x, start.y));
+
+    return searchMap;
 }
 
 
