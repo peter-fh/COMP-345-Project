@@ -1,3 +1,7 @@
+#ifndef LOOT_H
+#define LOOT_H
+
+
 #include "../Dice/Dice.h"
 #include "Item.h"
 #include "Armor.h"
@@ -25,3 +29,5 @@ class Loot{
         //in game progress we will attach the character so the loot scales with the level later
 
 };
+
+#endif
