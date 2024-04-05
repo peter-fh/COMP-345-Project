@@ -3,7 +3,7 @@
 Armor::Armor(std::string nom, std::string t, int d){
     itemName = nom;
     defence = d;
-    if (t != "Helmet" || t != "helmet" || t != "pants" || t != "Pants" || t != "boots" || t != "Boots"){
+    if (t != "Helmet" && t != "helmet" && t != "pants" && t != "Pants" && t != "boots" && t != "Boots"){
         type = "Chestplate";
         //default if unspecified
     }
@@ -16,3 +16,7 @@ int Armor::getDefence(){return defence;}
 
 void Armor::equip(){held = true;}
 void Armor::unEquip(){held = false;}
+
+std::string Armor::getItemName(){
+    return itemName + " (" + std::to_string(defence) + ")";
+}
