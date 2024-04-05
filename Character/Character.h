@@ -23,11 +23,10 @@
 #include <cstring>
 #include "../Observer/Observer.h"
 #include "Strategy.h"
-#include "Item.h"
-#include "Consumable.h"
-#include "Weapon.h"
-#include "Armor.h"
-#include "Corpse.h"
+#include "../Item/Item.h"
+#include "../Item/Consumable.h"
+#include "../Item/Weapon.h"
+#include "../Item/Armor.h"
 #include "../Dice/Dice.h"
 #include <iostream>
 class CharUI;
@@ -41,19 +40,20 @@ class Character : public Subject
 public:
     
     Character();
+    std::string status();
     std::vector<Item*> inventory;
     std::string name;
     void inventoryCheck();
     void setName(std::string name);
     std::string getName();
     int inventorySize;
-    bool alive;
     int currHP;
     void kill();
     void equip(int pos);
     void equip(Item* i);
     void pickup(Item* i);
     void drop(int pos);
+    bool alive;
     Weapon* equippedWeapon;
     Armor* equippedHelmet;
     Armor* equippedChestplate;
@@ -65,7 +65,7 @@ public:
     void Notify(string message);
     void Notify();
     void takeDamage(int damage);
-    int attack();
+    int attack(float modifier);
     int armorLevel;
 
     Character(int level); // Constructor declaration
@@ -82,6 +82,7 @@ public:
     // getters
     int getLevel() const;
     int getHitPoints() const;
+    int getCurrentHP();
     int getArmorClass() const;
     int getAttackBonus() const;
     int getDamageBonus() const;
@@ -100,12 +101,11 @@ public:
     int getWisdomMod() const;
     int getCharismaMod() const;
     // getters for equipment
-    string getArmor() const;
-    string getShield() const;
+    string getHelmet() const;
+    string getChestplate() const;
     string getWeapon() const;
     string getBoots() const;
-    string getRing() const;
-    string getHelmet() const;
+    string getPants() const;
     // increase (buff and debuff)
     void increaseLevel(int levelUp);
     void increaseStrength(int strengthUp);
