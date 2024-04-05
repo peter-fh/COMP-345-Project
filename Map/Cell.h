@@ -2,7 +2,7 @@
 #include <iostream>
 #include <vector>
 #include "../Character/CharUI.h"
-#include "Character.h"
+#include "../Character/Character.h"
 
 
 
@@ -16,7 +16,8 @@ struct Cell {
     int x;
     int y;
     int type;
-    Character *character;
+    Character* character;
+    char character_char;
     
     Cell() {
 	x = 0; 
@@ -44,6 +45,7 @@ struct Cell {
 	y = inp_y; 
 	type = inp_type; 
 	character = inp_character;
+	character_char = inp_character->getName()[0];
     }
 
 };

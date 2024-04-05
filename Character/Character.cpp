@@ -17,7 +17,7 @@
 #include <math.h>
 #include "Character.h"
 #include "../Observer/Observer.h"
-#include "map.h"
+#include "../Map/Map.h"
 
 
 
@@ -745,8 +745,8 @@ bool Character::moveTo(int newX, int newY, Map* currentMap){
     int currentX = this->getXlocation();
     int currentY = this->getYlocation();
     if(currentMap->passable(newX,newY)){
-        currentMap->setCell(newX,newX,OCCUPIED, this);
-        this->setLocation(newX,newX);
+        currentMap->setCell(newX,newY,OCCUPIED, this);
+        this->setLocation(newX,newY);
         currentMap->setCell(currentX,currentY,EMPTY);
         return true;
     }

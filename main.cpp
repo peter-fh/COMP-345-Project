@@ -10,9 +10,13 @@
 
 
 int main(){
-    cout << "thank fucking god it compiled\n";
     Game game;
-    game.load("test_campaign"); 
+    game.loadCampaign("test_campaign"); 
+    game.loadNextMap();
+    game.startGameLoop();
+    return 0;
+    
+    
 
 
 }

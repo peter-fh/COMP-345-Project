@@ -44,21 +44,8 @@ bool Game::loadCampaign(string filename){
     loaded_campaign.push_back(*mapEditor.saveMap());
 
 
-    //loaded_campaign.display_campaign();
+    loaded_campaign.display_campaign();
     campaign = loaded_campaign;
-    
-    Character character1(1);
-    Character character2(1);
-    Character character3(1);
-
-    character1.setName("Jack");
-    character2.setName("Gill");
-    character3.setName("Fred");
-
-    characters.push_back(character1);
-    characters.push_back(character2);
-    characters.push_back(character3);
-
 
 
     return true;
@@ -75,25 +62,8 @@ bool Game::loadNextMap(){
     map = campaign.get(0);
     map_index++;
     map.insertCharacters(characters);
-    map.displayMap();
+    //map->displayMap();
     return true;
 }
-
-
-void Game::initiativePhase(){
-    for (Character& character : characters){
-	cout << character.getName() << ": roll for initiative (press enter)";
-	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-
-	character.initiativeRoll = d20.Roll();
-	cout << "You rolled a " << character.initiativeRoll << "!\n";
-    }
-}
-
-
-void Game::startGameLoop(){
-    initiativePhase();
-}
-
 
 

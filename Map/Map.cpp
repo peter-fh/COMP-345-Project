@@ -129,8 +129,9 @@ bool Map::setCell(Cell inp_cell){
 
 bool Map::setCell(int x, int y, int type, Character* character){
     int prev_cell_type = getCell(x, y).type;
-    if (prev_cell_type == START || prev_cell_type == END)
+    if (prev_cell_type == START || prev_cell_type == END){
 	return false;
+    }
 
     Cell new_cell = Cell(x, y, type, character);
     //character.setLocation(new_cell);
@@ -159,7 +160,15 @@ string Map::toString(){
 	for (int x=0; x < width; x++){
 	    int type = getCell(x, y).type;
 	    if (reachable[x][y] || type != EMPTY){
-		output += cell_map[type] + " ";
+		if (type == OCCUPIED && getCell(x, y).character != nullptr){
+		    output.push_back(getCell(x, y).character_char);
+		    output += " ";
+		} else {
+		    if (type == OCCUPIED && getCell(x, y).character == nullptr){
+			cout << "fuck fuck fuck\n";
+		    }
+		    output += cell_map[type] + " ";
+		}
 	    } else {
 		output += "  ";
 	    }
@@ -212,6 +221,75 @@ bool Map::setEnd(int x, int y){
 }
 
 
+bool Map::isOccupied(int x, int y){
+    return getCell(x, y).type == OCCUPIED;
+}
+
+
+Cell Map::getNearbyUnnocupied(int x, int y){
+    Cell N(x, y-1);
+    Cell NE(x+1,y-1);
+    Cell E(x+1,y);
+    Cell SE(x+1,y+1);
+    Cell S(x, y+1);
+    Cell SW(x-1, y+1);
+    Cell W(x-1,y+1);
+    Cell NW(x-1,y-1);
+
+    if (checkBounds(N.x, N.y) && passable(N.x, N.y) && !isOccupied(N.x, N.y)){
+	return N;
+    }
+
+    if (checkBounds(NE.x, NE.y) && passable(NE.x, NE.y) && !isOccupied(NE.x, NE.y)){
+	return NE;
+    }
+
+    if (checkBounds(E.x, E.y) && passable(E.x, E.y) && !isOccupied(E.x, E.y)){
+	return E;
+    }
+
+    if (checkBounds(SE.x, SE.y) && passable(SE.x, SE.y) && !isOccupied(SE.x, SE.y)){
+	return SE;
+    }
+
+    if (checkBounds(S.x, S.y) && passable(S.x, S.y) && !isOccupied(S.x, S.y)){
+	return S;
+    }
+
+    if (checkBounds(SW.x, SW.y) && passable(SW.x, SW.y) && !isOccupied(SW.x, SW.y)){
+	return SW;
+    }
+
+    if (checkBounds(W.x, W.y) && passable(W.x, W.y) && !isOccupied(W.x, W.y)){
+	return W;
+    }
+
+    if (checkBounds(NW.x, NW.y) && passable(NW.x, NW.y) && !isOccupied(NW.x, NW.y)){
+	return NW;
+    }
+
+    return Cell(-1, -1);
+
+
+}
+
+bool Map::insertCharacters(std::list<Character> characters){
+    vector<Character>::iterator it;
+    for (auto it = characters.begin(); it != characters.end(); it++){
+	Character character = *it;
+	Cell location = getNearbyUnnocupied(start.x, start.y);
+	if (location.x == -1){
+	    cout << "No space for character\n";
+	    return false;
+	}
+	character.setLocation(location.x, location.y);
+	addChar(character);
+    }
+    displayMap();
+    return true;
+}
+
+
 bool Map::checkBounds(int x, int y){
     if (x >= width || x < 0 || y >= height || y < 0)
 	return false;
@@ -222,8 +300,9 @@ bool Map::checkBounds(int x, int y){
 bool Map::passable(int x, int y){
     int cell_type = getCell(x, y).type;
 
-    if (cell_type == EMPTY || cell_type == START || cell_type == END) 
+    if (cell_type == EMPTY || cell_type == START || cell_type == END || cell_type == OCCUPIED){
 	return true;
+    }
 
     return false;
 }
@@ -314,28 +393,3 @@ bool Map::addChar(Character myChar){
     return false;
 }
 
-//main to test characters moving on the map
-int main(){
-
-    Map imamap = Map(10,10);
-    // imamap.displayMap();
-    Character nice = Character(1);
-    Character to = Character(2);
-    Character meet = Character(3);
-    Character you = Character(4);
-
-    nice.setLocation(1,4);
-    to.setLocation(5,2);
-    meet.setLocation(5,8);
-    you.setLocation(3,4);
-
-    imamap.addChar(nice);
-    imamap.addChar(to);
-    imamap.addChar(meet);
-    imamap.addChar(you);
-    imamap.displayMap();
-
-    imamap.displayMap();
-
-    return 0;
-}
