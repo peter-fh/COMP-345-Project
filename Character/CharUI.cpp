@@ -7,10 +7,6 @@ Character UI/observer, attaches to character, displays stats, notifies of change
 CharUI::CharUI(Character* c) : playerChar(c){
             if (playerChar) {
                   playerChar->Attach(this);
-                        
-                  //nameCharacter();
-                  regDisplay();
-                  statChecker();
             }
             else{
                   std::cout << "Failed attachment, please pass a reference to a character";
@@ -42,10 +38,12 @@ void CharUI::Update(Subject* subject){
     
 }
 
-void CharUI::Update(string message){}
+void CharUI::Update(string message){
+      std::cout << message << "\n";
+}
 
 void CharUI::setName(std::string given){
-            name = given;
+      name = given;
 }
 
 void CharUI::statChecker(){
@@ -123,15 +121,13 @@ void CharUI::nameCharacter() {
   void CharUI::checkAttributes(){
     std::cout << "Level: " << playerChar->getLevel() << "\n";
     std::cout << "Hit Points: " << playerChar->getHitPoints() << "\n";
-    std::cout << "Armor Class: " << playerChar->getArmorClass() << "\n";
-    std::cout << "Attack Bonus: " << playerChar->getAttackBonus() << "\n";
-    std::cout << "Damage Bonus: " << playerChar->getDamageBonus() << "\n";
+    std::cout << "Armor Rating: " << playerChar->getArmorClass() << "\n";
+    std::cout << "Weapon Bonus: " << playerChar->getAttackBonus() << "\n";
   }
   void CharUI::checkEquipment(){
-    std::cout << "  Armor: " << (playerChar->getArmor().empty() ? "None" : playerChar->getArmor()) << "\n";
-    std::cout << "  Shield: " << (playerChar->getShield().empty() ? "None" : playerChar->getShield()) << "\n";
     std::cout << "  Weapon: " << (playerChar->getWeapon().empty() ? "None" : playerChar->getWeapon()) << "\n";
-    std::cout << "  Boots: " << (playerChar->getBoots().empty() ? "None" : playerChar->getBoots()) << "\n";
-    std::cout << "  Ring: " << (playerChar->getRing().empty() ? "None" : playerChar->getRing()) << "\n";
     std::cout << "  Helmet: " << (playerChar->getHelmet().empty() ? "None" : playerChar->getHelmet()) << "\n";
+    std::cout << "  Chestplate: " << (playerChar->getChestplate().empty() ? "None" : playerChar->getChestplate()) << "\n";
+    std::cout << "  Pants: " << (playerChar->getPants().empty() ? "None" : playerChar->getPants()) << "\n";
+    std::cout << "  Boots: " << (playerChar->getBoots().empty() ? "None" : playerChar->getBoots()) << "\n";
   }
