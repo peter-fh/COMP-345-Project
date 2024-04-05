@@ -1,3 +1,8 @@
+#ifndef ENEMY_H
+#define ENEMY_H
+
+
+
 #include "../Item/Item.h"
 #include "../Item/Consumable.h"
 #include "../Item/Weapon.h"
@@ -8,6 +13,7 @@
 #include "../Item/Loot.h"
 #include "Corpse.h"
 #include <string>
+
 class Corpse;
 
 class Enemy{
@@ -21,7 +27,10 @@ class Enemy{
         std::vector<Item*> inventory;
         bool alive;
         void playerFlee();
-        int armorMod;
+        int armorMod, level;
+
+        void equipment();
+
         //TODO for final, armormod as a percentage of damage reduction, eg: 15 armorMod means attack is 85% effective
 
         Armor *equippedChestplate, *equippedHelmet, *equippedBoots, *equippedPants;
@@ -34,3 +43,5 @@ class Enemy{
         Character* playerCharacter;
 
 };
+
+#endif
