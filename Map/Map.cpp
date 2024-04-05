@@ -89,7 +89,7 @@ string Map::getName(){
 
 void Map::setName(string inp_name){
     name = inp_name;
-    Notify();
+    //Notify();
 }
 
 
@@ -110,7 +110,7 @@ bool Map::setCell(int x, int y, int type){
 	return false;
 
     mapArray[inp_cell.x][inp_cell.y] = inp_cell;
-    Notify();
+    //Notify();
     return true;
 
 }
@@ -122,7 +122,7 @@ bool Map::setCell(Cell inp_cell){
 	return false;
 
     mapArray[inp_cell.x][inp_cell.y] = inp_cell;
-    Notify();
+    //Notify();
     return true;
 }
 
@@ -135,7 +135,7 @@ bool Map::setCell(int x, int y, int type, Character character){
     Cell new_cell = Cell(x, y, type, &character);
     //character.setLocation(new_cell);
     mapArray[x][y] = new_cell;
-    Notify();
+    //Notify();
     return true;
 }
 
@@ -172,6 +172,7 @@ string Map::toString(){
 
 
 void Map::displayMap(){
+    cout << "\n";
     cout << toString();
 }
 
@@ -188,7 +189,7 @@ bool Map::setStart(int x, int y){
     mapArray[start.x][start.y] = Cell(start.x, start.y, EMPTY);
     start = Cell(x, y, START);
     mapArray[x][y] = start;
-    Notify();
+    //Notify();
     return returnBool;
 }
 
@@ -206,7 +207,7 @@ bool Map::setEnd(int x, int y){
     mapArray[end.x][end.y] = Cell(end.x, end.y, EMPTY);
     end = Cell(x, y, END);
     mapArray[x][y] = end;
-    Notify();
+    //Notify();
     return returnBool;
 }
 

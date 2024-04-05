@@ -1,7 +1,11 @@
 #include "Campaign.h"
 
 
-Campaign::Campaign() {}
+Campaign::Campaign() {
+
+    Map map(5, 5);
+    fuckoff.push_back(5);
+}
 
 
 Map* Campaign::get(int index){
@@ -65,6 +69,17 @@ bool Campaign::insert(Map map, int index){
     return true;
 }
 
+bool Campaign::insert(int fuck, int index){
+    if (index > fuckoff.size()){
+	return false;
+    }
+
+    std::list<int>::iterator it = fuckoff.begin();
+    advance(it, index);
+    fuckoff.insert(it, fuck);
+    return true;
+}
+
 
 bool Campaign::set(Map map, int index){
     if (index > maps.size()){
@@ -80,7 +95,6 @@ bool Campaign::set(Map map, int index){
 
 
 void Campaign::push_back(Map map){
-    cout << "got here at least";
     maps.push_back(map);
 }
 

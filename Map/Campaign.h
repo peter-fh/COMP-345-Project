@@ -14,13 +14,16 @@ public:
     bool replace(Map map);
     bool set(Map map, int index);
     bool insert(Map map, int index);
+    bool insert(int fuck, int index);
     bool swap(string map1, string map2);
     void push_back(Map map);
     void display_campaign();
     void display_names();
     int len();
+
 private:
     std::list<Map> maps;
+    std::list<int> fuckoff;
     string name;
 };
 

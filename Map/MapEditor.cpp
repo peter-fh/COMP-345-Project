@@ -6,6 +6,11 @@ MapEditor::MapEditor(Map* inp_map) {
 }
 
 
+void MapEditor::setMap(Map* inp_map){
+
+    editedMap = inp_map;
+}
+
 bool MapEditor::drawCell(int x, int y, int type){
     return editedMap->setCell(x, y, type);
 }

@@ -4,7 +4,7 @@
 using namespace std;
 
 
-class Map : public Subject {
+class Map  : public Subject{
  
 public:
 
@@ -46,7 +46,7 @@ private:
     int height; 
 
     vector< vector<Cell> > mapArray;
-    vector< Cell *> characterCells;
+    //vector< Cell *> characterCells;
 
     void breadthFirstSearch(vector <vector<int> > *map, Cell start_cell);
     void displaySearchMap(vector <vector<int> > *map);

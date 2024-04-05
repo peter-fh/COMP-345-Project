@@ -12,7 +12,6 @@
 class Game {
 public:
     Game();
-    ~Game();
     bool load(string campaign_name);
     bool save();
     void startGameLoop();

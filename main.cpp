@@ -11,6 +11,8 @@
 
 int main(){
     cout << "thank fucking god it compiled\n";
-    Game *game = new Game();
-    game->load("test_campaign");
+    Game game;
+    game.load("test_campaign"); 
+
+
 }
