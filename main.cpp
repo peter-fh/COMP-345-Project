@@ -21,8 +21,8 @@ int main(){
     game.loadNextMap();
     game.startGameLoop();
 
-
-    /* Character character2(12);
+    cin.get();
+    Character character2(12);
     character2.setName("Jeff");
 
     CharUI playerUI(&character2);
@@ -46,5 +46,5 @@ int main(){
 
     Combat(&character2, &e1);
 
-    system("pause");*/
+    system("pause");
 }
