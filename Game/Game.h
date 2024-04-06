@@ -31,6 +31,7 @@ private:
     void movementPhase();
     void gameLoop();
     void displayCurrentMap();
+    bool gameIsPlaying();
     //void enemyTurn(Enemy* enemy);
     Dice d20;
     Dice d6;

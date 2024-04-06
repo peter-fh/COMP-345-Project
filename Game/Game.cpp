@@ -29,8 +29,8 @@ bool Game::loadCampaign(string filename){
 
 
     Map map2(26, 11);
+    map2.setName("Map 2: The Dungeon");
     mapEditor.setMap(&map2);
-    mapEditor.setStart(2, 5);
     mapEditor.setEnd(23, 5);
     mapEditor.drawSquare(0,3,6,7,WALL);
     mapEditor.drawSquare(3,0,11,3,WALL);
@@ -48,6 +48,8 @@ bool Game::loadCampaign(string filename){
     mapEditor.drawSquare(19,2,21,8,EMPTY);
     mapEditor.drawSquare(20,3,20,7,EMPTY);
     mapEditor.drawSquare(14,5,22,5,EMPTY);
+
+    mapEditor.setStart(0, 5);
     loaded_campaign.push_back(*mapEditor.saveMap());
 
 
@@ -81,21 +83,32 @@ bool Game::loadNextMap(){
 	return false;
     } 
 
-    map = campaign.get(0);
+    map = campaign.get(map_index);
     cout << "Loaded map: " << map.getName() << "!\n";
     map_index++;
     map.insertCharacters(&characters);
     return true;
 }
 
+bool Game::gameIsPlaying(){
+    bool playing = false;
+    for (Character& character : characters){
+	if (character.playing){
+	    playing = true;
+	}
+    }
 
+    return playing;
+}
 void Game::initiativePhase(){
     for (Character& character : characters){
-	cout << character.getName() << ": roll for initiative (press enter)";
-	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	if (character.playing){
+	    cout << character.getName() << ": roll for initiative (press enter)";
+	    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
-	character.initiativeRoll = d20.Roll();
-	cout << "You rolled a " << character.initiativeRoll << "!\n";
+	    character.initiativeRoll = d20.Roll();
+	    cout << "You rolled a " << character.initiativeRoll << "!\n";
+	}
     }
 
     cout << "Press enter to continue.";
@@ -105,20 +118,37 @@ void Game::initiativePhase(){
 
 
 void Game::startGameLoop(){
+    bool done = false;
+    while (!done && gameIsPlaying()){
 	gameLoop();
+	cout << "End of turn.\n";
+	cout << "Enter to continue, anything else to exit.\n";
+	string input;
+	input = cin.get();
+	input = cin.get();
+	if (input == "\n"){
+	    done = false;
+	} else {
+	    done = true;
+	}
+    }
+
 }
 
 void Game::gameLoop(){
     displayCurrentMap();
+
     initiativePhase();
+
     for (int i=20; i > 0; i--){
 	for (Character& character : characters){
-	    if (character.initiativeRoll == i){
+	    if (character.initiativeRoll == i && character.playing){
 		
 		character = userTurn(character);
 	    }
 	}
     }
+
 }
 
 void Game::displayCurrentMap(){
@@ -154,10 +184,11 @@ void Game::userMove(Character* character){
 
     cout << "Roll for movement (press enter): ";
     cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    int roll = d6.Roll();
+    // int roll = d6.Roll();
+    int roll = d20.Roll();
     cout << "You rolled a " << roll << "!\n";
     bool done = false;
-    while (roll > 0 && !done){
+    while (roll > 0 && !done && character->playing){
 	int x = character->getXlocation();
 	int y = character->getYlocation();
 	cout << "Would you like to move up, down, left, right, or exit? \n(u/d/l/r/e): ";

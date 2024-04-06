@@ -145,6 +145,13 @@ Cell Map::getCell(int x, int y){
     return mapArray[x][y];
 }
 
+Cell Map::getStart(){
+    return start;
+}
+
+Cell Map::getEnd(){
+	return end;
+}
 string Map::toString(){
     string output = "";
     map<int, string> cell_map;
@@ -159,8 +166,10 @@ string Map::toString(){
     for (int y=0; y < height; y++){
 	for (int x=0; x < width; x++){
 	    int type = getCell(x, y).type;
-	    if (reachable[x][y] || type != EMPTY){
-		if (type == OCCUPIED && getCell(x, y).character != nullptr){
+	    if (type == END){
+		output += cell_map[type] + " ";
+	    } else if (reachable[x][y] || type != EMPTY){
+		if (type == OCCUPIED && getCell(x, y).character != nullptr){ 
 		    output.push_back(getCell(x, y).character_char);
 		    output += " ";
 		} else {
@@ -283,6 +292,7 @@ bool Map::insertCharacters(std::list<Character> *characters){
 	    return false;
 	}
 	character.setLocation(location.x, location.y);
+	character.playing = true;
 	*it = character;
 	addChar(character);
     }

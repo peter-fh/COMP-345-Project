@@ -18,9 +18,8 @@ int main(){
     game.loadCampaign("test_campaign"); 
     game.loadNextMap();
     game.startGameLoop();
-    
-    
-
+    game.loadNextMap();
+    game.startGameLoop();
 
 
     /* Character character2(12);
@@ -47,6 +46,5 @@ int main(){
 
     Combat(&character2, &e1);
 
-    system("pause");
-    cout << "thank fucking god it compiled\n"; */
+    system("pause");*/
 }

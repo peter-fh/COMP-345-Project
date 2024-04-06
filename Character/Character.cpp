@@ -24,7 +24,8 @@
 using namespace std;
 
 
-Character::Character(){}
+Character::Character(){
+}
 std::vector<Observer*> observers;
 
 void Character::inventoryCheck(){
@@ -304,6 +305,7 @@ void Character::equip(int pos){
 
 Character::Character(int setLevel)
 {
+    playing = false;
     alive = true;
     std::vector<Item*> inventory;
     inventorySize = 10;
@@ -741,6 +743,14 @@ void Character::setLocation(int newX, int newY){
 bool Character::moveTo(int newX, int newY, Map* currentMap){
     int currentX = this->getXlocation();
     int currentY = this->getYlocation();
+    if (currentMap->getEnd().x == newX && currentMap->getEnd().y == newY){
+        currentMap->setCell(currentX,currentY,EMPTY);
+	playing = false;
+	cout << name << " has reached the end of the map!" << endl;
+	cout << "Press enter to continue: ";
+	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	return true;
+    }
     if(currentMap->passable(newX,newY)){
         currentMap->setCell(newX,newY,OCCUPIED, this);
         this->setLocation(newX,newY);
