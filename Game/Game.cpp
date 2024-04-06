@@ -189,25 +189,30 @@ Character Game::userTurn(Character character){
 	string attack;
 	cin >> attack;
 	if (attack == "y"){
+	    cin.ignore();
+	    Character character2(12);
+	    character2.setName("Jeff");
+
+	    CharUI playerUI(&character2);
 
 	    Weapon w1 = Weapon(3, "Sword");
 	    Armor Chestpiece = Armor("Iron Chestplate", "Chestplate", 20);
 
-	    cin.get();
-	    cin.get();
-	    character.pickup(&w1);
-	    character.pickup(&Chestpiece);
+	    character2.pickup(&w1);
+	    character2.pickup(&Chestpiece);
 
-	    character.equip(0);
-	    character.equip(1);
+	    character2.equip(0);
+	    character2.equip(1);
 
 
 
 
 	    Enemy e1 = Enemy();
 	    e1.status();
+	    Enemy e2 = Enemy();
+	    e2.status();
 
-	    Combat(&character, &e1);
+	    Combat(&character2, &e1);
 	}
     }
 

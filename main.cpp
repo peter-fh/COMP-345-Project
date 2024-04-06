@@ -21,7 +21,7 @@ int main(){
     game.loadNextMap();
     game.startGameLoop();
 
-
+    cin.ignore();
     Character character2(12);
     character2.setName("Jeff");
 
