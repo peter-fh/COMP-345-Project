@@ -1,5 +1,6 @@
 #include "Enemy.h"
 #include "Corpse.h"
+#include "../Map/Map.h"
 
 
 
@@ -81,4 +82,35 @@ void Enemy::takeDamage(int damage){
         std::cout << "\n" << name << " slain";
         alive = false;
     }
+}
+
+
+
+int Enemy::getX(){
+	return xLocation;
+}
+
+int Enemy::getY(){
+	return yLocation;
+}
+
+void Enemy::setX(int x){
+    xLocation = x;
+}
+
+void Enemy::setY(int y){
+	yLocation = y;
+}
+
+
+// TODO: Flesh out moveTo function
+bool Enemy::moveTo(int x, int y, Map* map){
+	if (map->getCell(x, y).type == EMPTY){
+	    map->setCell(xLocation, yLocation, EMPTY);
+	    map->setCell(x, y, OCCUPIED);
+	    xLocation = x;
+	    yLocation = y;
+	    return true;
+	}
+	return false;
 }

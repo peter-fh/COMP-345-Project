@@ -187,7 +187,6 @@ public:
 
     bool attackThere(int targetX, int targetY, Map* currentMap, int dmg); // wip
     int initiativeRoll;
-
     bool playing;
 
 private: // private!!!

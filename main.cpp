@@ -22,7 +22,7 @@ int main(){
     game.startGameLoop();
 
 
-    /* Character character2(12);
+    Character character2(12);
     character2.setName("Jeff");
 
     CharUI playerUI(&character2);
@@ -30,6 +30,7 @@ int main(){
     Weapon w1 = Weapon(3, "Sword");
     Armor Chestpiece = Armor("Iron Chestplate", "Chestplate", 20);
 
+    cin.get();
     character2.pickup(&w1);
     character2.pickup(&Chestpiece);
 
@@ -46,5 +47,5 @@ int main(){
 
     Combat(&character2, &e1);
 
-    system("pause");*/
+    //system("pause");
 }

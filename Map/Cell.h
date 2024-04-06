@@ -3,7 +3,7 @@
 #include <vector>
 #include "../Character/CharUI.h"
 #include "../Character/Character.h"
-
+#include "../Enemy/Enemy.h"
 
 
 const int EMPTY = 0;
@@ -18,14 +18,15 @@ struct Cell {
     int type;
     Character* character;
     char character_char;
-    bool has_enemy;
+    Enemy* enemy = nullptr;
+    bool hasEnemy = false;
     
     Cell() {
 	x = 0; 
 	y = 0; 
 	type = EMPTY; 
 	character = nullptr;
-	has_enemy = false;
+	enemy = nullptr;
     }
 
     Cell(int inp_x, int inp_y) {
@@ -33,7 +34,7 @@ struct Cell {
 	y = inp_y; 
 	type = EMPTY; 
 	character = nullptr;
-	has_enemy = false;
+	enemy = nullptr;
     }
 
     Cell(int inp_x, int inp_y, int inp_type) {
@@ -41,7 +42,7 @@ struct Cell {
 	y = inp_y; 
 	type = inp_type; 
 	character = nullptr;
-	has_enemy = false;
+	enemy = nullptr;
     }
 
     Cell(int inp_x, int inp_y, int inp_type, Character* inp_character) {
@@ -50,16 +51,18 @@ struct Cell {
 	type = inp_type; 
 	character = inp_character;
 	character_char = inp_character->getName()[0];
-	has_enemy = false;
+	enemy = nullptr;
     }
 
-    Cell(int inp_x, int inp_y, bool has_enemy) {
+    Cell(int inp_x, int inp_y, int inp_type, Enemy* inp_enemy) {
 	x = inp_x;
 	y = inp_y;
 	type = OCCUPIED;
-	has_enemy = true;
 	character = nullptr;
-	character_char = 'E';
+	enemy = inp_enemy;
+	cout << "about to seg fault?" << endl;
+	cout << enemy->getX();
+	hasEnemy = true;
     }
 
 

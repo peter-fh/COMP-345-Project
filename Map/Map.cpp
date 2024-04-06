@@ -140,6 +140,19 @@ bool Map::setCell(int x, int y, int type, Character* character){
     return true;
 }
 
+bool Map::setCell(int x, int y, int type, Enemy* enemy){
+	int prev_cell_type = getCell(x, y).type;
+	if (prev_cell_type == START || prev_cell_type == END){
+	return false;
+	}
+
+	Cell new_cell = Cell(x, y, type, enemy);
+	//character.setLocation(new_cell);
+	mapArray[x][y] = new_cell;
+	//Notify();
+	return true;
+}
+
 
 Cell Map::getCell(int x, int y){
     return mapArray[x][y];
@@ -174,9 +187,10 @@ string Map::toString(){
 		    output += " ";
 		} else {
 		    if (type == OCCUPIED && getCell(x, y).character == nullptr){
-			cout << "Error: OCCUPIED cell with no character\n";
-		    }
+			output += "E ";
+		    } else {
 		    output += cell_map[type] + " ";
+		    }
 		}
 	    } else {
 		output += "  ";
@@ -232,6 +246,58 @@ bool Map::setEnd(int x, int y){
 
 bool Map::isOccupied(int x, int y){
     return getCell(x, y).type == OCCUPIED;
+}
+
+bool Map::hasEnemy(int x, int y){
+    Cell enemy_cell = getCell(x, y);
+    if (enemy_cell.hasEnemy){
+	return true;
+    }
+    return false;
+}
+
+Enemy* Map::getNearbyEnemy(int x, int y){
+    Cell N(x, y-1);
+    Cell NE(x+1,y-1);
+    Cell E(x+1,y);
+    Cell SE(x+1,y+1);
+    Cell S(x, y+1);
+    Cell SW(x-1, y+1);
+    Cell W(x-1,y+1);
+    Cell NW(x-1,y-1);
+
+    if (hasEnemy(N.x, N.y)){
+	return getCell(N.x, N.y).enemy;
+    }
+
+    if (hasEnemy(NE.x, NE.y)){
+	return getCell(NE.x, NE.y).enemy;
+	}
+
+    if (hasEnemy(E.x, E.y)){
+	return getCell(E.x, E.y).enemy;
+	}
+
+    if (hasEnemy(SE.x, SE.y)){
+	return getCell(SE.x, SE.y).enemy;
+	}
+
+    if (hasEnemy(S.x, S.y)){
+	return getCell(S.x, S.y).enemy;
+	}
+
+    if (hasEnemy(SW.x, SW.y)){
+	return getCell(SW.x, SW.y).enemy;
+	}
+
+    if (hasEnemy(W.x, W.y)){
+	return getCell(W.x, W.y).enemy;
+	}
+
+    if (hasEnemy(NW.x, NW.y)){
+	return getCell(NW.x, NW.y).enemy;
+	}
+    return nullptr;
 }
 
 
@@ -297,6 +363,16 @@ bool Map::insertCharacters(std::list<Character> *characters){
 	addChar(character);
     }
     return true;
+}
+
+bool Map::insertEnemy(int x, int y, Enemy *enemy){
+    if (passable(x, y)){
+	setCell(x, y, OCCUPIED, enemy);
+	enemy->setX(x);
+	enemy->setY(y);
+	return true;
+    }
+    return false;
 }
 
 

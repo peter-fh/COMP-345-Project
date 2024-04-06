@@ -14,6 +14,7 @@
 #include <string>
 
 class Corpse;
+class Map;
 
 class Enemy{
     public:
@@ -30,7 +31,14 @@ class Enemy{
 
         void equipment();
 
-        //TODO for final, armormod as a percentage of damage reduction, eg: 15 armorMod means attack is 85% effective
+	int getX();
+	int getY();
+	void setX(int x);
+    void setY(int y);
+	bool moveTo(int x, int y, Map* map);
+		
+
+        // TODO: for final, armormod as a percentage of damage reduction, eg: 15 armorMod means attack is 85% effective
 
         Armor *equippedChestplate, *equippedHelmet, *equippedBoots, *equippedPants;
 
@@ -40,6 +48,8 @@ class Enemy{
 
     private:
         Character* playerCharacter;
+    int xLocation;
+    int yLocation;
 
 };
 

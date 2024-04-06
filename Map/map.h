@@ -23,6 +23,7 @@ public:
     bool setCell(int x, int y, int type);
     bool setCell(int x, int y, int type, Character* character);
     bool setCell(Cell inp_cell);
+    bool setCell(int x, int y, int type, Enemy* enemy);
     Cell getCell(int x, int y);    
 
     bool setStart(int x, int y);
@@ -43,6 +44,9 @@ public:
     //moving a character on the map
     bool addChar(Character myChar);
     bool insertCharacters(std::list<Character> *characters);
+    bool insertEnemy(int x, int y, Enemy* enemy);
+    bool hasEnemy(int x, int y);
+    Enemy* getNearbyEnemy(int x, int y);
 
 private:
     string name;

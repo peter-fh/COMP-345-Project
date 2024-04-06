@@ -4,6 +4,8 @@
 #include "../Observer/Logger.h"
 #include "../Character/CharacterBuilder.cpp"
 #include "../Character/Character.h"
+#include "../Enemy/Enemy.h"
+#include "../Enemy/Combat.h"
 
 
 //class Enemy; // remove when jackson makes this
@@ -22,7 +24,8 @@ private:
     int map_index;
     Campaign campaign; Map map;
     std::list<Character> characters;
-    //std::list<Enemy> enemies;
+    std::list<Enemy> enemies;
+    Enemy enemy;
     
     Character userTurn(Character character);
     void userMove(Character* character);

@@ -1,6 +1,7 @@
 #include "Game.h"
 
 
+
 Game::Game() {
     map_index = 0;
     d20 = Dice(20);
@@ -85,8 +86,17 @@ bool Game::loadNextMap(){
 
     map = campaign.get(map_index);
     cout << "Loaded map: " << map.getName() << "!\n";
-    map_index++;
+
     map.insertCharacters(&characters);
+
+    if (map_index == 1){
+	Enemy enemy1 = Enemy();
+	map.insertEnemy(10, 1, &enemy1);
+	enemy = enemy1;
+
+
+    }
+    map_index++;
     return true;
 }
 
@@ -168,13 +178,38 @@ Character Game::userTurn(Character character){
     if (move == "y"){
 	userMove(&character);
     } 
+    
+    Enemy* nearby_enemy = map.getNearbyEnemy(character.getXlocation(), character.getYlocation());
 
-    /* cout << "Would you like to attack? (y/n)\n";
-    string attack;
-    cin >> attack;
-    if (attack == "y"){
-	userAttack(&character);
-    }*/
+    if (nearby_enemy != nullptr){
+
+
+
+	cout << "Would you like to attack? (y/n)\n";
+	string attack;
+	cin >> attack;
+	if (attack == "y"){
+
+	    Weapon w1 = Weapon(3, "Sword");
+	    Armor Chestpiece = Armor("Iron Chestplate", "Chestplate", 20);
+
+	    cin.get();
+	    cin.get();
+	    character.pickup(&w1);
+	    character.pickup(&Chestpiece);
+
+	    character.equip(0);
+	    character.equip(1);
+
+
+
+
+	    Enemy e1 = Enemy();
+	    e1.status();
+
+	    Combat(&character, &e1);
+	}
+    }
 
     return character;
 }
