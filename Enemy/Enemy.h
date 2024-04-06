@@ -11,7 +11,6 @@
 #include "../Dice/Dice.h"
 #include "../Observer/Observer.h"
 #include "../Item/Loot.h"
-#include "Corpse.h"
 #include <string>
 
 class Corpse;

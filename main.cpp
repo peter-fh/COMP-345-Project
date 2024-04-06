@@ -23,7 +23,7 @@ int main(){
 
 
 
-    Character character2(12);
+    /* Character character2(12);
     character2.setName("Jeff");
 
     CharUI playerUI(&character2);
@@ -48,7 +48,5 @@ int main(){
     Combat(&character2, &e1);
 
     system("pause");
-    cout << "thank fucking god it compiled\n";
-    Game game;
-    game.load("test_campaign"); 
+    cout << "thank fucking god it compiled\n"; */
 }

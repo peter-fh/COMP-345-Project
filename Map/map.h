@@ -42,7 +42,7 @@ public:
 
     //moving a character on the map
     bool addChar(Character myChar);
-    bool insertCharacters(std::list<Character> characters);
+    bool insertCharacters(std::list<Character> *characters);
 
 private:
     string name;

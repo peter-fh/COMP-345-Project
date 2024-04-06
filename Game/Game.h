@@ -20,12 +20,18 @@ public:
 private:
 
     int map_index;
-    Campaign campaign;
-    Map map;
+    Campaign campaign; Map map;
     std::list<Character> characters;
     //std::list<Enemy> enemies;
-    void userTurn(Character* character);
+    
+    Character userTurn(Character character);
+    void userMove(Character* character);
+    void userAttack(Character* character);
     void initiativePhase();
+    void movementPhase();
+    void gameLoop();
+    void displayCurrentMap();
     //void enemyTurn(Enemy* enemy);
     Dice d20;
+    Dice d6;
 };

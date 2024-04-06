@@ -165,7 +165,7 @@ string Map::toString(){
 		    output += " ";
 		} else {
 		    if (type == OCCUPIED && getCell(x, y).character == nullptr){
-			cout << "fuck fuck fuck\n";
+			cout << "Error: OCCUPIED cell with no character\n";
 		    }
 		    output += cell_map[type] + " ";
 		}
@@ -273,9 +273,9 @@ Cell Map::getNearbyUnnocupied(int x, int y){
 
 }
 
-bool Map::insertCharacters(std::list<Character> characters){
+bool Map::insertCharacters(std::list<Character> *characters){
     vector<Character>::iterator it;
-    for (auto it = characters.begin(); it != characters.end(); it++){
+    for (auto it = characters->begin(); it != characters->end(); it++){
 	Character character = *it;
 	Cell location = getNearbyUnnocupied(start.x, start.y);
 	if (location.x == -1){
@@ -283,9 +283,9 @@ bool Map::insertCharacters(std::list<Character> characters){
 	    return false;
 	}
 	character.setLocation(location.x, location.y);
+	*it = character;
 	addChar(character);
     }
-    displayMap();
     return true;
 }
 
