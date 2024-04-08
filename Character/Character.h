@@ -31,6 +31,7 @@
 #include "../Item/Chest.h"
 #include "../Map/Mappable.h"
 #include <iostream>
+#include "../Enemy/Corpse.h"
 class CharUI;
 using std::string;
 
@@ -42,6 +43,7 @@ class Character : public Subject, Mappable
 public:
     char getSymbol() override;
     void openChest(Chest* chest);
+    void searchCorpse(Corpse* corpse);
     Character();
     std::string status();
     std::vector<Item*> inventory;

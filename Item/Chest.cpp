@@ -2,25 +2,26 @@
 
 Chest::Chest(){
     contents = Loot::generateChestLoot();
-    int amount = contents.size();
+    amount = contents.size();
 }
-Chest::Chest(){
-
+Chest::Chest(std::vector<Item*> setContents){
+    contents = setContents;
+    amount = contents.size();
 }
 
 Item* Chest::takeItem(int index){
     if (index-1 > amount || index < 1){
-        std::cout << "\nInvalid index";
+        std::cout << "\nInvalid Selection";
+        return nullptr;
     }
     else{
         amount--;
         Item* selection = contents[index-1];
-        contents[index-1] = nullptr;
+        contents.erase(contents.begin() + index-1);
         return selection;
     }
 }
 void Chest::openChest(){
-    int index = 0;
     if (contents[0] == nullptr){
         std::cout << "\nChest empty";
         return;
@@ -29,8 +30,7 @@ void Chest::openChest(){
         std::cout << "\nChest Contains";
     }
     for (Item* item : contents){
-        index++;
-        std::cout << "\n  " << index << ": " << item->getItemName();
+        std::cout << "\n  " << item->getItemName();
     }
 }
 
@@ -40,6 +40,8 @@ void Chest::reget(){
         index++;
         std::cout << "\n  " << index << ": " << item->getItemName();
     }
+    index++;
+    std::cout << "\n    " << index << ": Exit";
 }
 
 int Chest::getNumOfContents(){

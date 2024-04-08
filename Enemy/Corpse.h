@@ -12,4 +12,7 @@ class Corpse : public Mappable{
         void search();
         Item* loot(int i);
         char getSymbol() override;
+        void search();
+        void reget();
+        int getInvSize();
 };

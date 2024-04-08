@@ -51,13 +51,78 @@ void Character::inventoryCheck(){
 //new
 
 void Character::openChest(Chest* chest){
+    std::string selection;
+    int index;
     chest->openChest();
     while (chest->getNumOfContents() != 0){
+        selection = "";
         Notify("\nTake item? (y/n)");
+        std::getline(cin, selection);
+        if (selection != "y" && selection != "Y" && selection != "n" && selection != "N"){ 
+            do{
+                  std::cout << "\nInvalid, please try again";
+                  std::cout << "\nCheck stats? (y/n): ";
+                  std::getline(cin, selection);
+            } while (selection != "y" && selection != "Y" && selection != "n" && selection != "N");
+                  }
+        if (selection == "y" || selection == "Y"){
+            chest->reget();
+            Notify("\n Select Item: ");
+            std::getline(cin, selection);
+            try{
+                index = std::stoi(selection);
+                if (index == chest->getNumOfContents()+2) return;
+                else{
+                    Item* item = chest->takeItem(index);
+                    if (item != nullptr) pickup(item);
+                }
+            }catch(exception e){
+                std::cout << "\nInvaid Selection";
+            }
+    }
+        else if (selection == "n" || selection == "N") return;
+    
+
     }
     Notify("\nChest is now empty");
-
 }
+void Character::searchCorpse(Corpse* corpse){
+    std::string selection;
+    int index;
+    corpse->search();
+    while (corpse->getInvSize() != 0){
+        selection = "";
+        Notify("\nTake item? (y/n)");
+        std::getline(cin, selection);
+        if (selection != "y" && selection != "Y" && selection != "n" && selection != "N"){ 
+            do{
+                  std::cout << "\nInvalid, please try again";
+                  std::cout << "\nCheck stats? (y/n): ";
+                  std::getline(cin, selection);
+            } while (selection != "y" && selection != "Y" && selection != "n" && selection != "N");
+                  }
+        if (selection == "y" || selection == "Y"){
+            corpse->reget();
+            Notify("\n Select Item: ");
+            std::getline(cin, selection);
+            try{
+                index = std::stoi(selection);
+                if (index == corpse->getInvSize()+2) return;
+                else{
+                    Item* item = corpse->loot(index);
+                    if (item != nullptr) pickup(item);
+                }
+            }catch(exception e){
+                std::cout << "\nInvaid Selection";
+            }
+    }
+        else if (selection == "n" || selection == "N") return;
+    
+
+    }
+    Notify("\nCorpse is now empty");
+}
+
 
 //end new
 
