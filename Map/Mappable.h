@@ -1,4 +1,5 @@
-
+#ifndef MAPPABLE_H
+#define MAPPABLE_H
 
 class Mappable{
     int xCoord, yCoord;
@@ -13,3 +14,5 @@ class Mappable{
 
 
 };
+
+#endif // MAPPABLE_H
