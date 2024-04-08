@@ -13,6 +13,10 @@ Item* Corpse::loot(int i){
     return inventory[i];
 }
 
+
+char Corpse::getSymbol(){
+    return 'B';
+}
 Corpse::Corpse(Enemy* e){
     inventory = e->inventory;
 }

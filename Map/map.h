@@ -1,5 +1,7 @@
 #pragma once
 #include "Cell.h"
+#include "Mappable.h"
+#include <vector>
 
 using namespace std;
 
@@ -8,6 +10,9 @@ class Map  : public Subject{
  
 public:
 
+    std::vector<Mappable*> onMapSection; 
+
+    
     Map(int x);
     Map ();
     Map (Map *map);

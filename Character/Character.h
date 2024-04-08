@@ -28,6 +28,8 @@
 #include "../Item/Weapon.h"
 #include "../Item/Armor.h"
 #include "../Dice/Dice.h"
+#include "../Item/Chest.h"
+#include "../Map/Mappable.h"
 #include <iostream>
 class CharUI;
 using std::string;
@@ -35,10 +37,11 @@ using std::string;
 // Forward declaration
 class Map;
 
-class Character : public Subject
+class Character : public Subject, Mappable
 {
 public:
-    
+    char getSymbol() override;
+    void openChest(Chest* chest);
     Character();
     std::string status();
     std::vector<Item*> inventory;

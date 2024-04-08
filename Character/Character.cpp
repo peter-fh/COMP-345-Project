@@ -23,6 +23,14 @@
 
 using namespace std;
 
+char Character::getSymbol(){
+    if (name == ""){
+        return 'C';
+    }
+    else{
+        return (char)name[0];
+    }
+}
 
 Character::Character(){
 }
@@ -39,6 +47,19 @@ void Character::inventoryCheck(){
             Notify("  " + to_string(index++) + ": " + item->getItemName());
         }
 }}
+
+//new
+
+void Character::openChest(Chest* chest){
+    chest->openChest();
+    while (chest->getNumOfContents() != 0){
+        Notify("\nTake item? (y/n)");
+    }
+    Notify("\nChest is now empty");
+
+}
+
+//end new
 
 void Character::takeDamage(int damage){
     currHP -= damage;

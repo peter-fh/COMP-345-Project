@@ -11,11 +11,12 @@
 #include "../Dice/Dice.h"
 #include "../Observer/Observer.h"
 #include "../Item/Loot.h"
+#include "../Map/Mappable.h"
 #include <string>
 
 class Corpse;
 
-class Enemy{
+class Enemy : public Mappable{
     public:
         Enemy();
         std::string name;
@@ -27,6 +28,7 @@ class Enemy{
         bool alive;
         void playerFlee();
         int armorMod, level;
+        char getSymbol() override;
 
         void equipment();
 

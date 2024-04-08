@@ -14,23 +14,28 @@ Enemy::Enemy() {
 
     inventory.push_back(Loot::generateChestplate());
     equippedChestplate = dynamic_cast<Armor*>(inventory[1]);
+    armorMod += equippedChestplate->getDefence();
 
     inventory.push_back(Loot::generateBoots());
     equippedBoots = dynamic_cast<Armor*>(inventory[2]);
+    armorMod += equippedBoots->getDefence();
 
 
     if (coinflip.Roll() == 2) {
         inventory.push_back(Loot::generatePants());
         equippedPants = dynamic_cast<Armor*>(inventory.back());
+        armorMod += equippedPants->getDefence();
     } else {
         Armor* b1 = new Armor("Tattered Pants", "Pants", 1);
         inventory.push_back(b1);
         equippedPants = b1;
+        armorMod += 1;
     }
 
     if (coinflip.Roll() == 2) {
         inventory.push_back(Loot::generateHelmet());
         equippedHelmet = dynamic_cast<Armor*>(inventory.back()); 
+        armorMod += equippedHelmet->getDefence();
     } else {
         equippedHelmet = nullptr;
     }
@@ -58,7 +63,7 @@ void Enemy::playerFlee(){
 }
 
 int Enemy::Attack(float modifier){
-    int damage = (modifier * ((equippedWeapon->getDamage()))/2);
+    int damage = (modifier * ((equippedWeapon->getDamage())));
     if (damage == 0){
         std::cout << "\nAttack missed";
     }
@@ -76,9 +81,13 @@ void Enemy::equipment(){
 }
 
 void Enemy::takeDamage(int damage){
-    currentHP -= damage;
+    currentHP -= damage*(armorMod/100.0f);
     if (currentHP <= 0){
         std::cout << "\n" << name << " slain";
         alive = false;
     }
+}
+
+char Enemy::getSymbol(){
+    return 'E';
 }
