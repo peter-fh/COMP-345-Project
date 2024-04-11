@@ -47,3 +47,9 @@ void Chest::reget(){
 int Chest::getNumOfContents(){
     return amount;
 }
+
+
+void Chest::determineSymbol(){
+    setSymbol('C');
+}
+

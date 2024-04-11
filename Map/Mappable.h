@@ -20,7 +20,7 @@ public:
     
     char getSymbol();
     void setSymbol(char newSymbol);
-    virtual void determineSymbol();
+    virtual void determineSymbol() = 0;
 
 
 };

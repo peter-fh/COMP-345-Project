@@ -169,7 +169,11 @@ string Map::toString(){
 	    } else if (reachable[x][y] || type != EMPTY){
 		if (type == OCCUPIED && getCell(x, y).mappable_obj != nullptr){ 
 		    Mappable* mappable = getCell(x, y).mappable_obj;
-		    output.push_back(getCell(x, y).mappable_obj->getSymbol());
+		    char symbol = mappable->getSymbol();
+		    if (!isalpha(symbol)){
+			cerr << "Error: Mappable object does not have a valid symbol\n";
+		    }
+		    output.push_back(symbol);
 		    output += " ";
 		} else {
 		    if (type == OCCUPIED && getCell(x, y).mappable_obj== nullptr){

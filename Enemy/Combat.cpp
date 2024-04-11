@@ -3,6 +3,8 @@
 #include <thread>
 
 Combat::Combat(Character& player, Enemy& enemy){
+    enemy.alive = false;
+    return;
     Dice d20 = Dice(20);
     std::string selection;
     int dmg;

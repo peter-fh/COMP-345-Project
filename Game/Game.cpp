@@ -27,13 +27,20 @@ bool Game::loadCampaign(string filename){
     campaign = loaded_campaign;
     
     Character character1(1);
-    Character character2(1);
-    Character character3(1);
 
     character1.setName("Jack");
     character1.setHP(10);
     character1.heal();
     player = character1;
+
+    Weapon w1 = Weapon(3, "Sword");
+    Armor Chestpiece = Armor("Iron Chestplate", "Chestplate", 20);
+
+    player.pickup(&w1);
+    player.pickup(&Chestpiece);
+
+    player.equip(0);
+    player.equip(1);
 
     cout << "Loaded character: " << character1.getName() << "!\n";
 
@@ -369,6 +376,12 @@ void Game::userMove(Character& character){
     }
 }
 
+void Game::insertCorpses(){
+    for (Corpse& corpse : corpses){
+	corpse.determineSymbol();
+	map.setCell(corpse.getX(), corpse.getY(), OCCUPIED, &corpse);
+    }
+}
 
 void Game::userAttack(Character& character){
     vector<Enemy> nearby = enemiesNearby(character);
@@ -377,7 +390,16 @@ void Game::userAttack(Character& character){
 	return;
     } else {
 	Enemy enemy = nearby[0];
-	Combat combat(character, nearby[0]);
+	Combat combat(character, enemy);
+	if (enemy.alive == false){
+	    Corpse corpse(&enemy);
+	    cout << "corpse symbol: " << corpse.getSymbol() << endl;
+	    corpse.setX(enemy.getX());
+	    corpse.setY(enemy.getY());
+	    corpses.push_back(corpse);
+	    enemies.erase(enemies.begin());
+	    insertCorpses();
+	}
     }
 
 

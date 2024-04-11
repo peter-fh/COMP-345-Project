@@ -27,9 +27,11 @@ private:
     Character player;
     std::vector<Enemy> enemies;
     std::vector<Chest> chests;
+    std::vector<Corpse> corpses;
     
     bool insertCharacters();
     bool insertEnemies(int num_enemies);
+    void insertCorpses();
     void userTurn(Character& character);
     void userMove(Character& character);
     void userAttack(Character& character);

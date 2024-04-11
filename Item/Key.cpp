@@ -7,7 +7,7 @@ Key::Key(int c){
 int Key::getCode(){
     return code;
 }
-char Key::getSymbol(){
-    return 'K';
-    //special
+
+void Key::determineSymbol(){
+    setSymbol('K');
 }
