@@ -17,10 +17,13 @@ int main(){
     Game game;
     game.loadCampaign("test_campaign"); 
     game.loadNextMap();
-    game.startGameLoop();
+    //game.startGameLoop();
     game.loadNextMap();
-    game.startGameLoop();
+    game.startGameLoop(); 
 
+    /* cin.get();
+    cin.get();
+    cin.get();
     cin.get();
     Character character2(12);
     character2.setName("Jeff");
@@ -45,6 +48,6 @@ int main(){
     e2.status();
 
     Combat(&character2, &e1);
-
-    system("pause");
+    cout << endl;
+    //system("pause"); */
 }

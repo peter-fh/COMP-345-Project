@@ -18,24 +18,24 @@
 #include "Character.h"
 #include "../Observer/Observer.h"
 #include "../Map/Map.h"
+#include "../Enemy/Corpse.h"
 
 
 
 using namespace std;
 
-char Character::getSymbol(){
+
+void Character::determineSymbol(){
     if (name == ""){
-        //P for player
-        return 'P';
+	setSymbol('C');
     }
     else{
-        char rt = (char)name[0];
-        if (rt == 'C' || rt == 'B' || rt =='E'){
-            //taken
-            return 'P';
-        }
-        return rt;
+        setSymbol((char)name[0]);
     }
+}
+
+
+Character::Character(){
 }
 
 std::vector<Observer*> observers;
@@ -402,7 +402,6 @@ void Character::equip(int pos){
 
 Character::Character(int setLevel)
 {
-    playing = false;
     alive = true;
     std::vector<Item*> inventory;
     inventorySize = 10;
@@ -818,30 +817,13 @@ void testPrint()
 
 //********************************************
 //FOR MOVING CHARACTER
-int Character::getXlocation(){
-    return this->xLocation;
-}
-int Character::getYlocation(){
-    return this->yLocation;
-}
-
-void Character::setXLocation(int newX){
-    this->xLocation = newX;
-}
-void Character::setYLocation(int newY){
-    this->yLocation = newY;
-}
-void Character::setLocation(int newX, int newY){
-    this->setXLocation(newX);
-    this->setYLocation(newY);
-}
 
 bool Character::moveTo(int newX, int newY, Map* currentMap){
-    int currentX = this->getXlocation();
-    int currentY = this->getYlocation();
+    int currentX = this->getX();
+    int currentY = this->getY();
     if (currentMap->getEnd().x == newX && currentMap->getEnd().y == newY){
         currentMap->setCell(currentX,currentY,EMPTY);
-	playing = false;
+	this->deactivate();
 	cout << name << " has reached the end of the map!" << endl;
 	cout << "Press enter to continue: ";
 	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -849,7 +831,8 @@ bool Character::moveTo(int newX, int newY, Map* currentMap){
     }
     if(currentMap->passable(newX,newY)){
         currentMap->setCell(newX,newY,OCCUPIED, this);
-        this->setLocation(newX,newY);
+	this->setX(newX);
+	this->setY(newY);
         currentMap->setCell(currentX,currentY,EMPTY);
         return true;
     }
@@ -874,7 +857,7 @@ bool Character::attackThere(int targetX, int targetY, Map* currentMap, int dmg){
     //         }
     //     }
     // }
-    Character enemy = *currentMap->getCell(targetX,targetY).character;
+    /* Character enemy = *currentMap->getCell(targetX,targetY).character;
     if(currentMap->getCell(targetX,targetY).character){
         enemy.setHP(enemy.getHitPoints()-dmg-this->getStrengthMod()); //doesnt work
         cout<<"Attack Successful"<<endl;
@@ -883,8 +866,9 @@ bool Character::attackThere(int targetX, int targetY, Map* currentMap, int dmg){
     else{
         cout<<"Not a Valid Target"<<endl;
         return false;
-    }
-}
+    }*/
+    return false;
+} 
 
 //FOR MOVING CHARACTER
 //********************************************

@@ -11,7 +11,7 @@ class Corpse : public Mappable{
         Corpse(Enemy* e);
         void search();
         Item* loot(int i);
-        char getSymbol() override;
+        void determineSymbol() override;
         void reget();
         int getInvSize();
 };

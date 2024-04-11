@@ -37,8 +37,8 @@ void Corpse::search(){
     }
 }
 
-char Corpse::getSymbol(){
-    return 'B';
+void Corpse::determineSymbol(){
+    setSymbol('B');
 }
 Corpse::Corpse(Enemy* e){
     inventory = e->inventory;

@@ -28,11 +28,12 @@ class Enemy : public Mappable{
         bool alive;
         void playerFlee();
         int armorMod, level;
-        char getSymbol() override;
+	
+        void determineSymbol() override;
 
         void equipment();
 
-        //TODO for final, armormod as a percentage of damage reduction, eg: 15 armorMod means attack is 85% effective
+        // TODO: for final, armormod as a percentage of damage reduction, eg: 15 armorMod means attack is 85% effective
 
         Armor *equippedChestplate, *equippedHelmet, *equippedBoots, *equippedPants;
 
