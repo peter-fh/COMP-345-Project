@@ -24,7 +24,7 @@ private:
     int map_index;
     Campaign campaign; Map map;
 
-    std::vector<Character> characters;
+    Character player;
     std::vector<Enemy> enemies;
     std::vector<Chest> chests;
     
@@ -39,8 +39,8 @@ private:
     void displayCurrentMap();
     bool gameIsPlaying();
     vector<Enemy> enemiesNearby(Character& character);
-    bool moveOneSquare(int dx, int dy, Character& character, Map& map);
-    bool moveTo(int x, int y, Character& character, Map& map, int& spaces);
+    bool moveOneSquare(int dx, int dy, Character& character, Map& map, bool& done);
+    bool moveTo(int x, int y, Character& character, Map& map, int& spaces, bool& done);
 
     //void enemyTurn(Enemy* enemy);
     Dice d20;
