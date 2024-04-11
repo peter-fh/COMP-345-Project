@@ -78,6 +78,28 @@ bool Game::loadCampaign(string filename){
 }
 
 
+bool Game::insertCharacters(){
+    vector<Character>::iterator it;
+    for (auto it = characters.begin(); it != characters.end(); it++){
+	Character character = *it;
+	Cell start = map.getStart();
+	Cell location = map.getNearbyUnnocupied(start.x, start.y);
+	if (location.x == -1){
+	    cout << "No space for character!\n";
+	    return false;
+	}
+	character.setX(location.x);
+	character.setY(location.y);
+	character.determineSymbol();
+	character.activate();
+	*it = character;
+	map.setCell(location.x, location.y, OCCUPIED, &*it); 
+
+	
+    }
+    return true;
+}
+
 bool Game::loadNextMap(){
     if (map_index >= campaign.len()){
 	return false;
@@ -86,14 +108,14 @@ bool Game::loadNextMap(){
     map = campaign.get(map_index);
     cout << "Loaded map: " << map.getName() << "!\n";
     map_index++;
-    map.insertCharacters(&characters);
+    insertCharacters();
     return true;
 }
 
 bool Game::gameIsPlaying(){
     bool playing = false;
     for (Character& character : characters){
-	if (character.playing){
+	if (character.isActive()){
 	    playing = true;
 	}
     }
@@ -102,7 +124,7 @@ bool Game::gameIsPlaying(){
 }
 void Game::initiativePhase(){
     for (Character& character : characters){
-	if (character.playing){
+	if (character.isActive()){
 	    cout << character.getName() << ": roll for initiative (press enter)";
 	    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
@@ -122,7 +144,7 @@ void Game::startGameLoop(){
     while (!done && gameIsPlaying()){
 	gameLoop();
 	cout << "End of turn.\n";
-	cout << "Enter to continue, anything else to exit.\n";
+	cout << "Enter to continue, anything else to save and exit.\n";
 	string input;
 	input = cin.get();
 	input = cin.get();
@@ -142,9 +164,8 @@ void Game::gameLoop(){
 
     for (int i=20; i > 0; i--){
 	for (Character& character : characters){
-	    if (character.initiativeRoll == i && character.playing){
-		
-		character = userTurn(character);
+	    if (character.initiativeRoll == i && character.isActive()){
+		userTurn(character);
 	    }
 	}
     }
@@ -155,7 +176,7 @@ void Game::displayCurrentMap(){
 	map.displayMap();
 }
 
-Character Game::userTurn(Character character){
+void Game::userTurn(Character& character){
     for (int i=0; i < 10; i++){
 	cout << endl;
     }
@@ -165,8 +186,9 @@ Character Game::userTurn(Character character){
     cout << "Would you like to move? (y/n)\n";
     string move;
     cin >> move;
+    cin.get();
     if (move == "y"){
-	userMove(&character);
+	userMove(character);
     } 
 
     /* cout << "Would you like to attack? (y/n)\n";
@@ -176,10 +198,9 @@ Character Game::userTurn(Character character){
 	userAttack(&character);
     }*/
 
-    return character;
 }
 
-void Game::userMove(Character* character){
+void Game::userMove(Character& character){
 
 
     cout << "Roll for movement (press enter): ";
@@ -188,9 +209,9 @@ void Game::userMove(Character* character){
     int roll = d20.Roll();
     cout << "You rolled a " << roll << "!\n";
     bool done = false;
-    while (roll > 0 && !done && character->playing){
-	int x = character->getXlocation();
-	int y = character->getYlocation();
+    while (roll > 0 && !done && character.isActive()){
+	int x = character.getX();
+	int y = character.getY();
 	cout << "Would you like to move up, down, left, right, or exit? \n(u/d/l/r/e): ";
 	string direction;
 	cin >> direction;
@@ -205,36 +226,40 @@ void Game::userMove(Character* character){
 	    spaces = 0;
 	}
 	if (direction == "u" && roll - spaces >= 0){
-	    if (character->moveTo(x, y-spaces, &map)){
+	    if (character.moveTo(x, y-spaces, &map)){
 		displayCurrentMap();
 		roll -= spaces;
+		cout << "Moves left: " << roll << endl;
 	    } else {
 		cout << "Invalid move, try again\n";
 	    
 	    }
 	} else if (direction == "d" && roll - spaces >= 0){
-	    if (character->moveTo(x, y + spaces, &map)){
+	    if (character.moveTo(x, y + spaces, &map)){
 		displayCurrentMap();
 		roll -= spaces;
+		cout << "Moves left: " << roll << endl;
 	    } else {
 		cout << "Invalid move, try again\n";
 	    
 	    }
 
 	} else if (direction == "l" && roll - spaces >= 0){
-	    if (character->moveTo(x - spaces, y, &map)){
+	    if (character.moveTo(x - spaces, y, &map)){
 		displayCurrentMap();
 		roll -= spaces;
+		cout << "Moves left: " << roll << endl;
 	    } else {
 		cout << "Invalid move, try again\n";
 	    
 	    }
 
 	} else if (direction == "r" && roll - spaces >= 0){
-	    if (character->moveTo(x + spaces, y, &map)){
+	    if (character.moveTo(x + spaces, y, &map)){
 		displayCurrentMap();
 
 		roll -= spaces;
+		cout << "Moves left: " << roll << endl;
 	    } else {
 		cout << "Invalid move, try again\n";
 	    
@@ -251,6 +276,6 @@ void Game::userMove(Character* character){
 }
 
 
-void Game::userAttack(Character* character){
+void Game::userAttack(Character& character){
 	cout << "attack logic here\n";
 }

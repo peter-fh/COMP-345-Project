@@ -31,17 +31,16 @@
 #include "../Item/Chest.h"
 #include "../Map/Mappable.h"
 #include <iostream>
-#include "../Enemy/Corpse.h"
 class CharUI;
 using std::string;
 
-// Forward declaration
 class Map;
+class Corpse;
 
-class Character : public Subject, Mappable
+class Character : public Subject, public Mappable
 {
 public:
-    char getSymbol() override;
+    void determineSymbol() override;
     void openChest(Chest* chest);
     void searchCorpse(Corpse* corpse);
     Character();
@@ -64,11 +63,11 @@ public:
     Armor* equippedChestplate;
     Armor* equippedPants;
     Armor* equippedBoots;
-    void Attach(Observer *observer);
-    void Detach(Observer *observer);
+    void Attach(Observer *observer) override;
+    void Detach(Observer *observer) override;
     void Notify(string attribute, int newValue, int oldValue);
     void Notify(string message);
-    void Notify();
+    void Notify() override;
     void takeDamage(int damage);
     int attack(float modifier);
     int armorLevel;
@@ -184,20 +183,12 @@ public:
     //*************************
     //MOVING CHARACTER
     bool moveTo(int newX, int newY, Map* currentMap);
-    int getXlocation();
-    int getYlocation();
-    void setXLocation(int newX);
-    void setYLocation(int newY);
-    void setLocation(int newX, int newY);
 
     bool attackThere(int targetX, int targetY, Map* currentMap, int dmg); // wip
     int initiativeRoll;
 
-    bool playing;
 
 private: // private!!!
-    int xLocation;
-    int yLocation;
 
     Strategy *strategy;
 

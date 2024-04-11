@@ -1,16 +1,26 @@
 #ifndef MAPPABLE_H
 #define MAPPABLE_H
 
+
 class Mappable{
+private:
     int xCoord, yCoord;
-    
+    bool active;
+    char symbol;
+
+public:
     void setX(int newX);
     void setY(int newY);
-    virtual char getSymbol();
-
     int getX();
     int getY();
+    void activate();
+    void deactivate();
+    bool isActive();
 
+    
+    char getSymbol();
+    void setSymbol(char newSymbol);
+    virtual void determineSymbol();
 
 
 };

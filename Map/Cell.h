@@ -1,9 +1,7 @@
 #pragma once
 #include <iostream>
 #include <vector>
-#include "../Character/CharUI.h"
-#include "../Character/Character.h"
-
+#include "Mappable.h"
 
 
 const int EMPTY = 0;
@@ -16,50 +14,41 @@ struct Cell {
     int x;
     int y;
     int type;
-    Character* character;
-    char character_char;
-    bool has_enemy;
+    Mappable* mappable_obj;
     
     Cell() {
 	x = 0; 
 	y = 0; 
 	type = EMPTY; 
-	character = nullptr;
-	has_enemy = false;
+	mappable_obj = nullptr;
     }
 
     Cell(int inp_x, int inp_y) {
 	x = inp_x; 
 	y = inp_y; 
 	type = EMPTY; 
-	character = nullptr;
-	has_enemy = false;
+	mappable_obj = nullptr;
     }
 
     Cell(int inp_x, int inp_y, int inp_type) {
+	if (inp_type == OCCUPIED) {
+	    std::cerr << "Error: Must provide a character for an OCCUPIED cell\n";
+	}
 	x = inp_x; 
 	y = inp_y; 
 	type = inp_type; 
-	character = nullptr;
-	has_enemy = false;
+	mappable_obj = nullptr;
     }
 
-    Cell(int inp_x, int inp_y, int inp_type, Character* inp_character) {
+    Cell(int inp_x, int inp_y, int inp_type, Mappable* inp_mappable_obj) {
+	if (inp_type != OCCUPIED) {
+	    std::cerr << "Error: Incorrect constructor used for non-occupied cell\n";
+	}
 	x = inp_x; 
 	y = inp_y; 
 	type = inp_type; 
-	character = inp_character;
-	character_char = inp_character->getName()[0];
-	has_enemy = false;
-    }
+	mappable_obj = inp_mappable_obj;
 
-    Cell(int inp_x, int inp_y, bool has_enemy) {
-	x = inp_x;
-	y = inp_y;
-	type = OCCUPIED;
-	has_enemy = true;
-	character = nullptr;
-	character_char = 'E';
     }
 
 

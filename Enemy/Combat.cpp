@@ -3,6 +3,7 @@
 #include <thread>
 
 Combat::Combat(Character* player, Enemy* enemy){
+
     Dice d20 = Dice(20);
     std::string selection;
     int dmg;
@@ -10,7 +11,7 @@ Combat::Combat(Character* player, Enemy* enemy){
     std::cout << "Amushed by " << enemy->name << " (Level " << enemy->level << ") " << enemy->maxHP << "HP\n";
     enemy->equipment();
 
-    std::this_thread::sleep_for(0.5s); 
+    std::this_thread::sleep_for(2s); 
 
     while (player->alive && enemy->alive){
         selection = "";
@@ -52,7 +53,7 @@ Combat::Combat(Character* player, Enemy* enemy){
         }
 
         std::cout << "\n" << enemy->status();
-        std::this_thread::sleep_for(0.2s); 
+        std::this_thread::sleep_for(2s); 
 
 
         std::cout << "\n" << enemy->name << "'s Move" << "\n\n" << enemy->name << " Attacks";
@@ -67,7 +68,7 @@ Combat::Combat(Character* player, Enemy* enemy){
         dmg = enemy->Attack(static_cast<float>(roll) / 20.0f);
         player->takeDamage(dmg);
         
-        std::this_thread::sleep_for(0.5s); 
+        std::this_thread::sleep_for(2s); 
 
         }
     /* if (enemy->alive == false){

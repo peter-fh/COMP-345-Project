@@ -1,3 +1,4 @@
+#pragma once
 #include "Enemy.h"
 #include "../Character/Character.h"
 #include <iostream>

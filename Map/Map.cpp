@@ -127,18 +127,17 @@ bool Map::setCell(Cell inp_cell){
 }
 
 
-bool Map::setCell(int x, int y, int type, Character* character){
+bool Map::setCell(int x, int y, int type, Mappable* mappable){
     int prev_cell_type = getCell(x, y).type;
     if (prev_cell_type == START || prev_cell_type == END){
 	return false;
     }
 
-    Cell new_cell = Cell(x, y, type, character);
-    //character.setLocation(new_cell);
+    Cell new_cell = Cell(x, y, type, mappable);
     mapArray[x][y] = new_cell;
-    //Notify();
     return true;
 }
+
 
 
 Cell Map::getCell(int x, int y){
@@ -162,19 +161,19 @@ string Map::toString(){
     cell_map[START] = "◰";
     cell_map[END] = "◲";
     
-
     for (int y=0; y < height; y++){
 	for (int x=0; x < width; x++){
 	    int type = getCell(x, y).type;
 	    if (type == END){
 		output += cell_map[type] + " ";
 	    } else if (reachable[x][y] || type != EMPTY){
-		if (type == OCCUPIED && getCell(x, y).character != nullptr){ 
-		    output.push_back(getCell(x, y).character_char);
+		if (type == OCCUPIED && getCell(x, y).mappable_obj != nullptr){ 
+		    Mappable* mappable = getCell(x, y).mappable_obj;
+		    output.push_back(getCell(x, y).mappable_obj->getSymbol());
 		    output += " ";
 		} else {
-		    if (type == OCCUPIED && getCell(x, y).character == nullptr){
-			cout << "Error: OCCUPIED cell with no character\n";
+		    if (type == OCCUPIED && getCell(x, y).mappable_obj== nullptr){
+			cerr << "Error: OCCUPIED cell with no character\n";
 		    }
 		    output += cell_map[type] + " ";
 		}
@@ -184,6 +183,7 @@ string Map::toString(){
 	}
 	output += "\n";
     }
+
 
     return output;
 }
@@ -282,19 +282,20 @@ Cell Map::getNearbyUnnocupied(int x, int y){
 
 }
 
-bool Map::insertCharacters(std::list<Character> *characters){
-    vector<Character>::iterator it;
+bool Map::insertCharacters(vector<Character*> *characters){
+    vector<Mappable*>::iterator it;
     for (auto it = characters->begin(); it != characters->end(); it++){
-	Character character = *it;
+	Mappable* mappable = *it;
 	Cell location = getNearbyUnnocupied(start.x, start.y);
 	if (location.x == -1){
-	    cout << "No space for character\n";
+	    cout << "No space for mappable\n";
 	    return false;
 	}
-	character.setLocation(location.x, location.y);
-	character.playing = true;
-	*it = character;
-	addChar(character);
+	mappable->setX(location.x);
+	mappable->setY(location.y);
+	mappable->activate();
+	setCell(location.x, location.y, OCCUPIED, mappable); // WARN: this might not work
+	
     }
     return true;
 }
@@ -393,13 +394,14 @@ void Map::displaySearchMap(vector<vector<int> > *map){
     }
 }
 
-bool Map::addChar(Character myChar){
-    int x = myChar.getXlocation();
-    int y = myChar.getYlocation();
-    if(this->passable(x,y)){
-        this->setCell(x,y,OCCUPIED, &myChar);
-        return true;
-    }
-    return false;
+
+bool Map::addMappable(Mappable* mappable_obj){
+    int x = mappable_obj->getX();
+    int y = mappable_obj->getY();
+    if (passable(x, y)){
+	setCell(x, y, OCCUPIED, mappable_obj);
+	return true;
+	}
+	return false;
 }
 

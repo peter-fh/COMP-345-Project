@@ -1,12 +1,12 @@
 #pragma once
 #include "Cell.h"
-#include "Mappable.h"
+#include "../Character/Character.h"
 #include <vector>
 
 using namespace std;
 
 
-class Map  : public Subject{
+class Map {
  
 public:
 
@@ -26,7 +26,7 @@ public:
     int getHeight();
 
     bool setCell(int x, int y, int type);
-    bool setCell(int x, int y, int type, Character* character);
+    bool setCell(int x, int y, int type, Mappable* mappable_obj);
     bool setCell(Cell inp_cell);
     Cell getCell(int x, int y);    
 
@@ -39,15 +39,15 @@ public:
     bool passable(int x, int y); 
     bool isOccupied(int x, int y);
     Cell getNearbyUnnocupied(int x, int y);
+    bool addMappable(Mappable* mappable_obj);
+    bool insertCharacters(vector<Character*> *characters);
 
     bool validate();
     string toString();
 
     void displayMap();
 
-    //moving a character on the map
-    bool addChar(Character myChar);
-    bool insertCharacters(std::list<Character> *characters);
+
 
 private:
     string name;

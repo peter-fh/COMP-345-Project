@@ -8,9 +8,8 @@
 #include "Weapon.h"
 #include "Consumable.h"
 #include <vector>
-#include "../Character/Character.h"
 
-
+class Character;
 
 class Loot{
     public:

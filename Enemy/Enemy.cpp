@@ -88,6 +88,6 @@ void Enemy::takeDamage(int damage){
     }
 }
 
-char Enemy::getSymbol(){
-    return 'E';
+void Enemy::determineSymbol(){
+    //this->setSymbol('E');
 }

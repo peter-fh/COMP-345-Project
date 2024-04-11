@@ -4,9 +4,11 @@
 #include "../Observer/Logger.h"
 #include "../Character/CharacterBuilder.cpp"
 #include "../Character/Character.h"
+#include "../Enemy/Enemy.h"
+#include "../Enemy/Combat.h"
+#include "../Enemy/Corpse.h"
 
 
-//class Enemy; // remove when jackson makes this
 
 
 class Game {
@@ -21,12 +23,14 @@ private:
 
     int map_index;
     Campaign campaign; Map map;
-    std::list<Character> characters;
-    //std::list<Enemy> enemies;
+
+    std::vector<Character> characters;
+    std::vector<Enemy> enemies;
     
-    Character userTurn(Character character);
-    void userMove(Character* character);
-    void userAttack(Character* character);
+    bool insertCharacters();
+    void userTurn(Character& character);
+    void userMove(Character& character);
+    void userAttack(Character& character);
     void initiativePhase();
     void movementPhase();
     void gameLoop();
