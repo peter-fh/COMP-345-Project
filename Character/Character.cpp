@@ -525,6 +525,10 @@ int Character::calculateHitPoints()
     Notify("Hit Points", hitPoints, getConstitutionMod() + level + hitDieRoll);
     return getConstitutionMod() + level + hitDieRoll;
 }
+
+void Character::heal(){
+    currHP = hitPoints;
+}
 int Character::calculateArmorClass()
 {
     return getDexterityMod();

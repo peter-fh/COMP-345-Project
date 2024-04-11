@@ -6,7 +6,5 @@
 
 class Combat{
     public:
-        Character* player;
-        Enemy* enemy;
-        Combat(Character*, Enemy*);
+        Combat(Character& inp_player, Enemy& inp_enemy);
 };

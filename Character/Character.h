@@ -119,6 +119,7 @@ public:
     void increaseWisdom(int wisdomUp);
     void increaseCharisma(int charismaUp);
     void setLevel(int newLevel);
+    void heal();
     void setHP(int newHP)
     
     {
