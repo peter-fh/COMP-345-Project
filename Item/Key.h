@@ -7,7 +7,6 @@ class Key : public Item {
     public:
         Key(int code);
         int getCode();
-        char getSymbol() override;
     private:
         int code;
 };
