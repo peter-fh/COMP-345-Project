@@ -37,6 +37,7 @@ public:
 
     bool checkBounds(int x, int y);
     bool passable(int x, int y); 
+    bool reachable(int x, int y);
     bool isOccupied(int x, int y);
     Cell getNearbyUnnocupied(int x, int y);
     bool addMappable(Mappable* mappable_obj);

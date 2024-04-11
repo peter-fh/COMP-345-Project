@@ -321,6 +321,26 @@ bool Map::passable(int x, int y){
 const int REACHED = 1;
 const int UNREACHED = 0;
 
+bool Map::reachable(int inp_x, int inp_y){
+    
+    vector<vector<int> > searchMap;
+    // Fill entire map with unreached
+    for (int x = 0; x < width; x++){
+	vector<int> column (height);
+	fill(column.begin(), column.end(), UNREACHED);
+	searchMap.push_back(column);
+    }
+
+    breadthFirstSearch(&searchMap, Cell(start.x, start.y));
+
+    if (searchMap[inp_x][inp_y] == REACHED){
+	return true;
+    }
+
+    return false;
+}
+
+
 bool Map::validate(){
     vector<vector<int> > searchMap;
     // Fill entire map with unreached

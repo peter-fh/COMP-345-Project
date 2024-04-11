@@ -26,8 +26,10 @@ private:
 
     std::vector<Character> characters;
     std::vector<Enemy> enemies;
+    std::vector<Chest> chests;
     
     bool insertCharacters();
+    bool insertEnemies(int num_enemies);
     void userTurn(Character& character);
     void userMove(Character& character);
     void userAttack(Character& character);
@@ -36,8 +38,13 @@ private:
     void gameLoop();
     void displayCurrentMap();
     bool gameIsPlaying();
+    vector<Enemy> enemiesNearby(Character& character);
+    bool moveOneSquare(int dx, int dy, Character& character, Map& map);
+    bool moveTo(int x, int y, Character& character, Map& map, int& spaces);
+
     //void enemyTurn(Enemy* enemy);
     Dice d20;
+    Dice d10;
     Dice d6;
 
     class MapMaker{
