@@ -23,8 +23,7 @@ class CharUI : public Observer {
     void nameCharacter();
     void statChecker();
     void regDisplay();
-    void setName(std::string given);
-    
+    void startup();
     
     };
 

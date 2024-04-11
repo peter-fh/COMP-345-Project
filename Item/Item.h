@@ -13,6 +13,7 @@ class Item{
         void drop();
         virtual std::string getItemName();
         virtual void equip();
+        bool key = false;
 };
 
 #endif // ITEM_H

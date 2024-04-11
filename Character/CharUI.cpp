@@ -13,6 +13,11 @@ CharUI::CharUI(Character* c) : playerChar(c){
       }
 }
 
+void CharUI::startup(){
+      nameCharacter();
+      checkAttributes();
+}
+
 void CharUI::checkInventory(){
       std::cout << playerChar->getName() << "'s inventory!\n";
       playerChar->inventoryCheck();
@@ -21,7 +26,7 @@ void CharUI::checkInventory(){
 CharUI::CharUI(Character* c, std::string given) : playerChar(c){
             if (playerChar) {
                         playerChar->Attach(this);
-                        setName(given);
+                        playerChar->setName(given);
             }
             else{
                         std::cout << "Failed attachment, please pass a reference to a character";   
@@ -40,10 +45,6 @@ void CharUI::Update(Subject* subject){
 
 void CharUI::Update(string message){
       std::cout << message << "\n";
-}
-
-void CharUI::setName(std::string given){
-      name = given;
 }
 
 void CharUI::statChecker(){
@@ -93,8 +94,7 @@ void CharUI::nameCharacter() {
     do {
         std::cout << "\nYou selected \"" << name << "\", is this correct? It cannot be changed later (y/n): ";
         std::getline(cin, selection);
-        // Assuming a strip() function exists or similar logic is implemented to trim whitespace
-        if (selection == "y" || selection == "Y") break;
+        if (selection == "y" || selection == "Y") playerChar->setName(selection);
         else if (selection == "n" || selection == "N") {
             std::cout << "\nPlease enter your character's name: ";
             std::getline(cin, name);

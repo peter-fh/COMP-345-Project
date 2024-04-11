@@ -25,15 +25,19 @@ using namespace std;
 
 char Character::getSymbol(){
     if (name == ""){
-        return 'C';
+        //P for player
+        return 'P';
     }
     else{
-        return (char)name[0];
+        char rt = (char)name[0];
+        if (rt == 'C' || rt == 'B' || rt =='E'){
+            //taken
+            return 'P';
+        }
+        return rt;
     }
 }
 
-Character::Character(){
-}
 std::vector<Observer*> observers;
 
 void Character::inventoryCheck(){
@@ -48,7 +52,6 @@ void Character::inventoryCheck(){
         }
 }}
 
-//new
 
 void Character::openChest(Chest* chest){
     std::string selection;
@@ -124,10 +127,15 @@ void Character::searchCorpse(Corpse* corpse){
 }
 
 
-//end new
 
 void Character::takeDamage(int damage){
-    currHP -= damage;
+
+    int newDamage = damage * armorLevel/100;
+    currHP -= newDamage;
+    int blocked = damage - newDamage;
+    if (blocked > 0){
+        std::cout << "Armor blocks " << blocked << " damage";
+    }
     if (currHP <= 0){
         kill();
         //reload save logic?
@@ -149,13 +157,16 @@ void Character::pickup(Item* i){
         Notify("Picked up " + i->getItemName() + "!");
         inventory.push_back(i);
         i->pickup();
-        //inventorySize++;
     }
 }
 
 
 void Character::drop(int pos){
     Item* i = inventory[pos];
+    if (i->key){
+        Notify("Keys cannot be dropped");
+        return;
+    }
     i->drop();
     inventory.erase(inventory.begin() + pos);
 }
@@ -449,7 +460,6 @@ void Character::Notify(std::string attribute)
         observer->Update(attribute);
     }
 }
-
 
 void Character::Notify(){
     for (auto& observer: observers){
