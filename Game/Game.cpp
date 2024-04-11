@@ -12,6 +12,38 @@ bool Game::loadCampaign(string filename){
     Campaign loaded_campaign;
     loaded_campaign.setName(filename);
     
+    MapMaker mapMaker;
+    Map map1 = mapMaker.makeMap1();
+    loaded_campaign.push_back(map1);
+    
+    Map map2 = mapMaker.makeMap2();
+    loaded_campaign.push_back(map2);
+
+
+    campaign = loaded_campaign;
+    
+    Character character1(1);
+    Character character2(1);
+    Character character3(1);
+
+    character1.setName("Jack");
+    character2.setName("Gill");
+    character3.setName("Fred");
+
+    characters.push_back(character1);
+    cout << "Loaded character: " << character1.getName() << "!\n";
+    characters.push_back(character2);
+    cout << "Loaded character: " << character2.getName() << "!\n";
+    characters.push_back(character3);
+    cout << "Loaded character: " << character3.getName() << "!\n";
+
+    cout << "Loaded campaign: " << filename << "!\n";
+
+    return true;
+    
+}
+
+Map Game::MapMaker::makeMap1(){
     Map map1(10, 7);
     map1.setName("Map 1: Intro");
     MapEditor mapEditor(&map1);
@@ -19,15 +51,13 @@ bool Game::loadCampaign(string filename){
     mapEditor.drawSquare(0,1,4,5,WALL);
     mapEditor.drawSquare(4,0,9,6,WALL);
     mapEditor.drawSquare(4,2,4,4,EMPTY);
-
     mapEditor.setStart(0, 3);
-    /* mapEditor.drawCell(1, 2, WALL);
-    mapEditor.drawCell(1, 4, WALL);
-    mapEditor.drawCell(0, 1, EMPTY);
-    mapEditor.drawCell(0, 5, EMPTY); */
-    loaded_campaign.push_back(*mapEditor.saveMap());
 
+    return *mapEditor.saveMap();
+}
 
+Map Game::MapMaker::makeMap2(){
+    MapEditor mapEditor;
     Map map2(26, 11);
     map2.setName("Map 2: The Dungeon");
     mapEditor.setMap(&map2);
@@ -50,31 +80,7 @@ bool Game::loadCampaign(string filename){
     mapEditor.drawSquare(14,5,22,5,EMPTY);
 
     mapEditor.setStart(0, 5);
-    loaded_campaign.push_back(*mapEditor.saveMap());
-
-
-    //loaded_campaign.display_campaign();
-    campaign = loaded_campaign;
-    
-    Character character1(1);
-    Character character2(1);
-    Character character3(1);
-
-    character1.setName("Jack");
-    character2.setName("Gill");
-    character3.setName("Fred");
-
-    characters.push_back(character1);
-    cout << "Loaded character: " << character1.getName() << "!\n";
-    characters.push_back(character2);
-    cout << "Loaded character: " << character2.getName() << "!\n";
-    characters.push_back(character3);
-    cout << "Loaded character: " << character3.getName() << "!\n";
-
-    cout << "Loaded campaign: " << filename << "!\n";
-
-    return true;
-    
+    return *mapEditor.saveMap();
 }
 
 

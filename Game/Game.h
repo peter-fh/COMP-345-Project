@@ -39,4 +39,10 @@ private:
     //void enemyTurn(Enemy* enemy);
     Dice d20;
     Dice d6;
+
+    class MapMaker{
+    public:
+	Map makeMap1();
+	Map makeMap2();
+    };
 };
