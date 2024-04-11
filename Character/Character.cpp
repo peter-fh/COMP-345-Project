@@ -402,6 +402,7 @@ void Character::equip(int pos){
 
 Character::Character(int setLevel)
 {
+    int armorLevel = 0;
     alive = true;
     std::vector<Item*> inventory;
     inventorySize = 10;

@@ -3,10 +3,37 @@
 
 
 
+Enemy::Enemy(std::string givenName, int givenLevel, int givenHP, Weapon* weapon, Armor* Helmet, Armor* Chestplate, Armor* Pants, Armor* Boots){
+    name = givenName;
+    level = givenLevel;
+    maxHP = givenHP;
+    currentHP = givenHP;
+    std::vector<Item*> inventory;
+    armorMod = 0;
+    equippedWeapon = weapon;
+    inventory.push_back(weapon);
+    equippedHelmet = Helmet;
+    inventory.push_back(Helmet);
+    armorMod += Helmet->getDefence();
+    equippedChestplate = Chestplate;
+    inventory.push_back(Chestplate);
+    armorMod += Chestplate->getDefence();
+    equippedPants = Pants;
+    inventory.push_back(Pants);
+    armorMod += Pants->getDefence();
+    equippedBoots = Boots;
+    inventory.push_back(Boots);
+    armorMod += Boots->getDefence();
+}
+
+void Enemy::giveItem(Item* i){
+    inventory.push_back(i);
+}
 
 Enemy::Enemy() {
     Dice coinflip = Dice(2);
     std::vector<Item*> inventory;
+    int armorMod = 0;
 
     inventory.push_back(Loot::generateWeapon());
     equippedWeapon = dynamic_cast<Weapon*>(inventory[0]);
@@ -82,6 +109,9 @@ void Enemy::equipment(){
 
 void Enemy::takeDamage(int damage){
     currentHP -= damage*(armorMod/100.0f);
+    if (damage - damage*(armorMod/100.0f > 0)){
+        cout << "\nArmor blocks " << damage - damage*(armorMod/100.0f > 0) << " damage";
+    }
     if (currentHP <= 0){
         std::cout << "\n" << name << " slain";
         alive = false;
