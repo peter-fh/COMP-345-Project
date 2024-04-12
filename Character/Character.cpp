@@ -30,10 +30,12 @@ using namespace std;
 
 void Character::determineSymbol(){
     if (name == ""){
-	setSymbol('C');
+	setSymbol('P');
     }
     else{
-        setSymbol((char)name[0]);
+        char p = (char)name[0];
+        if (p == 'C' || p == 'E' || p =='B') setSymbol('P');
+        else setSymbol((char)name[0]);
     }
 }
 void Character::gainXP(int XP){
