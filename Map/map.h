@@ -59,7 +59,6 @@ private:
     int height; 
 
     vector< vector<Cell> > mapArray;
-    //vector< Cell *> characterCells;
 
     void breadthFirstSearch(vector <vector<int> > *map, Cell start_cell);
     void displaySearchMap(vector <vector<int> > *map);

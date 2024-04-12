@@ -19,7 +19,7 @@ class Corpse;
 class Enemy : public Mappable{
     public:
         Enemy();
-        Enemy::Enemy(std::string name, int level, int HP, Weapon* weapon, Armor* Helmet, Armor* Chestplate, Armor* Pants, Armor* Boots);
+        Enemy(std::string name, int level, int HP, Weapon* weapon, Armor* Helmet, Armor* Chestplate, Armor* Pants, Armor* Boots);
         void giveItem(Item* i);
         std::string name;
         void takeDamage(int damage);
