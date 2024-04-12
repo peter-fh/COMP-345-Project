@@ -63,7 +63,11 @@ void Character::inventoryCheck(){
     int index = 1;
     for (Item* item : Character::inventory) {
         if (item != nullptr) {
-            Notify("  " + to_string(index++) + ": " + item->getItemName());
+            if (item->held)
+                Notify("  " + to_string(index++) + ": " + item->getItemName() + " (Equipped)");
+            else{
+                Notify("  " + to_string(index++) + ": " + item->getItemName());
+            }
         }
 }}
 
@@ -327,15 +331,32 @@ void Character::equip(int pos){
         delete C;
         return;
     }
+    Bow* B = dynamic_cast<Bow*>(i);
+    if (B) {
+        if (equippedBow = nullptr){
+            Notify("Equipped: " + B->getItemName());
+            equippedBow = B;
+            B->equip();
+            return;
+         }
+        else{
+            Notify("Unequipped: " + equippedBow->getItemName() + "\nEquipped: " + B->getItemName());
+            equippedBow->unEquip();
+            equippedBow = B;
+            B->equip();
+            return;
+         }
+    }
     Weapon* W = dynamic_cast<Weapon*>(i);
     if (W) {
-         if (equippedWeapon == nullptr){
+
+        if (equippedWeapon == nullptr){
             Notify("Equipped: " + W->getItemName());
             equippedWeapon = W;
             W->equip();
             return;
          }
-         else{
+        else{
             Notify("Unequipped: " + equippedWeapon->getItemName() + "\nEquipped: " + W->getItemName());
             equippedWeapon->unEquip();
             equippedWeapon = W;
@@ -434,6 +455,7 @@ Character::Character(int setLevel)
     equippedPants = nullptr;
     equippedHelmet = nullptr;
     equippedWeapon = nullptr;
+    equippedBow = nullptr;
 
     if (setLevel > 0)
     {

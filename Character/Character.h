@@ -27,6 +27,7 @@
 #include "../Item/Consumable.h"
 #include "../Item/Weapon.h"
 #include "../Item/Armor.h"
+#include "../Item/Bow.h"
 #include "../Dice/Dice.h"
 #include "../Item/Chest.h"
 #include "../Map/Mappable.h"
@@ -67,6 +68,7 @@ public:
     Armor* equippedChestplate;
     Armor* equippedPants;
     Armor* equippedBoots;
+    Bow* equippedBow;
     void Attach(Observer *observer) override;
     void Detach(Observer *observer) override;
     void Notify(string attribute, int newValue, int oldValue);

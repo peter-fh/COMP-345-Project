@@ -35,7 +35,7 @@ void CharUI::checkInventory(){
       if (selection == "y" || selection == "Y"){
                   std::cout << "\nWhat Item?";
                   std::getline(cin, item);
-                  int sel = stoi(item);
+                  int sel = stoi(item)-1;
                   if (sel < playerChar->inventory.size()){
                         playerChar->equip(sel);
                   }
