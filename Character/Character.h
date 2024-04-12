@@ -94,15 +94,11 @@ public:
     string getPants() const;
     // increase (buff and debuff)
     void heal();
-    void setHP(int newHP)
-    
-    {
+    void setHP(int newHP){
         hitPoints = newHP;
-}
-    void takeDmg(int hit)
-    {
-        if (hit < 1)
-        {
+    }
+    void takeDmg(int hit){
+        if (hit < 1){
             std::cout << "The hit was inneffective" << endl;
         }
         else
@@ -116,7 +112,6 @@ public:
             }
         }
         this->setHP(this->getHitPoints() - hit);
-
 }
 
     //*************************
@@ -153,8 +148,10 @@ public:
     //MOVING CHARACTER
     bool moveTo(int newX, int newY, Map* currentMap);
 
-    bool attackThere(int targetX, int targetY, Map* currentMap, int dmg); // wip
     int initiativeRoll;
+
+    void saveCharacter();
+    static Character loadCharacter(string filename);
 
 
 private: // private!!!

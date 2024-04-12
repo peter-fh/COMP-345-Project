@@ -15,6 +15,9 @@
 #include <cassert>
 #include <stdexcept>
 #include <math.h>
+#include <iostream>
+#include <fstream>
+#include <sstream>
 #include "Character.h"
 #include "../Observer/Observer.h"
 #include "../Map/Map.h"
@@ -610,37 +613,31 @@ bool Character::moveTo(int newX, int newY, Map* currentMap){
     }
     return false;
 }
-
-bool Character::attackThere(int targetX, int targetY, Map* currentMap, int dmg){
-    // int currentX = this->getXlocation();
-    // int currentY = this->getYlocation();
-    // const int LARGE_NUM = 2147483647;
-    // float distance=LARGE_NUM, currentDist;
-    // int x,y,destinationX,destinationY,stepX,stepY;
-    // for(x=0;x<currentMap->getWidth();x++){
-    //     for(y=0;y<currentMap->getHeight();y++){
-    //         if(currentMap->getCell(x,y).character != nullptr){
-    //             currentDist = pow((x-currentX),2)+pow((y-currentY),2);
-    //             if(currentDist<distance){
-    //                 distance = currentDist;
-    //                 destinationX = x;
-    //                 destinationY = y;
-    //             }
-    //         }
-    //     }
-    // }
-    /* Character enemy = *currentMap->getCell(targetX,targetY).character;
-    if(currentMap->getCell(targetX,targetY).character){
-        enemy.setHP(enemy.getHitPoints()-dmg-this->getStrengthMod()); //doesnt work
-        cout<<"Attack Successful"<<endl;
-        return true;
-    }
-    else{
-        cout<<"Not a Valid Target"<<endl;
-        return false;
-    }*/
-    return false;
-} 
-
 //FOR MOVING CHARACTER
 //********************************************
+
+//SERIALIZATION
+void Character::saveCharacter(){
+    std::ofstream outFile(getName()+ ".txt");
+    outFile << "Name: " << name << "\n";
+    outFile << "Level: " << level << "\n";
+    outFile << "Current Hit Points: " << currHP << "\n";
+    outFile << "Max Hit Points: " << hitPoints << "\n";
+    outFile << "Character is: " << alive << "\n";
+
+    outFile << "Armor Class: " << armorClass << "\n";
+    outFile << "Attack Bonus: " << attackBonus << "\n";
+    outFile << "Damage Bonus: " << damageBonus << "\n";
+
+    outFile << "Strength: " << strength << "\n";
+
+    outFile << "inventory: " << "\n";
+    for (Item* item : Character::inventory){
+        outFile << item->getItemName() << "\n";
+    }
+    outFile.close();
+}
+
+Character Character::loadCharacter(string filename){
+
+}
