@@ -40,12 +40,7 @@ public:
 
     void buildAbilityScores() override
     {
-        character->setStrength(generateAbilityScore());
-        character->setConstitution(generateAbilityScore());
-        character->setDexterity(generateAbilityScore());
-        character->setIntelligence(generateAbilityScore());
-        character->setCharisma(generateAbilityScore());
-        character->setWisdom(generateAbilityScore());
+
     }
 
     Character *getCharacter() override
@@ -67,12 +62,7 @@ public:
 
     void buildAbilityScores() override
     {
-        character->setDexterity(generateAbilityScore());
-        character->setConstitution(generateAbilityScore());
-        character->setStrength(generateAbilityScore());
-        character->setIntelligence(generateAbilityScore());
-        character->setCharisma(generateAbilityScore());
-        character->setWisdom(generateAbilityScore());
+
     }
 
     Character *getCharacter() override
@@ -94,12 +84,7 @@ public:
 
     void buildAbilityScores() override
     {
-        character->setConstitution(generateAbilityScore());
-        character->setDexterity(generateAbilityScore());
-        character->setStrength(generateAbilityScore());
-        character->setIntelligence(generateAbilityScore());
-        character->setCharisma(generateAbilityScore());
-        character->setWisdom(generateAbilityScore());
+
     }
 
     Character *getCharacter() override

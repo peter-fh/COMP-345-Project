@@ -33,7 +33,19 @@ void Character::determineSymbol(){
         setSymbol((char)name[0]);
     }
 }
-
+void Character::gainXP(int XP){
+    std::cout << "Gained " << XP << "XP";
+    currXP += XP;
+    if (currXP >= levelUpThreshold){
+        level++;
+        std::cout << "Leveled up to level " << level << " strength and HP increased!";
+        currXP -= levelUpThreshold;
+        levelUpThreshold++;
+        hitPoints += 3;
+        strength += 2;
+        currHP = hitPoints;
+    }
+}
 
 Character::Character(){
 }
@@ -161,6 +173,8 @@ void Character::pickup(Item* i){
 }
 
 
+
+
 void Character::drop(int pos){
     Item* i = inventory[pos];
     if (i->key){
@@ -185,6 +199,7 @@ int Character::attack(float modifier){
 
 std::string Character::status(){
     return name + ": " + std::to_string(currHP) + "/" + std::to_string(hitPoints);
+
 }
 
 
@@ -192,6 +207,9 @@ void Character::equip(Item* i){
     Consumable* C = dynamic_cast<Consumable*>(i);
     if (C) {
         currHP += C->getValue();
+        if (currHP > hitPoints){
+            currHP = hitPoints;
+        }
         delete C;
         return;
     }
@@ -403,6 +421,7 @@ void Character::equip(int pos){
 Character::Character(int setLevel)
 {
     int armorLevel = 0;
+    levelUpThreshold = setLevel;
     alive = true;
     std::vector<Item*> inventory;
     inventorySize = 10;
@@ -415,26 +434,10 @@ Character::Character(int setLevel)
     if (setLevel > 0)
     {
         level = setLevel;
-
-        strength = generateAbilityScores();
-        dexterity = generateAbilityScores();
-        constitution = generateAbilityScores();
-        intelligence = generateAbilityScores();
-        wisdom = generateAbilityScores();
-        charisma = generateAbilityScores();
-
-        strengthMod = calculateModifiers(strength);
-        dexterityMod = calculateModifiers(dexterity);
-        constitutionMod = calculateModifiers(constitution);
-        intelligenceMod = calculateModifiers(intelligence);
-        wisdomMod = calculateModifiers(wisdom);
-        charismaMod = calculateModifiers(charisma);
-
-        hitPoints = calculateHitPoints();
+        strength = level*2;
+        hitPoints = level*3;
         currHP = hitPoints;
-        armorClass = calculateArmorClass();
-        attackBonus = calculateAttackBonus();
-        damageBonus = calculateDamageBonus();
+        armorClass = armorLevel;
     }
     else
     {
@@ -481,72 +484,34 @@ void Character::Detach(Observer *observer)
         }
     }
 }
+int Character::getLevel(){
+    return level;
+}
+int Character::getArmorClass(){
+    return armorLevel;
+}
+int Character::getCurrentHP(){
+    return currHP;
+}
+int Character::getHitPoints(){
+    return hitPoints;
+}
 
-int Character::generateAbilityScores()
-{
-    int n = 4;
-    int roll[4];
-    for (int i = 0; i < n; i++)
-    { // rolling 4d6
-        int high = 6;
-        int low = 1;
-        roll[i] = rand() % (high - low) + low;
-    }
-    //sort(roll, roll + n);               // dropping the lowest roll
-    return roll[1] + roll[2] + roll[3]; // summing the 3 highest rolls
-}
-int Character::calculateModifiers(int points)
-{
-    float difference = points - 10;
-    float modifier = difference / 2;
-    return floor(modifier);
-}
-int Character::calculateHitPoints()
-{
-    int hitDie = 10; // fighter hit die (d10)
-    int hitDieRoll;
-    int high;
-    int low = 1;
-    if (getLevel() == 1)
-    {
-        hitDieRoll = 1;
-    }
-    else
-    {
-        if (getLevel() < hitDie)
-        {
-            high = getLevel();
-        }
-        else
-        {
-            high = hitDie;
-        }
-        hitDieRoll = rand() % (high - low) + low;
-    }
-    Notify("Hit Points", hitPoints, getConstitutionMod() + level + hitDieRoll);
-    return getConstitutionMod() + level + hitDieRoll;
+int Character::getAttackBonus(){
+    if (equippedWeapon == nullptr) return 0;
+    return equippedWeapon->getDamage();
 }
 
 void Character::heal(){
     currHP = hitPoints;
 }
-int Character::calculateArmorClass()
-{
-    return getDexterityMod();
-}
-int Character::calculateAttackBonus()
-{
-    return level + getStrengthMod() + getDexterityMod();
-}
-int Character::calculateDamageBonus()
-{
-    return getStrengthMod();
-}
 
 void Character::setName(string newName){
     name = newName;
 }
-
+int Character::getStrength(){
+    return strength;
+}
 int Character::calculateAttackPerRound()
 {
 
@@ -558,155 +523,8 @@ int Character::calculateAttackPerRound()
     return attackPerRound;
 }
 // Setter for level
-void Character::setLevel(int newLevel)
-{
-    Notify("Level", level, newLevel);
-    if (newLevel > 0)
-    {
-        level = newLevel;
-        recalculateAttributes();
-	Notify();
-    }
-    else
-    {
-        throw invalid_argument("Level must be positive");
-    }
-}
-void Character::setStrength(int newStrength)
-{
-    Notify("Strength", strength, newStrength);
-    strength = newStrength;
-    strengthMod = calculateModifiers(strength);
-    recalculateAttributes();
-}
-void Character::setDexterity(int newDexterity)
-{
-    Notify("Dexterity", dexterity, newDexterity);
-    dexterity = newDexterity;
-    dexterityMod = calculateModifiers(dexterity);
-    recalculateAttributes();
-}
-void Character::setConstitution(int newConstitution)
-{
-    Notify("Constitution", constitution, newConstitution);
-    constitution = newConstitution;
-    constitutionMod = calculateModifiers(constitution);
-    recalculateAttributes();
-}
-void Character::setIntelligence(int newIntelligence)
-{
-    Notify("Intelligence", intelligence, newIntelligence);
-    intelligence = newIntelligence;
-    intelligenceMod = calculateModifiers(intelligence);
-    recalculateAttributes();
-}
-void Character::setWisdom(int newWisdom)
-{
-    Notify("Wisdom", wisdom, newWisdom);
-    wisdom = newWisdom;
-    wisdomMod = calculateModifiers(wisdom);
-    recalculateAttributes();
-}
-void Character::setCharisma(int newCharisma)
-{
-    Notify("Charisma", charisma, newCharisma);
-    charisma = newCharisma;
-    charismaMod = calculateModifiers(charisma);
-    recalculateAttributes();
-}
-// increase (buff and debuff)
-void Character::increaseLevel(int levelUp)
-{
-    if (level + levelUp > 0)
-    {
-        level += levelUp;
-        recalculateAttributes(); // attributes are recalculated after a level change
-	cout << "Correct function\n";
-	Notify();
-    }
-    else
-    {
-        throw invalid_argument("New Level must be positive");
-    }
-}
-void Character::increaseStrength(int buffStrength)
-{
-    Notify("Strength", strength, (strength + buffStrength));
-    strength += buffStrength;
-    strengthMod = calculateModifiers(strength);
-    recalculateAttributes();
-}
-void Character::increaseDexterity(int buffDexterity)
-{
-    Notify("Dexterity", dexterity, (dexterity + buffDexterity));
-    dexterity += buffDexterity;
-    dexterityMod = calculateModifiers(dexterity);
-    recalculateAttributes();
-}
-void Character::increaseConstitution(int buffConstitution)
-{
-    Notify("Constitution", constitution, (constitution + buffConstitution));
-    constitution += buffConstitution;
-    constitutionMod = calculateModifiers(constitution);
-    recalculateAttributes();
-}
-void Character::increaseIntelligence(int buffIntelligence)
-{
-    Notify("Intelligence", intelligence, (intelligence + buffIntelligence));
-    intelligence += buffIntelligence;
-    intelligenceMod = calculateModifiers(intelligence);
-    recalculateAttributes();
-}
-void Character::increaseWisdom(int buffWisdom)
-{
-    Notify("Wisdom", wisdom, (wisdom + buffWisdom));
-    wisdom += buffWisdom;
-    wisdomMod = calculateModifiers(wisdom);
-    recalculateAttributes();
-}
-void Character::increaseCharisma(int buffCharisma)
-{
-    Notify("Charisma", charisma, (charisma + buffCharisma));
-    charisma += buffCharisma;
-    charismaMod = calculateModifiers(charisma);
-    recalculateAttributes();
-}
-// Recalculate attributes that depend on level or modifiers
-void Character::recalculateAttributes()
-{
-    hitPoints = calculateHitPoints();
-    armorClass = calculateArmorClass();
-    attackBonus = calculateAttackBonus();
-    damageBonus = calculateDamageBonus();
-}
-// Equip gear (as strings for simplicity for now)
-void Character::equipArmor(string newArmor) { armor = newArmor; }
-void Character::equipShield(string newShield) { shield = newShield; }
-void Character::equipWeapon(string newWeapon) { weapon = newWeapon; }
-void Character::equipBoots(string newBoots) { boots = newBoots; }
-void Character::equipRing(string newRing) { ring = newRing; }
-void Character::equipHelmet(string newHelmet) { helmet = newHelmet; }
-// getters for Character stats
-int Character::getLevel() const { return level; }
-int Character::getHitPoints() const { return hitPoints; }
-int Character::getCurrentHP() {return currHP;}
-int Character::getArmorClass() const { return armorClass; }
-int Character::getAttackBonus() const { return attackBonus; }
-int Character::getDamageBonus() const { return damageBonus; }
-// getters for abilities
-int Character::getStrength() const { return strength; }
-int Character::getDexterity() const { return dexterity; }
-int Character::getConstitution() const { return constitution; }
-int Character::getIntelligence() const { return intelligence; }
-int Character::getWisdom() const { return wisdom; }
-int Character::getCharisma() const { return charisma; }
-// getters for abilitiy modifiers
-int Character::getStrengthMod() const { return strengthMod; }
-int Character::getDexterityMod() const { return dexterityMod; }
-int Character::getConstitutionMod() const { return constitutionMod; }
-int Character::getIntelligenceMod() const { return intelligenceMod; }
-int Character::getWisdomMod() const { return wisdomMod; }
-int Character::getCharismaMod() const { return charismaMod; }
+
+
 // getters for equipment
 string Character::getChestplate() const { return equippedChestplate->getItemName(); }
 string Character::getPants() const { return equippedPants->getItemName(); }
@@ -723,16 +541,10 @@ string Character::toString()
     output += "Hit Points: " + to_string(getHitPoints()) + "\n";
     output += "Armor Class: " + to_string(getArmorClass()) + "\n";
     output += "Attack Bonus: " + to_string(getAttackBonus()) + "\n";
-    output += "Damage Bonus: " + to_string(getDamageBonus()) + "\n";
     // Print ability scores
     output += "Ability Scores:";
     output += "\n";
-    output += "  Strength: " + to_string(getStrength()) + " (Mod: " + to_string(getStrengthMod()) + ")" + "\n";
-    output += "  Dexterity: " + to_string(getDexterity()) + " (Mod: " + to_string(getDexterityMod()) + ")" + "\n";
-    output += "  Constitution: " + to_string(getConstitution()) + " (Mod: " + to_string(getConstitutionMod()) + ")" + "\n";
-    output += "  Intelligence: " + to_string(getIntelligence()) + " (Mod: " + to_string(getIntelligenceMod()) + ")" + "\n";
-    output += "  Wisdom: " + to_string(getWisdom()) + " (Mod: " + to_string(getWisdomMod()) + ")" + "\n";
-    output += "  Charisma: " + to_string(getCharisma()) + " (Mod: " + to_string(getCharismaMod()) + ")" + "\n";
+    output += "  Strength: " + to_string(getStrength()) + "\n";
     // Print equipment
     output += "Equipment:";
     output += "\n";
@@ -750,23 +562,10 @@ void Character::printCharacter()
     std::cout << "Hit Points: " << getHitPoints() << "\n";
     std::cout << "Armor Class: " << getArmorClass() << "\n";
     std::cout << "Attack Bonus: " << getAttackBonus() << "\n";
-    std::cout << "Damage Bonus: " << getDamageBonus() << "\n";
     // Print ability scores
     std::cout << "Ability Scores:"
          << "\n";
-    std::cout << "  Strength: " << getStrength() << " (Mod: " << getStrengthMod() << ")"
-         << "\n";
-    std::cout << "  Dexterity: " << getDexterity() << " (Mod: " << getDexterityMod() << ")"
-         << "\n";
-    std::cout << "  Constitution: " << getConstitution() << " (Mod: " << getConstitutionMod() << ")"
-         << "\n";
-    std::cout << "  Intelligence: " << getIntelligence() << " (Mod: " << getIntelligenceMod() << ")"
-         << "\n";
-    std::cout << "  Wisdom: " << getWisdom() << " (Mod: " << getWisdomMod() << ")"
-         << "\n";
-    std::cout << "  Charisma: " << getCharisma() << " (Mod: " << getCharismaMod() << ")"
-         << "\n";
-    // Print equipment
+    std::cout << "  Strength: " << getStrength() << "\n";
     std::cout << "Equipment:"
          << "\n";
     std::cout << "  Weapon: " + getWeapon() << "\n";
@@ -776,40 +575,7 @@ void Character::printCharacter()
     std::cout << "  Boots: " + getBoots() << "\n";
 }
 
-// Test constructor and level initialization
-void testConstructor()
-{
-    Character testCharacter(1);
-    assert(testCharacter.getLevel() == 1);
-    assert(testCharacter.getHitPoints() > 0);
 
-    assert(testCharacter.getStrength() > 2);
-    assert(testCharacter.getDexterity() > 2);
-    assert(testCharacter.getConstitution() > 2);
-    assert(testCharacter.getIntelligence() > 2);
-    assert(testCharacter.getWisdom() > 2);
-    assert(testCharacter.getCharisma() > 2);
-    std::cout << "testConstructor passed\n";
-}
-
-// Test increasing level
-void testIncreaseLevel()
-{
-    Character testCharacter(1);
-    testCharacter.increaseLevel(1);
-    assert(testCharacter.getLevel() == 2);
-    std::cout << "testIncreaseLevel passed\n";
-}
-
-// Test strength attribute and modifier
-void testStrengthAttribute()
-{
-    Character testCharacter(1);
-    int initialStrength = testCharacter.getStrength();
-    testCharacter.increaseStrength(5);
-    assert(testCharacter.getStrength() == initialStrength + 5);
-    std::cout << "testStrengthAttribute passed\n";
-}
 
 // Test armor equipment
 
