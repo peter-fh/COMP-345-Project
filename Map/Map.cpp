@@ -3,6 +3,8 @@
 #include <sstream>
 #include <map>
 #include "Map.h"
+#include "../Enemy/Enemy.h"
+#include "../Enemy/Corpse.h"
 using namespace std;
 
 //create empty square map
@@ -157,11 +159,18 @@ string Map::toString(){
     string output = "";
     map<int, string> cell_map;
     vector<vector<int> > reachable = fillValidateMap();
-    cell_map[EMPTY] = "□";
-    cell_map[WALL] = "■";
-    cell_map[OCCUPIED] = "▣";
-    cell_map[START] = "◰";
-    cell_map[END] = "◲";
+    // cell_map[EMPTY] = "□";
+    // cell_map[WALL] = "■";
+    // cell_map[OCCUPIED] = "▣";
+    // cell_map[START] = "◰";
+    // cell_map[END] = "◲";
+    
+    //for testing and viewing the map on my end -Eric
+    cell_map[EMPTY] = "0";
+    cell_map[WALL] = "W";
+    cell_map[OCCUPIED] = "X";
+    cell_map[START] = "S";
+    cell_map[END] = "F";
     
     for (int y=0; y < height; y++){
 	for (int x=0; x < width; x++){
@@ -498,14 +507,15 @@ Map Map::loadMap(string filename){
                     }
                 } catch (std::invalid_argument const &e) {
                     // Conversion failed, cell is a string
-                    // if (cell == "E") { //placing an enemy
-                    //     map.setCell(row, col,2);
-                    // }
-                    // else{
-                        Character fromSave(1);//to be worked on
+                    if (cell == "E") { //placing an enemy
+                        Enemy testEnemy = Enemy();
+                        map.setCell(row, col,2,&testEnemy);
+                    }
+                    else{
+                        Character fromSave(10);//to be worked on
                         fromSave.setName(cell);
                         map.setCell(row, col,2,&fromSave);
-                    // }
+                    }
                 }
                 row++;
             }

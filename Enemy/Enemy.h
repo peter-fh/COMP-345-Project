@@ -20,16 +20,18 @@ class Enemy : public Mappable{
     public:
         Enemy();
         Enemy(std::string name, int level, int HP, Weapon* weapon, Armor* Helmet, Armor* Chestplate, Armor* Pants, Armor* Boots);
+        Enemy(std::string name, int level, bool friends);
         void giveItem(Item* i);
         std::string name;
         void takeDamage(int damage);
         int Attack(float mod);
-        Corpse kill();
+        void kill();
         std::string status();
         std::vector<Item*> inventory;
         bool alive;
         void playerFlee();
         int armorMod, level;
+        bool friendly;
 	
         void determineSymbol() override;
 
@@ -41,6 +43,7 @@ class Enemy : public Mappable{
 
         Weapon* equippedWeapon;
         int maxHP, currentHP;
+	int initiative;
 
 
     private:
