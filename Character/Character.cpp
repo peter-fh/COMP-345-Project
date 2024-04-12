@@ -640,5 +640,35 @@ void Character::saveCharacter(){
 
 Character Character::loadCharacter(string filename){
     Character character;
+
+    std::ifstream file(filename);
+    std::string line;
+
+    if (std::getline(file, line)) { // Read the first line
+        std::istringstream iss(line);
+        std::string value;
+        int width, height;
+
+        // Get first value
+        std::getline(iss, value, ',');
+        width = std::stoi(value);
+
+        // Get second value
+        std::getline(iss, value, ',');
+        height = std::stoi(value);
+
+    }
+
+    int row = 0;
+    if (file.is_open()) {
+        while (std::getline(file, line)) {
+            std::istringstream iss(line);
+            std::string cell;
+
+            row++;
+        }
+        file.close();
+    }
+
     return character;
 }
