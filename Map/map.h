@@ -48,6 +48,10 @@ public:
 
     void displayMap();
 
+    void saveMap();
+
+    static Map loadMap(string filename);
+
 
 
 private:
