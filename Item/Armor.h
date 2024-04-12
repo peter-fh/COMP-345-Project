@@ -3,15 +3,18 @@
 #include <string>
 #include "Item.h"
 
+class Armor : public Item
+{
+public:
+    Armor(std::string name, std::string type, int defence);
+    Armor();
+    std::string type;
+    int defence;
+    std::string getType();
+    int getDefence();
+    std::string getItemName() override;
+    std::string getSimpleItemName();
 
-class Armor : public Item{
-    public:
-        Armor(std::string name, std::string type, int defence);
-        std::string type;
-        int defence;
-        void equip() override;
-        void unEquip();
-        std::string getType();
-        int getDefence();
-        std::string getItemName() override;
+    void serialize(std::ostream &out) const override;
+    void deserialize(std::istream &in) override;
 };

@@ -1,13 +1,18 @@
 #include "Item.h"
 #include "../Map/Mappable.h"
 
+class Key : public Item, public Mappable
+{
+public:
+    Key(int code);
+    Key();
+    int getCode();
+    void determineSymbol() override;
 
-class Key : public Item, public Mappable{
-    public:
-        Key(int code);
-        int getCode();
-	void determineSymbol() override;
-    private:
-        int code;
-	bool key = true;
+    void serialize(std::ostream &out) const override;
+    void deserialize(std::istream &in) override;
+
+private:
+    int code;
+    bool key = true;
 };

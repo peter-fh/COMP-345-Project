@@ -1,0 +1,2 @@
+big ass sword!,ranged,150
+small ass sword,melee,230

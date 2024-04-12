@@ -1,9 +1,8 @@
 #include "Item.h"
 
+std::string Item::getItemName() { return itemName; }
 
-
-std::string Item::getItemName(){return itemName;}
-void Item::drop(){held = false;}
-void Item::pickup(){held = true;}
-
-void Item::equip(){held = true;}
+virtual void serialize(std::ostream &out) const
+{
+    out << itemName << ' ' << held << ' ' << key;
+}

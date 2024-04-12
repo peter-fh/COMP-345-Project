@@ -1,0 +1,2 @@
+Dragon Armor,Chestplate,40
+Diamond Armor,Helmet,120
