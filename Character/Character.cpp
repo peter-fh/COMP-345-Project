@@ -196,7 +196,7 @@ void Character::drop(int pos){
 
 
 int Character::attack(float modifier){
-    if (equippedWeapon = nullptr){
+    if (equippedWeapon == nullptr){
         Notify("Punched enemy for 1 damage");
         return 1;
     }
@@ -218,7 +218,7 @@ int Character::bowAttack(float modifier){
     int damage = (modifier * (equippedBow->getDamage())), dmg;
     Dice d = Dice(3);
     int num = modifier*5;
-    if (num = 0){
+    if (num == 0){
         Notify("Attack failed");
         return 0;
     }
@@ -362,7 +362,7 @@ void Character::equip(int pos){
     }
     Bow* B = dynamic_cast<Bow*>(i);
     if (B) {
-        if (equippedBow = nullptr){
+        if (equippedBow == nullptr){
             Notify("Equipped: " + B->getItemName());
             equippedBow = B;
             B->equip();

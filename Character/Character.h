@@ -43,8 +43,6 @@ class Character : public Subject, public Mappable
 public:
     int currXP, levelUpThreshold;
     void gainXP(int XP);
-    int currXP, levelUpThreshold;
-    void gainXP(int XP);
     void determineSymbol() override;
     void openChest(Chest* chest);
     void searchCorpse(Corpse* corpse);
