@@ -49,7 +49,7 @@ void StartingUI::CharacterBuilder(){
         cout << "Reroll gear? (y/n)";
         std::getline(cin, selection);
     } while (selection != "N" || selection != "n");
-
+    Bow b = Bow(7, "Wooden Bow");
     //push character to map and equip items
 
 }
