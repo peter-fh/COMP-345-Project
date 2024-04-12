@@ -194,6 +194,10 @@ void Character::drop(int pos){
 
 
 int Character::attack(float modifier){
+    if (equippedWeapon = nullptr){
+        Notify("Punched enemy for 1 damage");
+        return 1;
+    }
     int damage = (modifier * (equippedWeapon->getDamage()));
     cout << "damage: " << damage << "\n";
     if (damage == 0){
@@ -203,6 +207,29 @@ int Character::attack(float modifier){
         Notify("Attacked for " + std::to_string(damage) + " damage!");
     }
     return damage;
+}
+int Character::bowAttack(float modifier){
+    if (equippedBow == nullptr){
+        Notify("No bow equipped");
+        return 0;
+    }
+    int damage = (modifier * (equippedBow->getDamage())), dmg;
+    Dice d = Dice(3);
+    int num = modifier*5;
+    if (num = 0){
+        Notify("Attack failed");
+        return 0;
+    }
+    int total = 0;
+    Notify(std::to_string(num) + " shots");
+    for (int x = 0; x<num; x++){
+        dmg = (d.Roll()+3)/5*damage;
+        std::cout << "shot " << x+1 << dmg << " damage!\n";
+        total += dmg;
+    }
+    Notify("Attacked with bow for " + std::to_string(total) + " damage!");
+    
+    return total;
 }
 
 std::string Character::status(){

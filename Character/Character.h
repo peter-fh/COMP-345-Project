@@ -62,6 +62,7 @@ public:
     void equip(Item* i);
     void pickup(Item* i);
     void drop(int pos);
+    int bowAttack(float modi);
     bool alive;
     Weapon* equippedWeapon;
     Armor* equippedHelmet;
