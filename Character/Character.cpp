@@ -34,7 +34,7 @@ void Character::determineSymbol(){
     }
     else{
         char p = (char)name[0];
-        if (p == 'C' || p == 'E' || p =='B') setSymbol('P');
+        if (p == 'C' || p == 'E' || p =='B' || p =='X') setSymbol('P');
         else setSymbol((char)name[0]);
     }
 }
