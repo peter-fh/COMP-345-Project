@@ -639,5 +639,6 @@ void Character::saveCharacter(){
 }
 
 Character Character::loadCharacter(string filename){
-
+    Character character;
+    return character;
 }
