@@ -12,8 +12,8 @@ std::vector<Item*> Loot::generateChestLoot(){
         case(1):{
             //1 weapon, 1 random armor piece, 1 consumable
             mod = RNGesus.Roll()/10;
-Consumable* c1 = new Consumable("Potion of Healing", mod);
-lootTable.push_back(c1);
+            Consumable* c1 = new Consumable("Potion of Healing", mod);
+            lootTable.push_back(c1);
             pull = RNGesus.Roll()/25;
             mod = RNGesus.Roll()/10;
             wildcard = RNGesus.Roll();
@@ -320,6 +320,36 @@ Item* Loot::generateWeapon(){
             return w1;
 }
 
+Item* Loot::generateWeapon(int i){
+        Dice RNGesus = Dice(100);
+        int pull = i/25;
+        int mod = i/25 + 1;
+        int wildcard = i;
+        std::string classMod;
+        if (wildcard == 100){
+            //1 in 100 chance of pulling super good gear
+            mod += 10;
+            classMod = "Greatsword";
+            }
+        else{
+            wildcard = wildcard/33;
+            if (wildcard == 0){
+                classMod = "Dagger";
+                mod += 1;
+            }
+            if (wildcard == 1){
+                classMod = "Mace";
+                mod += 2;
+            }
+            if (wildcard == 2){
+                classMod = "Shortsword";
+                mod += 3;
+            }
+            }
+            Weapon* w1 = new Weapon(mod, classMod);
+            return w1;
+}
+
 Item* Loot::generateHelmet(){
         Dice RNGesus = Dice(100);
         int pull = RNGesus.Roll()/25;
@@ -349,6 +379,35 @@ Item* Loot::generateHelmet(){
         Armor* a1 = new Armor(classMod + " Helmet", "Helmet", mod);
         return a1;
 }
+Item* Loot::generateHelmet(int i){
+        int pull = i/25;
+        int mod = i/25;
+        int wildcard = i;
+        std::string classMod;
+        if (wildcard == 100){
+                //1 in 100 chance of pulling super good gear
+                mod += 20;
+                classMod = "Diamond";
+            }
+            else{
+                wildcard = wildcard/33;
+                if (wildcard == 0){
+                    classMod = "Leather";
+                    mod += 3;
+                }
+                if (wildcard == 1){
+                    classMod = "Chainmail";
+                    mod += 4;
+                }
+                if (wildcard == 2){
+                    classMod = "Iron";
+                    mod += 5;
+                }
+            }
+        Armor* a1 = new Armor(classMod + " Helmet", "Helmet", mod);
+        return a1;
+}
+
 Item* Loot::generateChestplate(){
         Dice RNGesus = Dice(100);
         int pull = RNGesus.Roll()/25;
@@ -380,6 +439,38 @@ Item* Loot::generateChestplate(){
                     
 
 }
+Item* Loot::generateChestplate(int i){
+        int pull = i/25;
+        int mod = i/25;
+        int wildcard = i;
+        std::string classMod;
+        if (wildcard == 100){
+                //1 in 100 chance of pulling super good gear
+                mod += 20;
+                classMod = "Diamond";
+            }
+            else{
+                wildcard = wildcard/33;
+                if (wildcard == 0){
+                    classMod = "Leather";
+                    mod += 3;
+                }
+                if (wildcard == 1){
+                    classMod = "Chainmail";
+                    mod += 4;
+                }
+                if (wildcard == 2){
+                    classMod = "Iron";
+                    mod += 5;
+                }
+            }
+        Armor* a1 = new Armor(classMod + " Chestpiece", "Chestpiece", mod);
+        return a1;
+                    
+
+}
+
+
 Item* Loot::generatePants(){
         Dice RNGesus = Dice(100);
         int pull = RNGesus.Roll()/25;
@@ -410,11 +501,70 @@ Item* Loot::generatePants(){
         return a1;
 
 }
+Item* Loot::generatePants(int i){
+        int pull = i/25;
+        int mod = i/25;
+        int wildcard = i;
+        std::string classMod;
+        if (wildcard == 100){
+                //1 in 100 chance of pulling super good gear
+                mod += 20;
+                classMod = "Diamond";
+            }
+            else{
+                wildcard = wildcard/33;
+                if (wildcard == 0){
+                    classMod = "Leather";
+                    mod += 3;
+                }
+                if (wildcard == 1){
+                    classMod = "Chainmail";
+                    mod += 4;
+                }
+                if (wildcard == 2){
+                    classMod = "Iron";
+                    mod += 5;
+                }
+            }
+        Armor* a1 = new Armor(classMod + " Pants", "Pants", mod);
+        return a1;
+
+}
 Item* Loot::generateBoots(){
         Dice RNGesus = Dice(100);
         int pull = RNGesus.Roll()/25;
         int mod = RNGesus.Roll()/25;
         int wildcard = RNGesus.Roll();
+        std::string classMod;
+        if (wildcard == 100){
+                //1 in 100 chance of pulling super good gear
+                mod += 20;
+                classMod = "Diamond";
+            }
+            else{
+                wildcard = wildcard/33;
+                if (wildcard == 0){
+                    classMod = "Leather";
+                    mod += 3;
+                }
+                if (wildcard == 1){
+                    classMod = "Chainmail";
+                    mod += 4;
+                }
+                if (wildcard == 2){
+                    classMod = "Iron";
+                    mod += 5;
+                }
+            }
+        Armor* a1 = new Armor(classMod + " Boots", "Boots", mod);
+        return a1;
+
+}
+
+Item* Loot::generateBoots(int i){
+        int pull = i/25;
+        int mod = i/25;
+        int wildcard = i;
         std::string classMod;
         if (wildcard == 100){
                 //1 in 100 chance of pulling super good gear
