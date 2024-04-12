@@ -47,6 +47,9 @@ public:
     string toString();
 
     void displayMap();
+    
+    void saveMap();
+    static Map loadMap(string filename);
 
 
 
