@@ -35,6 +35,9 @@ private:
     void userTurn(Character& character);
     void userMove(Character& character);
     void userAttack(Character& character);
+    void enemyTurn(Enemy& enemy);
+    void moveEnemy(Enemy& enemy);
+    bool moveEnemyOneSquare(int dx, int dy, Enemy& enemy, Map& map);
     void initiativePhase();
     void movementPhase();
     void gameLoop();

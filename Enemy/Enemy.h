@@ -41,6 +41,7 @@ class Enemy : public Mappable{
 
         Weapon* equippedWeapon;
         int maxHP, currentHP;
+	int initiative;
 
 
     private:
