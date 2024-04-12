@@ -30,10 +30,12 @@ using namespace std;
 
 void Character::determineSymbol(){
     if (name == ""){
-	setSymbol('C');
+	setSymbol('P');
     }
     else{
-        setSymbol((char)name[0]);
+        char p = (char)name[0];
+        if (p == 'C' || p == 'E' || p =='B') setSymbol('P');
+        else setSymbol((char)name[0]);
     }
 }
 void Character::gainXP(int XP){
@@ -63,7 +65,11 @@ void Character::inventoryCheck(){
     int index = 1;
     for (Item* item : Character::inventory) {
         if (item != nullptr) {
-            Notify("  " + to_string(index++) + ": " + item->getItemName());
+            if (item->held)
+                Notify("  " + to_string(index++) + ": " + item->getItemName() + " (Equipped)");
+            else{
+                Notify("  " + to_string(index++) + ": " + item->getItemName());
+            }
         }
 }}
 
@@ -190,6 +196,10 @@ void Character::drop(int pos){
 
 
 int Character::attack(float modifier){
+    if (equippedWeapon = nullptr){
+        Notify("Punched enemy for 1 damage");
+        return 1;
+    }
     int damage = (modifier * (equippedWeapon->getDamage()));
     cout << "damage: " << damage << "\n";
     if (damage == 0){
@@ -199,6 +209,29 @@ int Character::attack(float modifier){
         Notify("Attacked for " + std::to_string(damage) + " damage!");
     }
     return damage;
+}
+int Character::bowAttack(float modifier){
+    if (equippedBow == nullptr){
+        Notify("No bow equipped");
+        return 0;
+    }
+    int damage = (modifier * (equippedBow->getDamage())), dmg;
+    Dice d = Dice(3);
+    int num = modifier*5;
+    if (num = 0){
+        Notify("Attack failed");
+        return 0;
+    }
+    int total = 0;
+    Notify(std::to_string(num) + " shots");
+    for (int x = 0; x<num; x++){
+        dmg = (d.Roll()+3)/5*damage;
+        std::cout << "shot " << x+1 << dmg << " damage!\n";
+        total += dmg;
+    }
+    Notify("Attacked with bow for " + std::to_string(total) + " damage!");
+    
+    return total;
 }
 
 std::string Character::status(){
@@ -327,15 +360,32 @@ void Character::equip(int pos){
         delete C;
         return;
     }
+    Bow* B = dynamic_cast<Bow*>(i);
+    if (B) {
+        if (equippedBow = nullptr){
+            Notify("Equipped: " + B->getItemName());
+            equippedBow = B;
+            B->equip();
+            return;
+         }
+        else{
+            Notify("Unequipped: " + equippedBow->getItemName() + "\nEquipped: " + B->getItemName());
+            equippedBow->unEquip();
+            equippedBow = B;
+            B->equip();
+            return;
+         }
+    }
     Weapon* W = dynamic_cast<Weapon*>(i);
     if (W) {
-         if (equippedWeapon == nullptr){
+
+        if (equippedWeapon == nullptr){
             Notify("Equipped: " + W->getItemName());
             equippedWeapon = W;
             W->equip();
             return;
          }
-         else{
+        else{
             Notify("Unequipped: " + equippedWeapon->getItemName() + "\nEquipped: " + W->getItemName());
             equippedWeapon->unEquip();
             equippedWeapon = W;
@@ -434,6 +484,7 @@ Character::Character(int setLevel)
     equippedPants = nullptr;
     equippedHelmet = nullptr;
     equippedWeapon = nullptr;
+    equippedBow = nullptr;
 
     if (setLevel > 0)
     {
