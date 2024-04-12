@@ -9,8 +9,9 @@ void Weapon::equip(){held = true;}
 void Weapon::unEquip(){held = false;}
 bool Weapon::equipped(){return held;}
 
-int Weapon::getDamage(){return baseDamage;
-}
+int Weapon::getDamage(){
+    std::cout << "Weapon damage: " << baseDamage << "\n";
+    return baseDamage;}
 
 std::string Weapon::getItemName(){
     return itemName + " (" + std::to_string(baseDamage) + ")";

@@ -188,6 +188,7 @@ void Character::drop(int pos){
 
 int Character::attack(float modifier){
     int damage = (modifier * (equippedWeapon->getDamage()));
+    cout << "damage: " << damage << "\n";
     if (damage == 0){
         Notify("Attack missed");
     }

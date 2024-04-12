@@ -1,4 +1,4 @@
-#ifndef CHARACTER_BUILDER_H
+/* #ifndef CHARACTER_BUILDER_H
 #define CHARACTER_BUILDER_H
 
 #include "Character.h"
@@ -107,4 +107,4 @@ public:
         return character;
     }
 };
-#endif // CHARACTER_BUILDER_H
+#endif // CHARACTER_BUILDER_H */
