@@ -33,11 +33,11 @@ bool Game::loadCampaign(string filename){
     character1.heal();
     player = character1;
 
-    Weapon w1 = Weapon(3, "Sword");
-    Armor Chestpiece = Armor("Iron Chestplate", "Chestplate", 20);
+    Weapon *w1 = new Weapon(3, "Sword");
+    Armor *Chestpiece = new Armor("Iron Chestplate", "Chestplate", 20);
 
-    player.pickup(&w1);
-    player.pickup(&Chestpiece);
+    player.pickup(w1);
+    player.pickup(Chestpiece);
 
     player.equip(0);
     player.equip(1);

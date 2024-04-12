@@ -3,8 +3,8 @@
 #include <sstream>
 #include <map>
 #include "Map.h"
-#include "Enemy.h"
-#include "Corpse.h"
+#include "../Enemy/Enemy.h"
+#include "../Enemy/Corpse.h"
 using namespace std;
 
 //create empty square map
