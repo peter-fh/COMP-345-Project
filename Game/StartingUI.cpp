@@ -40,8 +40,8 @@ void StartingUI::CharacterBuilder(){
         std::getline(cin, dead);
         roll = d.Roll();
         cout << "Rolled: " << roll;
-        Armor* pants = dynamic_cast<Armor*>(Loot::generatePants(roll*5));
-        cout << pants->getItemName();
+        Armor* boots = dynamic_cast<Armor*>(Loot::generateBoots(roll*5));
+        cout << boots->getItemName();
         cout << "Roll";
         std::getline(cin, dead);
         roll = d.Roll();
