@@ -52,7 +52,7 @@ bool Game::loadCampaign(string filename){
 
 Map Game::MapMaker::makeMap1(){
     Map map1(10, 7);
-    map1.setName("Map 1: Intro");
+    map1.setName("Intro");
     MapEditor mapEditor(&map1);
     mapEditor.setEnd(8, 3);
     mapEditor.drawSquare(0,1,4,5,WALL);
@@ -66,7 +66,7 @@ Map Game::MapMaker::makeMap1(){
 Map Game::MapMaker::makeMap2(){
     MapEditor mapEditor;
     Map map2(26, 11);
-    map2.setName("Map 2: The Dungeon");
+    map2.setName("The Dungeon");
     mapEditor.setMap(&map2);
     mapEditor.setEnd(23, 5);
     mapEditor.drawSquare(0,3,6,7,WALL);
