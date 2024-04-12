@@ -29,8 +29,51 @@ Enemy::Enemy(std::string givenName, int givenLevel, int givenHP, Weapon* weapon,
 void Enemy::giveItem(Item* i){
     inventory.push_back(i);
 }
+Enemy::Enemy(std::string nom, int lvl, bool friends){
+    name = nom;
+    level = lvl;
+    friendly = friends;
+    maxHP = 5 + lvl;
+    currentHP = 5 + lvl;
+    std::vector<Item*> inventory;
+    int armorMod = 0;
+    Dice coinflip = Dice(2);
+    
+    inventory.push_back(Loot::generateWeapon());
+    equippedWeapon = dynamic_cast<Weapon*>(inventory[0]);
+
+
+    inventory.push_back(Loot::generateChestplate());
+    equippedChestplate = dynamic_cast<Armor*>(inventory[1]);
+    armorMod += equippedChestplate->getDefence();
+
+    inventory.push_back(Loot::generateBoots());
+    equippedBoots = dynamic_cast<Armor*>(inventory[2]);
+    armorMod += equippedBoots->getDefence();
+
+
+    if (coinflip.Roll() == 2) {
+        inventory.push_back(Loot::generatePants());
+        equippedPants = dynamic_cast<Armor*>(inventory.back());
+        armorMod += equippedPants->getDefence();
+    } else {
+        Armor* b1 = new Armor("Tattered Pants", "Pants", 1);
+        inventory.push_back(b1);
+        equippedPants = b1;
+        armorMod += 1;
+    }
+
+    if (coinflip.Roll() == 2) {
+        inventory.push_back(Loot::generateHelmet());
+        equippedHelmet = dynamic_cast<Armor*>(inventory.back()); 
+        armorMod += equippedHelmet->getDefence();
+    } else {
+        equippedHelmet = nullptr;
+    }
+}
 
 Enemy::Enemy() {
+    friendly = false;
     Dice coinflip = Dice(2);
     std::vector<Item*> inventory;
     int armorMod = 0;
@@ -82,8 +125,8 @@ std::string Enemy::status(){
     return "\n" + name + ": " + std::to_string(currentHP) + "/" + std::to_string(maxHP);
 }
 
-Corpse Enemy::kill(){
-    return Corpse(this);
+void Enemy::kill(){
+    new Corpse(this);
 }
 void Enemy::playerFlee(){
     currentHP = maxHP;

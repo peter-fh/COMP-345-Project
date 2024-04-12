@@ -86,22 +86,8 @@ Combat::Combat(Character& player, Enemy& enemy){
         std::this_thread::sleep_for(2s); 
 
         }
-    /* if (enemy->alive == false){
-	//PLACE CORPSE ON MAP HERE NEXT VERSION  
-	selection = "";
-	Corpse c = enemy->kill();
-	std::cout << "\nSearch?\n   1: Yes\n    2: No";
-	std::getline(cin, selection);
-	if (selection != "1" && selection != "2"){ 
-	    do{
-		std::cout << "\nInvalid, please try again";
-		std::cout << "\nSearch?\n   1: Yes\n    2: No\n";;
-		std::getline(cin, selection);
-	    } while (selection != "1" && selection != "2");
-	}
-	if (selection == "1"){
-	    c.search();
-	}   
-    } */
-        
+    if (!enemy.alive){
+        player.gainXP(enemy.level);
+	    enemy.kill();
+        }        
 }
