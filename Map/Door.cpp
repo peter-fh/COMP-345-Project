@@ -9,7 +9,7 @@ Door::Door(bool o, int c){
     code = c;
 }
 int Door::getCode(){
-    
+    return code;    
 }
 
 void Door::unlock(Character* c){

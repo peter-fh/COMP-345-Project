@@ -42,6 +42,8 @@ class Character : public Subject, public Mappable
 public:
     int currXP, levelUpThreshold;
     void gainXP(int XP);
+    int currXP, levelUpThreshold;
+    void gainXP(int XP);
     void determineSymbol() override;
     void openChest(Chest* chest);
     void searchCorpse(Corpse* corpse);
@@ -94,15 +96,11 @@ public:
     string getPants() const;
     // increase (buff and debuff)
     void heal();
-    void setHP(int newHP)
-    
-    {
+    void setHP(int newHP){
         hitPoints = newHP;
-}
-    void takeDmg(int hit)
-    {
-        if (hit < 1)
-        {
+    }
+    void takeDmg(int hit){
+        if (hit < 1){
             std::cout << "The hit was inneffective" << endl;
         }
         else
@@ -117,7 +115,13 @@ public:
         }
         this->setHP(this->getHitPoints() - hit);
 
-}
+    }
+    void setStrength(int newStrength);
+    void setDexterity(int newDexterity);
+    void setConstitution(int newConstitution);
+    void setIntelligence(int newIntelligence);
+    void setWisdom(int newWisdom);
+    void setCharisma(int newCharisma);
 
     //*************************
     // FOR STRATEGY
@@ -153,8 +157,10 @@ public:
     //MOVING CHARACTER
     bool moveTo(int newX, int newY, Map* currentMap);
 
-    bool attackThere(int targetX, int targetY, Map* currentMap, int dmg); // wip
     int initiativeRoll;
+
+    void saveCharacter();
+    static Character loadCharacter(string filename);
 
 
 private: // private!!!

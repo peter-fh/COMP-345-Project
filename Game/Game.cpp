@@ -27,13 +27,20 @@ bool Game::loadCampaign(string filename){
     campaign = loaded_campaign;
     
     Character character1(1);
-    Character character2(1);
-    Character character3(1);
 
     character1.setName("Jack");
     character1.setHP(10);
     character1.heal();
     player = character1;
+
+    Weapon w1 = Weapon(3, "Sword");
+    Armor Chestpiece = Armor("Iron Chestplate", "Chestplate", 20);
+
+    player.pickup(&w1);
+    player.pickup(&Chestpiece);
+
+    player.equip(0);
+    player.equip(1);
 
     cout << "Loaded character: " << character1.getName() << "!\n";
 
@@ -45,7 +52,7 @@ bool Game::loadCampaign(string filename){
 
 Map Game::MapMaker::makeMap1(){
     Map map1(10, 7);
-    map1.setName("Map 1: Intro");
+    map1.setName("Intro");
     MapEditor mapEditor(&map1);
     mapEditor.setEnd(8, 3);
     mapEditor.drawSquare(0,1,4,5,WALL);
@@ -59,7 +66,7 @@ Map Game::MapMaker::makeMap1(){
 Map Game::MapMaker::makeMap2(){
     MapEditor mapEditor;
     Map map2(26, 11);
-    map2.setName("Map 2: The Dungeon");
+    map2.setName("The Dungeon");
     mapEditor.setMap(&map2);
     mapEditor.setEnd(23, 5);
     mapEditor.drawSquare(0,3,6,7,WALL);
@@ -369,6 +376,12 @@ void Game::userMove(Character& character){
     }
 }
 
+void Game::insertCorpses(){
+    for (Corpse& corpse : corpses){
+	corpse.determineSymbol();
+	map.setCell(corpse.getX(), corpse.getY(), OCCUPIED, &corpse);
+    }
+}
 
 void Game::userAttack(Character& character){
     vector<Enemy> nearby = enemiesNearby(character);
@@ -377,7 +390,16 @@ void Game::userAttack(Character& character){
 	return;
     } else {
 	Enemy enemy = nearby[0];
-	Combat combat(character, nearby[0]);
+	Combat combat(character, enemy);
+	if (enemy.alive == false){
+	    Corpse corpse(&enemy);
+	    cout << "corpse symbol: " << corpse.getSymbol() << endl;
+	    corpse.setX(enemy.getX());
+	    corpse.setY(enemy.getY());
+	    corpses.push_back(corpse);
+	    enemies.erase(enemies.begin());
+	    insertCorpses();
+	}
     }
 
 

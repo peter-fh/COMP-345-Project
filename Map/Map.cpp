@@ -1,6 +1,10 @@
 #include <iostream>
+#include <fstream>
+#include <sstream>
 #include <map>
 #include "Map.h"
+#include "Enemy.h"
+#include "Corpse.h"
 using namespace std;
 
 //create empty square map
@@ -155,11 +159,18 @@ string Map::toString(){
     string output = "";
     map<int, string> cell_map;
     vector<vector<int> > reachable = fillValidateMap();
-    cell_map[EMPTY] = "□";
-    cell_map[WALL] = "■";
-    cell_map[OCCUPIED] = "▣";
-    cell_map[START] = "◰";
-    cell_map[END] = "◲";
+    // cell_map[EMPTY] = "□";
+    // cell_map[WALL] = "■";
+    // cell_map[OCCUPIED] = "▣";
+    // cell_map[START] = "◰";
+    // cell_map[END] = "◲";
+    
+    //for testing and viewing the map on my end -Eric
+    cell_map[EMPTY] = "0";
+    cell_map[WALL] = "W";
+    cell_map[OCCUPIED] = "X";
+    cell_map[START] = "S";
+    cell_map[END] = "F";
     
     for (int y=0; y < height; y++){
 	for (int x=0; x < width; x++){
@@ -169,7 +180,11 @@ string Map::toString(){
 	    } else if (reachable[x][y] || type != EMPTY){
 		if (type == OCCUPIED && getCell(x, y).mappable_obj != nullptr){ 
 		    Mappable* mappable = getCell(x, y).mappable_obj;
-		    output.push_back(getCell(x, y).mappable_obj->getSymbol());
+		    char symbol = mappable->getSymbol();
+		    if (!isalpha(symbol)){
+			cerr << "Error: Mappable object does not have a valid symbol\n";
+		    }
+		    output.push_back(symbol);
 		    output += " ";
 		} else {
 		    if (type == OCCUPIED && getCell(x, y).mappable_obj== nullptr){
@@ -425,3 +440,90 @@ bool Map::addMappable(Mappable* mappable_obj){
 	return false;
 }
 
+void Map::saveMap() {
+    std::ofstream file(getName()+ ".txt");
+    if (!file.is_open()) {
+        std::cerr << "Failed to open file0 for saving." << std::endl;
+        return;
+    }
+    file << getWidth() << "," << getHeight() << std::endl;
+    for (int y = 0; y < height; ++y) {
+        for (int x = 0; x < width; ++x) {
+            Cell cell = getCell(x, y);
+            // if (cell.character != nullptr) {
+            //     file << cell.character->getName(); // Ensure getName() only returns a simple identifier
+            // }
+            // else{
+                file << cell.type;
+            // }
+            
+            file << (x == width - 1 ? '\n' : ',');
+        }
+    }
+    file.close();
+}
+
+Map Map::loadMap(string filename){
+    Map map;
+    std::ifstream file(filename);
+    std::string line;
+
+    if (std::getline(file, line)) { // Read the first line
+        std::istringstream iss(line);
+        std::string value;
+        int width, height;
+
+        // Get first value
+        std::getline(iss, value, ',');
+        width = std::stoi(value);
+
+        // Get second value
+        std::getline(iss, value, ',');
+        height = std::stoi(value);
+
+        map = Map(width,height,filename.substr(0, filename.size() - 4));
+    }
+
+    int col = 0;
+    if (file.is_open()) {
+        while (std::getline(file, line)) {
+            std::istringstream iss(line);
+            std::string cell;
+            int row = 0;
+
+            while (std::getline(iss, cell, ',')) {
+                try {
+                    // Attempt to convert cell to an integer
+                    // std::cout<<cell<<endl;
+                    int cellType = std::stoi(cell);
+
+                    // If conversion succeeds, it's a number
+                    if (cellType == 3) { // START
+                        map.setStart(row, col);
+                    } else if (cellType == 4) { // END
+                        map.setEnd(row, col);
+                    } else {
+                        map.setCell(row, col, cellType);
+                    }
+                } catch (std::invalid_argument const &e) {
+                    // Conversion failed, cell is a string
+                    if (cell == "E") { //placing an enemy
+                        Enemy testEnemy = Enemy();
+                        map.setCell(row, col,2,&testEnemy);
+                    }
+                    else{
+                        Character fromSave(10);//to be worked on
+                        fromSave.setName(cell);
+                        map.setCell(row, col,2,&fromSave);
+                    }
+                }
+                row++;
+            }
+            col++;
+        }
+        file.close();
+    } else {
+        std::cout << "Unable to open file" << std::endl;
+    }
+    return map;
+}

@@ -38,10 +38,11 @@ void Corpse::search(){
 }
 
 void Corpse::determineSymbol(){
-    setSymbol('B');
+    setSymbol('X');
 }
 Corpse::Corpse(Enemy* e){
     inventory = e->inventory;
+    determineSymbol();
 }
 int Corpse::getInvSize(){
     return inventory.size();

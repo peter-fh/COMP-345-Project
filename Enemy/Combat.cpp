@@ -35,11 +35,8 @@ Combat::Combat(Character& player, Enemy& enemy){
                 if (roll == 20){
                     cout << "\n!CRIT!";
                 }
-		cout << "before player attack\n";
 		float dmg = player.attack(static_cast<float>(roll) / 20.0f);	
-		cout << "before enemy take damage\n";
                 enemy.takeDamage(dmg);
-		cout << "after enemy take damage\n";
                 if (enemy.alive == false){
                     return;
                 }
