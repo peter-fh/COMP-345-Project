@@ -27,6 +27,7 @@
 #include "../Item/Consumable.h"
 #include "../Item/Weapon.h"
 #include "../Item/Armor.h"
+#include "../Item/Bow.h"
 #include "../Dice/Dice.h"
 #include "../Item/Chest.h"
 #include "../Map/Mappable.h"
@@ -59,12 +60,14 @@ public:
     void equip(Item* i);
     void pickup(Item* i);
     void drop(int pos);
+    int bowAttack(float modi);
     bool alive;
     Weapon* equippedWeapon;
     Armor* equippedHelmet;
     Armor* equippedChestplate;
     Armor* equippedPants;
     Armor* equippedBoots;
+    Bow* equippedBow;
     void Attach(Observer *observer) override;
     void Detach(Observer *observer) override;
     void Notify(string attribute, int newValue, int oldValue);
@@ -112,7 +115,14 @@ public:
             }
         }
         this->setHP(this->getHitPoints() - hit);
-}
+
+    }
+    void setStrength(int newStrength);
+    void setDexterity(int newDexterity);
+    void setConstitution(int newConstitution);
+    void setIntelligence(int newIntelligence);
+    void setWisdom(int newWisdom);
+    void setCharisma(int newCharisma);
 
     //*************************
     // FOR STRATEGY

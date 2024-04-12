@@ -42,8 +42,22 @@ Combat::Combat(Character& player, Enemy& enemy){
                 }
             }
         if (selection == "2"){
+                int roll = d20.Roll();
+                std::cout << "\nRolling D20";
+                std::this_thread::sleep_for(0.2s); 
+                std::cout << "\nRolled: " << roll << "\n";
+                if (roll == 20){
+                    cout << "\n!CRIT!";
+                }
+		        float dmg = player.attack(static_cast<float>(roll) / 20.0f);	
+                enemy.takeDamage(dmg);
+                if (enemy.alive == false){
+                    return;
+                }
+            }
+        if (selection == "3"){
             int roll = d20.Roll();
-            if (roll < 10){
+            if (roll < 15){
                 cout << "\nSuccessfully Fled";
                 enemy.playerFlee();
                 return;
