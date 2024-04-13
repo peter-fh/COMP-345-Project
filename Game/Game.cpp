@@ -369,28 +369,34 @@ bool Game::moveEnemy(Enemy& enemy){
 
     displayCurrentMap();
     std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-    while (roll > 0 && xDirection != 0){
-	if (moveEnemyOneSquare(xDirection, 0, enemy, map)){
-	    displayCurrentMap();
-	    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-	    roll--;
-	    xDirection = (player.getX() - enemy.getX()) / abs(player.getX() - enemy.getX());
+    bool hasMoved = true;
+    while (hasMoved){
+	hasMoved = false;
+	while (roll > 0 && xDirection != 0){
+	    if (moveEnemyOneSquare(xDirection, 0, enemy, map)){
+		hasMoved = true;
+		displayCurrentMap();
+		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+		roll--;
+		xDirection = (player.getX() - enemy.getX()) / abs(player.getX() - enemy.getX());
 
 	} else {
-	    break;
+		break;
+	    }
 	}
-    }
 
-    while (roll > 0 && yDirection != 0){
+	while (roll > 0 && yDirection != 0){
 
-	if (moveEnemyOneSquare(0, yDirection, enemy, map)){
-	    displayCurrentMap();
-	    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-	    roll--;
+	    if (moveEnemyOneSquare(0, yDirection, enemy, map)){
+		hasMoved = true;
+		displayCurrentMap();
+		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+		roll--;
 
-	    yDirection = (player.getY() - enemy.getY()) / abs(player.getY() - enemy.getY());
+		yDirection = (player.getY() - enemy.getY()) / abs(player.getY() - enemy.getY());
 	} else {
-	    break;
+		break;
+	    }
 	}
     }
 
