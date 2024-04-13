@@ -110,22 +110,22 @@ bool Game::insertCharacters(){
 }
 
 
-bool Game::insertChests(int num_chests){
-    chests.clear();
-    for (int i=0; i < num_chests; i++){
+bool Game::insertBags(int num_bags){
+    // corpses.clear();
+    for (int i=0; i < num_bags; i++){
 	Armor* armor1 = new Armor("Iron Helmet", "Helmet", 12);
 	Armor* armor2 = new Armor("Iron Pants","Pants", 12);
 	Armor* armor3 = new Armor("Iron Chestpiece","Chestplate", 12);
 	Armor* armor4 = new Armor("Iron Boots","Boots", 12);
 	std::vector<Item*> v = {armor1, armor2, armor3, armor4};
-	Chest openme = Chest(v);
-	chests.push_back(openme);
-	cout << "Chest created!\n";
+	Corpse openme = Corpse(v);
+	corpses.push_back(openme);
+	cout << "Bag created!\n";
     }
 
     std::srand(std::time(0));
-    for (auto it = chests.begin(); it != chests.end(); it++){
-	Chest chest = *it;
+    for (auto it = corpses.begin(); it != corpses.end(); it++){
+	Corpse chest = *it;
 	bool foundLocation = false;
 	int iterations = 0;
 	int max_x = map.getWidth() - 1;
@@ -141,7 +141,6 @@ bool Game::insertChests(int num_chests){
 		*it = chest;
 		map.setCell(x, y, OCCUPIED, &*it);
 		foundLocation = true;
-	    
 	    }
 	}
 
