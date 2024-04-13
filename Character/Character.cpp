@@ -53,6 +53,23 @@ void Character::gainXP(int XP){
 }
 
 Character::Character(){
+    int armorLevel = 0;
+    levelUpThreshold = 1;
+    alive = true;
+    std::vector<Item*> inventory;
+    inventorySize = 10;
+    equippedChestplate = nullptr;
+    equippedBoots = nullptr;
+    equippedPants = nullptr;
+    equippedHelmet = nullptr;
+    equippedWeapon = nullptr;
+    equippedBow = nullptr;
+
+    level = 1;
+    strength = level*2;
+    hitPoints = level*3;
+    currHP = hitPoints;
+    armorClass = armorLevel;
 }
 
 std::vector<Observer*> observers;

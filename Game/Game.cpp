@@ -572,6 +572,8 @@ void Game::userAttack(Character& character){
 	    corpses.push_back(corpse);
 	    enemies.erase(enemies.begin());
 	    insertCorpses();
+	} else {
+	    cout << "enemy is alive still\n";
 	}
 	std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     }
