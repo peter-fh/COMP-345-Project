@@ -1,8 +1,9 @@
+#include <fstream>
+#include <sstream>
 #include "Campaign.h"
 
 
 Campaign::Campaign() {
-
     Map map(5, 5);
 }
 
@@ -104,8 +105,10 @@ void Campaign::display_names(){
 void Campaign::display_campaign(){
     std::cout << "Campaign Maps:\n";
     for(std::list<Map>::iterator it = maps.begin(); it != maps.end(); ++it){
-	std::cout << it->getName();
+	std::cout << "\n"<<it->getName();
 	it->displayMap();
+    std::cout << "\n";
+
     }
 }
 
@@ -137,3 +140,42 @@ bool Campaign::remove(Map map){
 string Campaign::getName() {return name;}
 
 void Campaign::setName(string inp_name) {name = inp_name;}
+
+
+
+void Campaign::saveCampaign(){
+    std::ofstream file(getName()+ ".txt");
+    if (!file.is_open()) {
+        std::cerr << "Failed to open file for saving." << std::endl;
+        return;
+    }
+
+    int i=0;
+    for(std::list<Map>::iterator it = maps.begin(); it != maps.end(); ++it){
+	file << i << ":"<< it->getName() << "\n";
+	++i;
+    }    
+    file.close();
+}
+
+Campaign Campaign::loadCampaign(string filename){
+    Campaign campaign;
+    campaign.setName(filename.substr(0, filename.size() - 4));
+    std::ifstream file(filename);
+    std::string line;
+    
+    if (file.is_open()) {
+        while (getline(file, line)) {
+            std::istringstream iss(line);
+            std::string index, mapName;
+            if (getline(iss, index, ':') && getline(iss, mapName)) {
+                std::string filename = mapName + ".txt"; // Create filename
+                campaign.push_back(Map::loadMap(filename)); // Load the map
+            }
+        }
+        file.close();
+    } else {
+        std::cout << "Failed to open file." << std::endl;
+    }
+    return campaign;
+}
