@@ -11,8 +11,6 @@ Combat::Combat(Character& player, Enemy& enemy){
     enemy.equipment();
 
     std::this_thread::sleep_for(2s); 
-    std::cout << "Player is alive: " << player.alive << "\n";
-    std::cout << "Enemy is alive: " << enemy.alive << "\n";
     while (player.alive && enemy.alive){
         selection = "";
         std::cout << "\n" << player.status();

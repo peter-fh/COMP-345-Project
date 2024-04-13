@@ -42,6 +42,7 @@ bool Game::loadCampaign(string filename){
     player.equip(0);
     player.equip(1);
 
+
     cout << "Loaded character: " << character1.getName() << "!\n";
 
     cout << "Loaded campaign: " << filename << "!\n";
@@ -108,6 +109,44 @@ bool Game::insertCharacters(){
     return true;
 }
 
+
+bool Game::insertChests(int num_chests){
+    chests.clear();
+    for (int i=0; i < num_chests; i++){
+	Chest chest;
+	chests.push_back(chest);
+    }
+
+    std::srand(std::time(0));
+    for (auto it = chests.begin(); it != chests.end(); it++){
+	Chest chest = *it;
+	bool foundLocation = false;
+	int iterations = 0;
+	int max_x = map.getWidth() - 1;
+	int min_x = map.getStart().x + 1;
+	while (!foundLocation && iterations < 10000){
+	    iterations++;
+	    int x = std::rand() % (max_x - min_x + 2) + min_x;
+	    int y = std::rand() % (map.getHeight() - 1);
+	    if (map.passable(x, y) && map.reachable(x, y) && !map.isOccupied(x, y)){
+		chest.setX(x);
+		chest.setY(y);
+		chest.determineSymbol();
+		*it = chest;
+		map.setCell(x, y, OCCUPIED, &*it);
+		foundLocation = true;
+	    
+	    }
+	}
+
+	if (!foundLocation){
+	    cout << "No space for chest!\n";
+	    return false;
+	}
+    }
+
+    return true;
+}
 bool Game::insertEnemies(int num_enemies){
     enemies.clear();
     for (int i=0; i < num_enemies; i++){
@@ -128,7 +167,7 @@ bool Game::insertEnemies(int num_enemies){
 	    interations++;
 	    int x = std::rand() % (max_x - min_x + 1) + min_x;
 	    int y = std::rand() % (map.getHeight() - 1);
-	    if (map.passable(x, y) && map.reachable(x, y)){
+	    if (map.passable(x, y) && map.reachable(x, y) && !map.isOccupied(x, y)){
 		enemy.setX(x);
 		enemy.setY(y);
 		enemy.determineSymbol();
@@ -158,7 +197,8 @@ bool Game::loadNextMap(){
     cout << "Loaded map: " << map.getName() << "!\n";
     map_index++;
     insertCharacters();
-    insertEnemies(3);
+    insertEnemies(1);
+    insertChests(1);
     return true;
 }
 
@@ -178,7 +218,6 @@ void Game::initiativePhase(){
 	if (enemy.isActive()){
 	    enemy.initiative = d20.Roll();
 	    cout << enemy.status();
-
 	    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 	    cout << " rolled a " << enemy.initiative << "!\n";
 	}
@@ -224,24 +263,29 @@ void Game::gameLoop(){
 	    }
 	}
     }
-    userTurn(player);
 
 }
 
 void Game::enemyTurn(Enemy& enemy){
-    vector<Enemy> nearby = enemiesNearby(player);
-    for (Enemy& nearbyEnemy: nearby){
-	if (&nearbyEnemy == &enemy){
-	    Combat combat(player, enemy);    
-	    return;
-	}
+    if (moveEnemy(enemy)){
+	Combat combat(player, enemy);
     }
-    moveEnemy(enemy);
 }
 
 
 
+vector<Chest> Game::chestsNearby(Character& character){
+    vector<Chest> nearby;
+    for (Chest& chest : chests){
+	int dx = abs(character.getX() - chest.getX());
+	int dy = abs(character.getY() - chest.getY());
+	if (dx <= 1 && dy <= 1){
+	    nearby.push_back(chest);
+	}
+    }
 
+    return nearby;
+}
 vector<Enemy> Game::enemiesNearby(Character& character){
     vector<Enemy> nearby;
     for (Enemy& enemy : enemies){
@@ -277,41 +321,82 @@ void Game::userTurn(Character& character){
 	userMove(character);
     } 
 
-    cout << "Would you like to attack? (y/n)\n";
-    string attack;
-    cin >> attack;
-    if (attack == "y"){
-	userAttack(character);
+    vector<Enemy> nearbyEnemies = enemiesNearby(character);
+    if (nearbyEnemies.size() > 0){
+	cout << "Would you like to attack? (y/n)\n";
+	string attack;
+	cin >> attack;
+	if (attack == "y"){
+	    userAttack(character);
+	}
     }
+
+    vector<Chest> nearbyChests = chestsNearby(character);
+    if (nearbyChests.size() > 0){
+	cout << "Would you like to open a chest? (y/n)\n";
+	string open;
+	cin >> open;
+	if (open == "y"){
+	    userLoot(nearbyChests[0]);
+	}
+    }
+
 
 }
 
-void Game::moveEnemy(Enemy& enemy){
+
+void Game::userLoot(Chest& chest){
+    chest.openChest();
+    cout << "Which item would you like to take? (1-" << chest.getNumOfContents() << ")\n";
+    int choice;
+    cin >> choice;
+    Item* item = chest.takeItem(choice);
+    if (item != nullptr){
+	player.pickup(item);
+    }
+}
+
+bool Game::moveEnemy(Enemy& enemy){
     int xDirection = (player.getX() - enemy.getX()) / abs(player.getX() - enemy.getX());
     int yDirection = (player.getY() - enemy.getY()) / abs(player.getY() - enemy.getY());
-    cout << enemy.status() << "is rolling for movement (press enter)";
+    cout << "enemy y direction: " << yDirection << endl;
+    cout << enemy.status() << " is rolling for movement (press enter)";
     cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     int roll = d6.Roll();
     cout << enemy.status() << " rolled a " << roll << "!\n";
+
+    displayCurrentMap();
+    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     while (roll > 0 && xDirection != 0){
 	if (moveEnemyOneSquare(xDirection, 0, enemy, map)){
 	    displayCurrentMap();
 	    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 	    roll--;
+	    int xDirection = (player.getX() - enemy.getX()) / abs(player.getX() - enemy.getX());
+
 	} else {
-	    xDirection = 0;
+	    break;
 	}
     }
 
     while (roll > 0 && yDirection != 0){
+	cout << "yDirection: " << yDirection << endl;
 	if (moveEnemyOneSquare(0, yDirection, enemy, map)){
 	    displayCurrentMap();
 	    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 	    roll--;
+	    int yDirection = (player.getY() - enemy.getY()) / abs(player.getY() - enemy.getY());
 	} else {
-	    yDirection = 0;
+	    break;
 	}
     }
+
+    if (abs(enemy.getX() - player.getX()) <= 1 && abs(enemy.getY() - player.getY()) <= 1){
+	return true;
+    } 
+
+    return false;
+
 
 
 }
@@ -378,7 +463,8 @@ bool Game::moveTo(int x, int y, Character& character, Map& map, int& spaces, boo
 
 
 	displayCurrentMap();
-	std::this_thread::sleep_for(std::chrono::milliseconds(300));
+
+	std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 	spaces--;
 
 
@@ -461,7 +547,7 @@ void Game::insertCorpses(){
 void Game::userAttack(Character& character){
     vector<Enemy> nearby = enemiesNearby(character);
     if (nearby.size() == 0){
-	cout << "No enemies nearby to attack!\n";
+	cout << "No enemies nearby!\n";
 	return;
     } else {
 	Enemy enemy = nearby[0];
@@ -475,6 +561,7 @@ void Game::userAttack(Character& character){
 	    enemies.erase(enemies.begin());
 	    insertCorpses();
 	}
+	std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     }
 
 

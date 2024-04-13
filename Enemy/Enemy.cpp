@@ -117,7 +117,7 @@ Enemy::Enemy() {
 
     Dice speciesDice = Dice(5);
     std::string races[] = {"Goblin", "Human", "Orc", "Elf", "Dwarf"};
-    name = races[speciesDice.Roll()];
+    name = races[speciesDice.Roll() - 1];
 }
 
 

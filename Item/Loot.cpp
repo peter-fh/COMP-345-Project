@@ -3,11 +3,10 @@
 
 std::vector<Item*> Loot::generateChestLoot(){
     Dice RNGesus = Dice(100);
-    int table = RNGesus.Roll()/20;
+    int table = RNGesus.Roll()/5;
     std::vector<Item*> lootTable;
     int pull, mod, wildcard;
     std::string classMod;
-
     switch(table){
         case(1):{
             //1 weapon, 1 random armor piece, 1 consumable
@@ -124,10 +123,10 @@ std::vector<Item*> Loot::generateChestLoot(){
         case(3):{
             //1 pieces of armor, 2 consumable, 1 weapon
             mod = RNGesus.Roll()/10;
-            Consumable c1 = Consumable("Potion of Healing", mod);
+            Consumable* c1 = new Consumable("Potion of Healing", mod);
             mod = RNGesus.Roll()/10;
-            Consumable c2 = Consumable("Potion of Healing", mod);
-            lootTable.push_back(&c2);
+            Consumable* c2 = new Consumable("Potion of Healing", mod);
+            lootTable.push_back(c2);
             pull = RNGesus.Roll()/25;
             mod = RNGesus.Roll()/10;
             wildcard = RNGesus.Roll();
@@ -228,7 +227,7 @@ std::vector<Item*> Loot::generateChestLoot(){
             Weapon* w1 = new Weapon(mod, classMod);
             lootTable.push_back(w1);
             mod = RNGesus.Roll()/10;
-            Consumable c1 = Consumable("Potion of Healing", mod);
+            Consumable *c1 = new Consumable("Potion of Healing", mod);
             break;
         }
         case(5):{

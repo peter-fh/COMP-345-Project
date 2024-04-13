@@ -31,12 +31,14 @@ private:
     
     bool insertCharacters();
     bool insertEnemies(int num_enemies);
+    bool insertChests(int num_chests);
     void insertCorpses();
     void userTurn(Character& character);
     void userMove(Character& character);
     void userAttack(Character& character);
+    void userLoot(Chest& chest);
     void enemyTurn(Enemy& enemy);
-    void moveEnemy(Enemy& enemy);
+    bool moveEnemy(Enemy& enemy);
     bool moveEnemyOneSquare(int dx, int dy, Enemy& enemy, Map& map);
     void initiativePhase();
     void movementPhase();
@@ -44,6 +46,7 @@ private:
     void displayCurrentMap();
     bool gameIsPlaying();
     vector<Enemy> enemiesNearby(Character& character);
+    vector<Chest> chestsNearby(Character& character);
     bool moveOneSquare(int dx, int dy, Character& character, Map& map, bool& done);
     bool moveTo(int x, int y, Character& character, Map& map, int& spaces, bool& done);
 

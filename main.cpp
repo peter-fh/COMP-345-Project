@@ -17,7 +17,7 @@ int main(){
     Game game;
     game.loadCampaign("test_campaign"); 
     game.loadNextMap();
-    //game.startGameLoop();
+    game.startGameLoop();
     game.loadNextMap();
     game.startGameLoop(); 
 
