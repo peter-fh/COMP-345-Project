@@ -1,6 +1,6 @@
 X: 0
 Y: 0
-Name: James
+Name: Mike
 Level: 1
 Current Hit Points: 10
 Max Hit Points: 10

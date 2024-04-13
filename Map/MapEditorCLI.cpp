@@ -105,31 +105,18 @@ bool MapEditorCLI::setEnd(){
 
 
 
+Map MapEditorCLI::loadMapFromFile(){
 
-
-
-/* 
-Map* MapEditorCLI::loadMapFromFile(){
     cout << "Now loading map from file.\n";
-    string fileName;
-    cout << "Enter a file name: ";
-    cin >> fileName;
+	string fileName;
+	cout << "Enter a file name: ";
+	cin >> fileName;
 
-    MapSavedBuilder *mapLoader = new MapSavedBuilder();
-    bool loadSuccess = mapLoader->loadMap(fileName);
+	Map loadedMap = Map::loadMap(fileName);
 
-    if (loadSuccess){
-	mapLoader->getMap()->displayMap();
-	return mapLoader->getMap();
-    } else {
-	return nullptr;
-    }
-} */
-
-Map* MapEditorCLI::loadMapFromFile(){
-    return nullptr;
+	cout << "Loaded campaign " << campaign.getName() << ".\n";
+	return loadedMap;
 }
-
 
 
 
@@ -354,9 +341,9 @@ void MapEditorCLI::campaignEditorLoop(){
 	    int loadChoice;
 	    cin >> loadChoice;
 	    if (loadChoice == 1){
-		Map* inp_map = loadMapFromFile();
+		Map inp_map = loadMapFromFile();
 			
-		if (inp_map != nullptr){
+		if (inp_map.getName() != ""){
 		    cout << "Loaded map.\n";
 		    campaign.push_back(inp_map);
 		}
