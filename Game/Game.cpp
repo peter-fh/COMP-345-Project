@@ -3,7 +3,6 @@
 #include <ctime>
 #include <chrono>
 #include <thread>
-#include <ncurses.h>
 
 
 Game::Game() {

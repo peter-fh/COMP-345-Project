@@ -76,8 +76,8 @@ void Corpse::saveCorpse(string filename) {
         std::cerr << "Failed to open file for saving." << std::endl;
         return;
     }
-    file << "X: " << getX() << "\n";
-    file << "Y: " << getY() << "\n";
+    file << "X:" << getX() << "\n";
+    file << "Y:" << getY() << "\n";
     file << "Loot:\n";
 
     if (inventory[0] == nullptr){
@@ -94,6 +94,8 @@ Corpse Corpse::loadCorpse(string filename){
     std::ifstream file(filename);
     std::string line;
     std::vector<Item*> v;
+    int x,y;
+
 
 
 if (!file.is_open())
@@ -114,14 +116,11 @@ if (!file.is_open())
 
             if (key == "X")
             {
-                cout<<value<<endl;
-
-                corps.setX(stoi(value));
+                x = stoi(value);
             }
             else if (key == "Y")
             {
-                cout<<value<<endl;
-                corps.setY(stoi(value));
+                y = stoi(value);
             }
             else if (key == "Loot")
             {
@@ -159,5 +158,9 @@ if (!file.is_open())
         }
     }
     corps = Corpse(v);
+    corps.setX(x);
+    corps.setY(y);
+
+
     return corps;
 }

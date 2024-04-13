@@ -31,7 +31,7 @@ int main(){
 
     cout<<"\n"<<looted.getX()<<", "<< looted.getY()<<endl;
     looted.search();
-    // looted.saveCorpse("myOtherBag.txt");
+    looted.saveCorpse("myOtherBag.txt");
 
 
 
@@ -75,12 +75,12 @@ int main(){
     // game.loadNextMap();
     // game.startGameLoop();
 
-    Game game;
-    game.loadCampaign("test_campaign"); 
-    game.loadNextMap();
-    game.startGameLoop();
-    game.loadNextMap();
-    game.startGameLoop(); 
+    // Game game;
+    // game.loadCampaign("test_campaign"); 
+    // game.loadNextMap();
+    // game.startGameLoop();
+    // game.loadNextMap();
+    // game.startGameLoop(); 
 
     Character welcome(1);
     // welcome.printCharacter();
