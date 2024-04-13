@@ -155,7 +155,41 @@ Cell Map::getStart(){
 Cell Map::getEnd(){
 	return end;
 }
+
 string Map::toString(){
+    string output = "";
+    Textures textures;
+    for (int y=0; y < height; y++){
+	for (int i=0; i < 6; i++){
+	    for (int x=0; x < width; x++){
+		int type = getCell(x, y).type;
+		if (!reachable(x, y) && type == EMPTY){
+		    output += "          ";
+		} else if (type == START){
+		    output += textures.start[i];
+		} else if (type == END){
+		    output += textures.end[i];
+		} else if (type == WALL){
+		    output +=textures.wall[i];
+		} else if (type == EMPTY){
+		    output +=textures.empty[i];
+		} else if (type == OCCUPIED && getCell(x, y).mappable_obj != nullptr){
+		    if (getCell(x, y).mappable_obj->getSymbol() == 'P'){
+			output +=textures.character[i];
+		    }
+		    if (getCell(x, y).mappable_obj->getSymbol() == 'E'){
+			output +=textures.enemy[i];
+		    }
+		} 
+		output += " ";
+	    }
+	    output += "\n";
+	}
+    }
+    return output;
+}
+
+string Map::toStringOld(){
     string output = "";
     map<int, string> cell_map;
     vector<vector<int> > reachable = fillValidateMap();

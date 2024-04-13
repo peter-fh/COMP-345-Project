@@ -3,6 +3,7 @@
 #include <ctime>
 #include <chrono>
 #include <thread>
+#include <ncurses.h>
 
 
 Game::Game() {
@@ -114,11 +115,15 @@ bool Game::insertCharacters(){
 bool Game::insertChests(int num_chests){
     chests.clear();
     for (int i=0; i < num_chests; i++){
-	Chest chest;
-	chests.push_back(chest);
+	Armor* armor1 = new Armor("Iron Helmet", "Helmet", 12);
+	Armor* armor2 = new Armor("Iron Pants","Pants", 12);
+	Armor* armor3 = new Armor("Iron Chestpiece","Chestplate", 12);
+	Armor* armor4 = new Armor("Iron Boots","Boots", 12);
+	std::vector<Item*> v = {armor1, armor2, armor3, armor4};
+	Chest openme = Chest(v);
+	chests.push_back(openme);
+	cout << "Chest created!\n";
     }
-    cout << "opening chest for first time\n";
-    chests[0].openChest();
 
     std::srand(std::time(0));
     for (auto it = chests.begin(); it != chests.end(); it++){
@@ -206,13 +211,12 @@ bool Game::loadNextMap(){
     } 
 
     map = campaign.get(map_index);
-    cout << "Loaded map: " << map.getName() << "!\n";
     map_index++;
     insertCharacters();
     insertEnemies(1);
-    insertChests(1);
-    cout << "opening chest for second time\n";
-    chests[0].openChest();
+    cout << "Inserted enemies!\n";
+    //insertChests(1);
+    cout << "Loaded map: " << map.getName() << "!\n\n\n\n\n";
     return true;
 
 }
@@ -393,6 +397,8 @@ void Game::userTurn(Character& character){
 	    userLoot(nearbyCorpses[0]);
 	} else if (choice == "i"){
 	    character.inventoryCheck();
+	    cout << "Press enter to continue: ";
+	    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 	} else if (choice == "e"){
 	    done = true;
 	} else if (movement_roll <= 0 && nearbyEnemies.size() == 0 && nearbyChests.size() == 0 && nearbyCorpses.size() == 0){
@@ -422,7 +428,7 @@ void Game::userLoot(Chest& chest){
     Item* item = chest.takeItem(choice);
     if (item->key == true){
 	hasKey = true;
-    }
+    } 
     if (item != nullptr){
 	player.pickup(item);
     }
@@ -460,7 +466,7 @@ bool Game::moveEnemy(Enemy& enemy){
 	    if (moveEnemyOneSquare(xDirection, 0, enemy, map)){
 		hasMoved = true;
 		displayCurrentMap();
-		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+		std::this_thread::sleep_for(std::chrono::milliseconds(500));
 		roll--;
 		xDirection = (player.getX() - enemy.getX()) / abs(player.getX() - enemy.getX());
 
@@ -525,9 +531,17 @@ bool Game::moveOneSquare(int dx, int dy, Character& character, Map& map, bool& d
     int newX = currentX + dx;
     int newY = currentY + dy;
     if (map.getEnd().x == newX && map.getEnd().y == newY){
+	for (Item* item : character.inventory){
+	    if (item->key == true || item->getItemName() == "Key"){
+		cout << "key found\n";
+		hasKey = true;
+	    }
+	}
 	if (hasKey){
 	    map.setCell(currentX,currentY,EMPTY);
 	    cout << character.name << " has reached the end of the map!" << endl;
+	    character.deactivate();
+	    done = true;
 	    cout << "Press enter to continue: ";
 	    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 	    return false;
@@ -568,7 +582,7 @@ bool Game::moveTo(int x, int y, Character& character, Map& map, int& spaces, boo
 
 	displayCurrentMap();
 
-	std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+	std::this_thread::sleep_for(std::chrono::milliseconds(500));
 	spaces--;
 
 
@@ -595,6 +609,7 @@ void Game::userMove(Character& character, int& roll){
 	if (direction != "e"){
 
 	    cin >> spaces;
+	    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 	}
 	else {
 	    spaces = 0;
@@ -663,7 +678,6 @@ void Game::combat(Enemy& enemy){
 	ofstream file("corpse.txt");
 	file << "dead" << endl;
 	Corpse corpse(&enemy);
-	cout << "corpse symbol: " << corpse.getSymbol() << endl;
 	corpse.setX(enemy.getX());
 	corpse.setY(enemy.getY());
 	corpses.push_back(corpse);

@@ -22,7 +22,6 @@ Item* Chest::takeItem(int index){
     }
 }
 void Chest::openChest(){
-    cout << "entering openChest()\n";
     /* if (contents[0] == nullptr){
         std::cout << "\nChest empty";
         return;
@@ -36,7 +35,6 @@ void Chest::openChest(){
         std::cout << "\n  " << index << ": " << item->getItemName();
 	index++;
     }
-    cout << "exiting openChest()\n";
 }
 
 void Chest::reget(){

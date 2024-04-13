@@ -1,5 +1,6 @@
 #pragma once
 #include "Cell.h"
+#include "MapTextures.h"
 #include "../Character/Character.h"
 #include <vector>
 
@@ -45,6 +46,7 @@ public:
 
     bool validate();
     string toString();
+    string toStringOld();
 
     void displayMap();
     

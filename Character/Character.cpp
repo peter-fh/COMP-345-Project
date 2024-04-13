@@ -29,14 +29,15 @@ using namespace std;
 
 
 void Character::determineSymbol(){
-    if (name == ""){
+    setSymbol('P');
+    /* if (name == ""){
 	setSymbol('P');
     }
     else{
         char p = (char)name[0];
         if (p == 'C' || p == 'E' || p =='B') setSymbol('P');
         else setSymbol((char)name[0]);
-    }
+    } */
 }
 void Character::gainXP(int XP){
     std::cout << "Gained " << XP << "XP";
@@ -198,8 +199,10 @@ void Character::kill(){
 
 
 void Character::pickup(Item* i){
-    if (inventory.size() >= inventorySize) Notify("Cannot pickup " + i->getItemName() + " inventory full.");
-    else{
+    if (inventory.size() >= inventorySize) {
+	Notify("Cannot pickup " + i->getItemName() + " inventory full.");
+    } else {
+	cout << "Picked up " << i->getItemName() << "!" << endl;
         Notify("Picked up " + i->getItemName() + "!");
         inventory.push_back(i);
         i->pickup();
@@ -221,7 +224,7 @@ void Character::drop(int pos){
 
 
 int Character::attack(float modifier){
-    if (equippedWeapon = nullptr){
+    if (equippedWeapon == nullptr){
         Notify("Punched enemy for 1 damage");
         return 1;
     }
@@ -242,7 +245,7 @@ int Character::bowAttack(float modifier){
     int damage = (modifier * (equippedBow->getDamage())), dmg;
     Dice d = Dice(3);
     int num = modifier*5;
-    if (num = 0){
+    if (num == 0){
         Notify("Attack failed");
         return 0;
     }
@@ -386,7 +389,7 @@ void Character::equip(int pos){
     }
     Bow* B = dynamic_cast<Bow*>(i);
     if (B) {
-        if (equippedBow = nullptr){
+        if (equippedBow == nullptr){
             Notify("Equipped: " + B->getItemName());
             equippedBow = B;
             B->equip();

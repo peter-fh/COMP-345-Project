@@ -30,10 +30,11 @@ void Corpse::search(){
         return;
     }
     else{
-        std::cout << "\nInventory Contains";
+        std::cout << "\nInventory Contains\n";
     }
+    int index=1;
     for (Item* item : inventory){
-        std::cout << "\n  " << item->getItemName();
+        std::cout << "\n(" << index << "): " << item->getItemName() << "\n";
     }
 }
 

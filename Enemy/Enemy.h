@@ -35,12 +35,11 @@ class Enemy : public Mappable{
 
         void equipment();
 
-        // TODO: for final, armormod as a percentage of damage reduction, eg: 15 armorMod means attack is 85% effective
-
         Armor *equippedChestplate, *equippedHelmet, *equippedBoots, *equippedPants;
 
         Weapon* equippedWeapon;
         int maxHP, currentHP;
+    int initiative;
 
 
     private:

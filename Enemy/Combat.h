@@ -7,4 +7,5 @@
 class Combat{
     public:
         Combat(Character& inp_player, Enemy& inp_enemy);
+	void displayTexture();
 };

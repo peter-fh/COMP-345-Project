@@ -3,7 +3,24 @@
 #include <chrono>
 #include <thread>
 
+void Combat::displayTexture(){
+    for (int i=0; i < 20; i++){
+	cout << "\n";
+    }
+    string texture[10] = {
+	"             \\  O    ",
+	"      O  /    \\/|\\   ",
+	"     /|\\/      / \\   ",
+	"     / \\             "
+    };
+    for (int i = 0; i < 4; i++){
+	std::cout << texture[i] << "\n";
+    }
+
+    cout << "\n\n";
+}
 Combat::Combat(Character& player, Enemy& enemy){
+    displayTexture();		    
     Dice d20 = Dice(20);
     std::string selection = "";
     int dmg;
@@ -13,9 +30,12 @@ Combat::Combat(Character& player, Enemy& enemy){
 
     std::this_thread::sleep_for(2s); 
     while (player.alive && enemy.alive){
+
+	displayTexture();		    
         selection = "";
         std::cout << "\n" << player.status();
-        std::cout << "\nPlayer Move: \n   1: Attack\n   2: Attack with bow\n	3: Flee";
+        std::cout << "\nPlayer Move: \n\t1: Attack\n\t2: Attack with bow\n\t3: Flee\n";
+	std::cout << "#: ";
         std::getline(cin, selection);
         if (selection != "1" && selection != "2" && selection != "3"){ 
             do{
@@ -88,6 +108,7 @@ Combat::Combat(Character& player, Enemy& enemy){
     if (!enemy.alive){
         player.gainXP(enemy.level);
 	    enemy.kill();
+        std::this_thread::sleep_for(2s); 
         }        
     if (!player.alive){
 	exit(0);
