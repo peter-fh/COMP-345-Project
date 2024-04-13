@@ -1,9 +1,9 @@
-X: 3
+X: 5
 Y: 2
 Name: Elf
-Level: 5
-Current HP: 10
-Max HP: 10
+Level: 2
+Current HP: 7
+Max HP: 7
 
 Inventory: 
 Key0

@@ -1,4 +1,7 @@
 X:2
-Y:2
+Y:4
 Loot:
-Key
+Armour,Iron Helmet|Helmet(12)
+Armour,Iron Pants|Pants(12)
+Armour,Iron Chestpiece|Chestplate(12)
+Armour,Iron Boots|Boots(12)

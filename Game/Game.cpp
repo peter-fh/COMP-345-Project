@@ -211,7 +211,7 @@ bool Game::loadNextMap(){
     insertCharacters();
     insertEnemies(1);
     cout << "Inserted enemies!\n";
-    //insertChests(1);
+    insertBags(1);
     cout << "Loaded map: " << map.getName() << "!\n\n\n\n\n";
     return true;
 
@@ -251,15 +251,19 @@ void Game::startGameLoop(){
     player.activate();
     while (!done && gameIsPlaying()){
 	gameLoop();
-	cout << "End of turn.\n";
-	cout << "Enter to continue, anything else to save and exit.\n";
-	string input;
-	cin >> input;
-	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-	if (input == "\n"){
-	    done = false;
-	} else {
-	    done = true;
+	bool continue_bool = false;
+	while (!continue_bool){
+	    cout << "End of turn.\n";
+	    cout << "c to continue, q to save and quit: ";
+	    char continue_char;
+	    cin >> continue_char;
+	    if (continue_char == 'q'){
+		continue_bool = true;
+		done = true;
+	    } else {
+		continue_bool = true;
+		done = false;
+	    }
 	}
     }
 
@@ -299,8 +303,8 @@ void Game::enemyTurn(Enemy& enemy){
 vector<Corpse> Game::corpseNearby(){
     vector<Corpse> nearby;
     for (Corpse& corpse: corpses){
-	int dx = abs(player.getX() - player.getX());
-	int dy = abs(player.getY() - player.getY());
+	int dx = abs(player.getX() - corpse.getX());
+	int dy = abs(player.getY() - corpse.getY());
 	if (dx <= 1 && dy <= 1){
 	    nearby.push_back(corpse);
 	}
@@ -354,9 +358,7 @@ void Game::userTurn(Character& character){
 
     cout << "Roll for movement (press enter): ";
     cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    // TODO: make movement actually random again
-    // int roll = d10.Roll();
-    int movement_roll = 20;
+    int movement_roll = d10.Roll();
     cout << "You rolled a " << movement_roll << "!\n";
     std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 
@@ -378,7 +380,7 @@ void Game::userTurn(Character& character){
 	    cout << "(o) Open chest\n";
 	}
 	if(nearbyCorpses.size() > 0){
-	    cout << "(l) Loot corpse\n";
+	    cout << "(l) Loot bundle\n";
 	}
 	cout << "(i) Open inventory\n";
 	cout << "(e) End turn\n";

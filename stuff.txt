@@ -1,7 +1,7 @@
 map_index:1
 campaign:Default_Campaign
-player:Jack
-hasKey:0
+player: Jack
+hasKey:1
 
 enemy:
-corpse:0,
+corpse:
