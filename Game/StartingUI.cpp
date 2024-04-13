@@ -63,7 +63,7 @@ void StartingUI::NPCBuilder(){
     int lvl = stoi(level);
     cout << "\nFriendly? (y/n)";
     std::getline(cin, friendly);
-    while (friendly != "Y" || friendly != "y" || friendly != "N" || friendly != "n"){
+    while (friendly != "Y" && friendly != "y" && friendly != "N" && friendly != "n"){
         cout << "\nInvalid entry. Friendly? (y/n)";
         std::getline(cin, friendly);
     }
