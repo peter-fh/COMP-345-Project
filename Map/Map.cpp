@@ -507,7 +507,7 @@ Map Map::loadMap(string filename){
                     } else {
                         map.setCell(row, col, cellType);
                     }
-                } catch (std::invalid_argument const &e) {
+                } catch (std::invalid_argument const &e) { //just gotta save a class 
                     // Conversion failed, cell is a string
                     if (cell == "E") { //placing an enemy
                         Enemy testEnemy = Enemy();

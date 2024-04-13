@@ -11,4 +11,6 @@ class Weapon : public Item{
         int getDamage();
         void unEquip();
         std::string getItemName() override;
+        std::string getItemNameAndType() override;
+
 };

@@ -1,0 +1,10 @@
+Name: James
+Level: 1
+Current Hit Points: 10
+Max Hit Points: 10
+Strength: 2
+
+inventory: 
+Armour,iron chestplate|Chestplate(20)1
+Weapon,sword(3)1
+Armour,leather boots|boots(10)1

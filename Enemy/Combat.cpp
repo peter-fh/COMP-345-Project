@@ -1,4 +1,5 @@
 #include "Combat.h"
+#include "Corpse.h"
 #include <chrono>
 #include <thread>
 
@@ -91,4 +92,22 @@ Combat::Combat(Character& player, Enemy& enemy){
     if (!player.alive){
 	exit(0);
     }
+    /* if (enemy->alive == false){
+	//PLACE CORPSE ON MAP HERE NEXT VERSION  
+	selection = "";
+	Corpse c = enemy->kill();
+	std::cout << "\nSearch?\n   1: Yes\n    2: No";
+	std::getline(cin, selection);
+	if (selection != "1" && selection != "2"){ 
+	    do{
+		std::cout << "\nInvalid, please try again";
+		std::cout << "\nSearch?\n   1: Yes\n    2: No\n";;
+		std::getline(cin, selection);
+	    } while (selection != "1" && selection != "2");
+	}
+	if (selection == "1"){
+	    c.search();
+	}   
+    } */
+        
 }

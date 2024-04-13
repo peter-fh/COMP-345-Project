@@ -100,6 +100,8 @@ public:
     void setHP(int newHP){
         hitPoints = newHP;
     }
+    void setCurrentHP(int newHP );
+
     void takeDmg(int hit){
         if (hit < 1){
             std::cout << "The hit was inneffective" << endl;
@@ -117,12 +119,9 @@ public:
         this->setHP(this->getHitPoints() - hit);
 
     }
-    void setStrength(int newStrength);
-    void setDexterity(int newDexterity);
-    void setConstitution(int newConstitution);
-    void setIntelligence(int newIntelligence);
-    void setWisdom(int newWisdom);
-    void setCharisma(int newCharisma);
+    void setStrength(int newStrength){
+        strength = newStrength;
+    }
 
     //*************************
     // FOR STRATEGY

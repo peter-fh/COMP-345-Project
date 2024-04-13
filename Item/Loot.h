@@ -22,11 +22,6 @@ class Loot{
         static Item* generatePants();
         static Item* generateHelmet();
         static Item* generateChestplate();
-        static Item* generateWeapon(int i);
-        static Item* generateBoots(int i);
-        static Item* generatePants(int i);
-        static Item* generateHelmet(int i);
-        static Item* generateChestplate(int i);
 
     private:
         Character* playerChar;

@@ -42,8 +42,6 @@ void Corpse::determineSymbol(){
 }
 Corpse::Corpse(Enemy* e){
     inventory = e->inventory;
-    setX(e->getX());
-    setY(e->getY());
     determineSymbol();
 }
 int Corpse::getInvSize(){

@@ -239,6 +239,7 @@ void Game::initiativePhase(){
     }
 
     std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+
     cout << "Press enter to continue.";
     cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }
@@ -304,6 +305,9 @@ vector<Corpse> Game::corpseNearby(){
 
     return nearby;
 }
+
+
+
 
 
 vector<Chest> Game::chestsNearby(Character& character){
@@ -509,6 +513,12 @@ bool Game::moveEnemyOneSquare(int dx, int dy, Enemy& enemy, Map& map){
 
 
 bool Game::moveOneSquare(int dx, int dy, Character& character, Map& map, bool& done){
+    vector<Enemy> nearby = enemiesNearby(character);
+    if (nearby.size() > 0){
+	cout << "You cannot move while enemies are nearby!\n";
+	done = true;
+	return false;
+    }
     
     int currentX = character.getX();
     int currentY = character.getY();
@@ -528,7 +538,7 @@ bool Game::moveOneSquare(int dx, int dy, Character& character, Map& map, bool& d
     }
 
 
-    if(map.passable(newX,newY) && !map.isOccupied(newX,newY)){
+    if(map.passable(newX,newY)){
         map.setCell(newX,newY,OCCUPIED, &character);
 	character.setX(newX);
 	character.setY(newY);
