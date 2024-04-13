@@ -4,7 +4,7 @@
 
 Combat::Combat(Character& player, Enemy& enemy){
     Dice d20 = Dice(20);
-    std::string selection;
+    std::string selection = "";
     int dmg;
     
     std::cout << "Amushed by " << enemy.name << " (Level " << enemy.level << ") " << enemy.maxHP << "HP\n";
@@ -14,14 +14,14 @@ Combat::Combat(Character& player, Enemy& enemy){
     while (player.alive && enemy.alive){
         selection = "";
         std::cout << "\n" << player.status();
-        std::cout << "\nPlayer Move: \n   1: Attack\n   2: Attempt to Flee\n";
+        std::cout << "\nPlayer Move: \n   1: Attack\n   2: Attack with bow\n	3: Flee";
         std::getline(cin, selection);
-        if (selection != "1" && selection != "2"){ 
+        if (selection != "1" && selection != "2" && selection != "3"){ 
             do{
                 std::cout << "\nInvalid, please try again";
                 std::cout << "Player Move: \n   1: Attack\n   2: Attempt to Flee\n";
                 std::getline(cin, selection);
-            } while (selection != "1" && selection != "2");
+            } while (selection != "1" && selection != "2" && selection != "3");
                   }
         std::this_thread::sleep_for(0.5s); 
         //make it look better
