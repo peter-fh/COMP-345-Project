@@ -14,5 +14,10 @@ class Chest : public Mappable{
         void reget();
         int amount;
         int getNumOfContents();
-	void determineSymbol() override;
+	    void determineSymbol() override;
+
+        void saveChest(string filename);
+        static Chest loadChest(string filename);
+
+
 };
