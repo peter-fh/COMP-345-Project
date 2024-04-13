@@ -6,6 +6,7 @@
 
 
 Game::Game() {
+    hasKey = true;
     map_index = 0;
     d20 = Dice(20);
     d6 = Dice(6);
@@ -33,7 +34,7 @@ bool Game::loadCampaign(string filename){
     character1.heal();
     player = character1;
 
-    Weapon *w1 = new Weapon(3, "Sword");
+    Weapon *w1 = new Weapon(10000, "Sword");
     Armor *Chestpiece = new Armor("Iron Chestplate", "Chestplate", 20);
 
     player.pickup(w1);
@@ -188,9 +189,16 @@ bool Game::insertEnemies(int num_enemies){
 	}
     }
 
-
+    addKey();
     return true;
 }
+
+void Game::addKey(){
+    hasKey = false;
+    Key* key = new Key(0);
+    enemies[0].giveItem(new Key(0));
+}
+
 
 bool Game::loadNextMap(){
     if (map_index >= campaign.len()){
@@ -206,6 +214,7 @@ bool Game::loadNextMap(){
     cout << "opening chest for second time\n";
     chests[0].openChest();
     return true;
+
 }
 
 bool Game::gameIsPlaying(){
@@ -228,6 +237,8 @@ void Game::initiativePhase(){
 	    cout << " rolled a " << enemy.initiative << "!\n";
 	}
     }
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     cout << "Press enter to continue.";
     cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }
@@ -258,6 +269,8 @@ void Game::gameLoop(){
 
     initiativePhase();
     
+    displayCurrentMap();
+
     for (int i=20; i > 0; i--){
 	if (player.initiativeRoll == i){
 	    userTurn(player);
@@ -274,10 +287,23 @@ void Game::gameLoop(){
 
 void Game::enemyTurn(Enemy& enemy){
     if (moveEnemy(enemy)){
-	Combat combat(player, enemy);
+	combat(enemy);
     }
 }
 
+
+vector<Corpse> Game::corpseNearby(){
+    vector<Corpse> nearby;
+    for (Corpse& corpse: corpses){
+	int dx = abs(player.getX() - player.getX());
+	int dy = abs(player.getY() - player.getY());
+	if (dx <= 1 && dy <= 1){
+	    nearby.push_back(corpse);
+	}
+    }
+
+    return nearby;
+}
 
 
 vector<Chest> Game::chestsNearby(Character& character){
@@ -319,45 +345,96 @@ void Game::userTurn(Character& character){
     displayCurrentMap();
     cout << character.getName() << "'s (" << character.getName()[0] << ") turn!\n";
 
-    cout << "Would you like to move? (y/n)\n";
-    string move;
-    cin >> move;
-    cin.get();
-    if (move == "y"){
-	userMove(character);
-    } 
+    cout << "Roll for movement (press enter): ";
+    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    // TODO: make movement actually random again
+    // int roll = d10.Roll();
+    int movement_roll = 20;
+    cout << "You rolled a " << movement_roll << "!\n";
+    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 
-    vector<Enemy> nearbyEnemies = enemiesNearby(character);
-    if (nearbyEnemies.size() > 0){
-	cout << "Would you like to attack? (y/n)\n";
-	string attack;
-	cin >> attack;
-	if (attack == "y"){
+    bool done = false;
+
+    while (!done){
+
+	vector<Enemy> nearbyEnemies = enemiesNearby(character);
+	vector<Chest> nearbyChests = chestsNearby(character);
+	vector<Corpse> nearbyCorpses = corpseNearby();
+	cout << "What would you like to do?\n";
+	if (movement_roll > 0){
+	cout << "(m) Move: " << movement_roll << " spaces remaining\n";
+	}
+	if (nearbyEnemies.size() > 0){
+	    cout << "(a) Attack\n";
+	}
+	if(nearbyChests.size() > 0){
+	    cout << "(o) Open chest\n";
+	}
+	if(nearbyCorpses.size() > 0){
+	    cout << "(l) Loot corpse\n";
+	}
+	cout << "(i) Open inventory\n";
+	cout << "(e) End turn\n";
+	string choice;
+	cout << "Choice: ";
+	cin >> choice;
+	cin.get();
+	if (choice == "m" && movement_roll > 0){
+	    userMove(character, movement_roll);
+	} else if (choice == "a" && nearbyEnemies.size() > 0){
 	    userAttack(character);
-	}
-    }
-
-    vector<Chest> nearbyChests = chestsNearby(character);
-    if (nearbyChests.size() > 0){
-	cout << "Would you like to open a chest? (y/n)\n";
-	string open;
-	cin >> open;
-	if (open == "y"){
+	} else if (choice == "o" && nearbyChests.size() > 0){
 	    userLoot(nearbyChests[0]);
+	} else if (choice == "l" && nearbyCorpses.size() > 0){
+	    userLoot(nearbyCorpses[0]);
+	} else if (choice == "i"){
+	    character.inventoryCheck();
+	} else if (choice == "e"){
+	    done = true;
+	} else if (movement_roll <= 0 && nearbyEnemies.size() == 0 && nearbyChests.size() == 0 && nearbyCorpses.size() == 0){
+	    cout << "No more moves left.\n";
+	    done = true;
+	} else {
+	    cout << "Invalid choice, try again.\n";
 	}
+
+	displayCurrentMap();
+
     }
+    cout << "Press enter to continue: ";
+    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
 
 
 }
 
 
 void Game::userLoot(Chest& chest){
+    displayCurrentMap();
     chest.openChest();
     cout << "Which item would you like to take? (1-" << chest.getNumOfContents() << ")\n";
     int choice;
     cin >> choice;
     Item* item = chest.takeItem(choice);
+    if (item->key == true){
+	hasKey = true;
+    }
     if (item != nullptr){
+	player.pickup(item);
+    }
+}
+
+void Game::userLoot(Corpse& corpse){
+    displayCurrentMap();
+    corpse.search();
+    cout << "Which item would you like to take? (1-" << corpse.getInvSize() << ")\n";
+    int choice;
+    cin >> choice;
+    Item* item = corpse.loot(choice);
+    if (item != nullptr){
+	if (item->key == true){
+	    hasKey = true;
+	}
 	player.pickup(item);
     }
 }
@@ -370,8 +447,8 @@ bool Game::moveEnemy(Enemy& enemy){
     int roll = d6.Roll();
     cout << enemy.status() << " rolled a " << roll << "!\n";
 
-    displayCurrentMap();
     std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+    displayCurrentMap();
     bool hasMoved = true;
     while (hasMoved){
 	hasMoved = false;
@@ -438,11 +515,16 @@ bool Game::moveOneSquare(int dx, int dy, Character& character, Map& map, bool& d
     int newX = currentX + dx;
     int newY = currentY + dy;
     if (map.getEnd().x == newX && map.getEnd().y == newY){
-	map.setCell(currentX,currentY,EMPTY);
-	cout << character.name << " has reached the end of the map!" << endl;
-	cout << "Press enter to continue: ";
-	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-	return false;
+	if (hasKey){
+	    map.setCell(currentX,currentY,EMPTY);
+	    cout << character.name << " has reached the end of the map!" << endl;
+	    cout << "Press enter to continue: ";
+	    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	    return false;
+	} else {
+	    cout << "You need a key to open the door!\n";
+	    return false;
+	}
     }
 
 
@@ -486,15 +568,9 @@ bool Game::moveTo(int x, int y, Character& character, Map& map, int& spaces, boo
 }
 
 
-void Game::userMove(Character& character){
+void Game::userMove(Character& character, int& roll){
 
-
-    cout << "Roll for movement (press enter): ";
-    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    // TODO: make movement actually random again
-    // int roll = d10.Roll();
-    int roll = 20;
-    cout << "You rolled a " << roll << "!\n";
+    displayCurrentMap();
     bool done = false;
     while (roll > 0 && !done && character.isActive()){
 	int x = character.getX();
@@ -563,20 +639,30 @@ void Game::userAttack(Character& character){
 	return;
     } else {
 	Enemy enemy = nearby[0];
-	Combat combat(character, enemy);
-	if (enemy.alive == false){
-	    Corpse corpse(&enemy);
-	    cout << "corpse symbol: " << corpse.getSymbol() << endl;
-	    corpse.setX(enemy.getX());
-	    corpse.setY(enemy.getY());
-	    corpses.push_back(corpse);
-	    enemies.erase(enemies.begin());
-	    insertCorpses();
-	} else {
-	    cout << "enemy is alive still\n";
-	}
-	std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+	combat(enemy);
     }
+    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+
+
+}
+
+
+void Game::combat(Enemy& enemy){
+    Combat combat(player, enemy);
+    if (enemy.alive == false){
+	ofstream file("corpse.txt");
+	file << "dead" << endl;
+	Corpse corpse(&enemy);
+	cout << "corpse symbol: " << corpse.getSymbol() << endl;
+	corpse.setX(enemy.getX());
+	corpse.setY(enemy.getY());
+	corpses.push_back(corpse);
+	enemies.erase(enemies.begin());
+	insertCorpses();
+    }
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+    cout << endl;
 
 
 }

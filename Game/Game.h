@@ -7,6 +7,7 @@
 #include "../Enemy/Enemy.h"
 #include "../Enemy/Combat.h"
 #include "../Enemy/Corpse.h"
+#include "../Item/Key.h"
 
 
 
@@ -28,17 +29,19 @@ private:
     std::vector<Enemy> enemies;
     std::vector<Chest> chests;
     std::vector<Corpse> corpses;
-    
+    void combat(Enemy& enemy);    
     bool insertCharacters();
     bool insertEnemies(int num_enemies);
     bool insertChests(int num_chests);
     void insertCorpses();
     void userTurn(Character& character);
-    void userMove(Character& character);
+    void userMove(Character& character, int& roll);
     void userAttack(Character& character);
     void userLoot(Chest& chest);
+    void userLoot(Corpse& corpse);
     void enemyTurn(Enemy& enemy);
     bool moveEnemy(Enemy& enemy);
+    void addKey();
     bool moveEnemyOneSquare(int dx, int dy, Enemy& enemy, Map& map);
     void initiativePhase();
     void movementPhase();
@@ -47,10 +50,13 @@ private:
     bool gameIsPlaying();
     vector<Enemy> enemiesNearby(Character& character);
     vector<Chest> chestsNearby(Character& character);
+    vector<Corpse> corpseNearby();
     bool moveOneSquare(int dx, int dy, Character& character, Map& map, bool& done);
     bool moveTo(int x, int y, Character& character, Map& map, int& spaces, bool& done);
 
+
     //void enemyTurn(Enemy* enemy);
+    bool hasKey;
     Dice d20;
     Dice d10;
     Dice d6;

@@ -88,4 +88,7 @@ Combat::Combat(Character& player, Enemy& enemy){
         player.gainXP(enemy.level);
 	    enemy.kill();
         }        
+    if (!player.alive){
+	exit(0);
+    }
 }

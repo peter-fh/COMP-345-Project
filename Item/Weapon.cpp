@@ -10,7 +10,6 @@ void Weapon::unEquip(){held = false;}
 bool Weapon::equipped(){return held;}
 
 int Weapon::getDamage(){
-    std::cout << "Weapon damage: " << baseDamage << "\n";
     return baseDamage;}
 
 std::string Weapon::getItemName(){

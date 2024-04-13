@@ -151,10 +151,12 @@ void Enemy::equipment(){
 }
 
 void Enemy::takeDamage(int damage){
+    int blocked = 0;
+    armorMod = 0;
     if (armorMod > 10){
 	    damage -= armorMod/10;
 	    currentHP -= damage;
-	    int blocked = armorMod/10;
+	    blocked = armorMod/10;
     }
     else{
 	    currentHP -= damage;

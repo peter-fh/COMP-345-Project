@@ -167,10 +167,13 @@ void Character::searchCorpse(Corpse* corpse){
 
 
 void Character::takeDamage(int damage){
+    int blocked = 0;
+    armorLevel = 0;
     if (armorLevel > 10){
+	cout << "\narmor level: " << armorLevel << endl;
 	    damage -= armorLevel/10;
 	    currHP -= damage;
-	    int blocked = armorLevel/10;
+	    blocked = armorLevel/10;
     }
     else{
 	    currHP -= damage;
@@ -222,7 +225,6 @@ int Character::attack(float modifier){
         return 1;
     }
     int damage = (modifier * (equippedWeapon->getDamage()));
-    cout << "damage: " << damage << "\n";
     if (damage == 0){
         Notify("Attack missed");
     }
