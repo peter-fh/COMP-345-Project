@@ -176,7 +176,7 @@ Campaign Campaign::loadCampaign(string filename){
         }
         file.close();
     } else {
-        std::cout << "Failed to open file." << std::endl;
+        std::cout << "Failed to open load campaign file." << std::endl;
     }
     return campaign;
 }

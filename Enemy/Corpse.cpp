@@ -101,7 +101,7 @@ Corpse Corpse::loadCorpse(string filename){
 if (!file.is_open())
     {
         cout<<"no file\n";
-        throw std::runtime_error("Could not open file");
+        throw std::runtime_error("Could not open corpse file");
     }
 
     while (getline(file, line))

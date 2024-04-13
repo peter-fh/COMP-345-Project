@@ -28,7 +28,7 @@ bool Game::loadCampaign(string campaign_name){
 
 bool Game::loadCampaign(){
     Campaign loaded_campaign;
-    loaded_campaign.setName("Default Campaign");
+    loaded_campaign.setName("Default_Campaign");
     
     MapMaker mapMaker;
     Map map1 = mapMaker.makeMap1();
@@ -79,29 +79,15 @@ Map Game::MapMaker::makeMap1(){
 }
 
 Map Game::MapMaker::makeMap2(){
-    MapEditor mapEditor;
-    Map map2(26, 11);
-    map2.setName("The Dungeon");
-    mapEditor.setMap(&map2);
-    mapEditor.setEnd(23, 5);
-    mapEditor.drawSquare(0,3,6,7,WALL);
-    mapEditor.drawSquare(3,0,11,3,WALL);
-    mapEditor.drawSquare(8,3,11,10,WALL);
-    mapEditor.drawSquare(8,7,16,10,WALL);
-    mapEditor.drawSquare(13,3,16,10,WALL);
-    mapEditor.drawSquare(13,3,25,7,WALL);
-    mapEditor.drawSquare(18,1,22,9,WALL);
-    mapEditor.drawSquare(22,3,25,7,WALL);
-    mapEditor.drawSquare(4,3,5,3,EMPTY);
-    mapEditor.drawSquare(9,3,10,7,EMPTY);
-    mapEditor.drawSquare(11,8,13,9,EMPTY);
-    mapEditor.drawSquare(14,7,15,7,EMPTY);
-    mapEditor.drawSquare(14,4,24,6,EMPTY);
-    mapEditor.drawSquare(19,2,21,8,EMPTY);
-    mapEditor.drawSquare(20,3,20,7,EMPTY);
-    mapEditor.drawSquare(14,5,22,5,EMPTY);
+    Map map1(10, 7);
+    map1.setName("Intro");
+    MapEditor mapEditor(&map1);
+    mapEditor.setEnd(8, 3);
+    mapEditor.drawSquare(0,1,4,5,WALL);
+    mapEditor.drawSquare(4,0,9,6,WALL);
+    mapEditor.drawSquare(4,2,4,4,EMPTY);
+    mapEditor.setStart(0, 3);
 
-    mapEditor.setStart(0, 5);
     return *mapEditor.saveMap();
 }
 
@@ -216,7 +202,6 @@ void Game::addKey(){
     enemies[0].giveItem(new Key(0));
 }
 
-
 bool Game::loadNextMap(){
     if (map_index >= campaign.len()){
 	return false;
@@ -264,19 +249,22 @@ void Game::initiativePhase(){
 
 void Game::startGameLoop(){
     bool done = false;
+    player.activate();
     while (!done && gameIsPlaying()){
 	gameLoop();
 	cout << "End of turn.\n";
 	cout << "Enter to continue, anything else to save and exit.\n";
 	string input;
-	input = cin.get();
-	input = cin.get();
+	cin >> input;
+	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 	if (input == "\n"){
 	    done = false;
 	} else {
 	    done = true;
 	}
     }
+
+    saveGame();
 
 }
 
@@ -531,13 +519,6 @@ bool Game::moveEnemyOneSquare(int dx, int dy, Enemy& enemy, Map& map){
 
 
 bool Game::moveOneSquare(int dx, int dy, Character& character, Map& map, bool& done){
-    vector<Enemy> nearby = enemiesNearby(character);
-    if (nearby.size() > 0){
-	cout << "You cannot move while enemies are nearby!\n";
-	done = true;
-	return false;
-    }
-    
     int currentX = character.getX();
     int currentY = character.getY();
     int newX = currentX + dx;
@@ -703,8 +684,12 @@ void Game::combat(Enemy& enemy){
 
 }
 
-void Game::saveGame(string filename) {
-	std::ofstream file(filename);
+void Game::saveGame() {
+    string filename;
+    cout << "Enter filename to save game (including .txt!): ";
+    cin >> filename;
+
+	std::ofstream file("stuff.txt");
     if (!file.is_open()) {
         std::cerr << "Failed to open file for saving." << std::endl;
         return;
@@ -718,7 +703,7 @@ void Game::saveGame(string filename) {
 	player.saveCharacter();
 	file << "hasKey:" << hasKey << "\n";
 
-	file << "enemy:\n";
+	file << "\nenemy:";
 	int i = 0;
     for (Enemy& enemy: enemies){
 		file << i <<",";
@@ -726,7 +711,7 @@ void Game::saveGame(string filename) {
 		i++;
 	}
 
-    file << "corpse:\n";
+    file << "\ncorpse:";
 	i = 0;
     for (Corpse& corpse: corpses){
 		file << i <<",";
@@ -747,7 +732,7 @@ Game Game::loadGame(string filename){
     std::vector<Enemy> enemies;
     std::vector<Corpse> corpses;
 
-    std::ifstream file(filename);
+    std::ifstream file("stuff.txt");
     std::string line;
     string map_index,campaign,playerName,hasKey;
     string enemy,corpse;
@@ -755,7 +740,7 @@ Game Game::loadGame(string filename){
     if (!file.is_open())
     {
 	cout<<"no file\n";
-	throw std::runtime_error("Could not open file");
+	throw std::runtime_error("Could not open game file");
     }
 
     while (getline(file, line))
@@ -774,66 +759,83 @@ Game Game::loadGame(string filename){
 	    }
 	    else if (key == "campaign")
 	    {
-		Campaign cai = Campaign::loadCampaign(value+".txt");
+		cout << "loading campaign\n";
+		Campaign cai = Campaign::loadCampaign(value+ ".txt");
 		theGame.campaign =cai;
 		theGame.map = cai.get(theGame.map_index);
+		cout << "loaded campaign: " << cai.getName() << "!\n";
 	    }
 	    else if (key == "player")
 	    {
+		cout << "loading player\n";
 		Character cay = Character::loadCharacter(value+".txt");
 		theGame.player = cay;
-		cay.determineSymbol();
-		cay.activate();
+		theGame.player.determineSymbol();
+		theGame.player.activate();
 		theGame.map.setCell(cay.getX(),cay.getY(), OCCUPIED, &theGame.player);
+		cout << "loaded player: " << cay.getName() << "!\n";
 	    }
 	    else if (key == "hasKey")
 	    {
+		cout << "loading hasKey\n";
 		if(stoi(value)==1){
 		    theGame.hasKey = true;
 		}
 		else{
 		    theGame.hasKey = false;
 		}
+		cout << "loaded hasKey: " << theGame.hasKey << "!\n";
 	    }
 
 
 	    else if (key == "enemy")
 	    {
+		cout << "loading enemy\n";
 		while (getline(file, line) && !line.empty())
 		{
 		    std::istringstream itemStream(line);
 		    std::string value;
 		    getline(itemStream, value, ',');
-		    Enemy emy = Enemy::loadEnemy(value+".txt");
-
-		    emy.determineSymbol();
-		    emy.activate();
-		    enemies.push_back(emy);
-
-		    theGame.map.setCell(emy.getX(),emy.getY(), OCCUPIED, &enemies.back());
+		    try {
+			stoi(value);
+			cout << "loading enemy: " << value << "!\n";
+			//corpse:
+			Enemy emy = Enemy::loadEnemy(value+"enemy.txt");
+			enemies.push_back(emy);
+			enemies.back().determineSymbol();
+			enemies.back().activate();
+			theGame.map.setCell(emy.getX(),emy.getY(), OCCUPIED, &enemies.back());
+			cout << "loaded enemy: " << enemies.back().getSymbol() << "!\n";
+		    }catch (std::invalid_argument e) {
+			    cout << "lol";
+			}
 		}
+		cout << "loaded enemy. size: " << enemies.size() << "!\n";
 	    }
 	    else if (key == "corpse")
 	    {
+		cout << "loading corpse\n";
 		while (getline(file, line) && !line.empty())
 		{
 		    std::istringstream itemStream(line);
 		    std::string value;
 		    getline(itemStream, value, ',');
-		    Corpse cos = Corpse::loadCorpse(value+".txt");
+		    Corpse cos = Corpse::loadCorpse(value+"corpse.txt");
 
-		    cos.determineSymbol();
-		    cos.activate();
 		    corpses.push_back(cos);
+		    corpses.back().determineSymbol();
+		    corpses.back().activate();
 
-		    theGame.map.setCell(cos.getX(),cos.getY(), OCCUPIED, &enemies.back());
+		    theGame.map.setCell(cos.getX(),cos.getY(), OCCUPIED, &corpses.back());
 		}
+		cout << "loaded corpse: " << corpses.size() << "!\n";
 	    }
 	}
     }
     file.close();
     theGame.enemies = enemies;
     theGame.corpses = corpses;
+    //cout << "enemy symbol at the end: " << enemies.back().getSymbol();
 
     return theGame;
 }

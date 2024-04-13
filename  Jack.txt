@@ -1,0 +1,11 @@
+X: 1
+Y: 2
+Name:  Jack
+Level: 1
+Current Hit Points: 10
+Max Hit Points: 10
+Strength: 2
+
+inventory: 
+Weapon,Sword(10000)1
+Armour,Iron Chestplate|Chestplate(20)1

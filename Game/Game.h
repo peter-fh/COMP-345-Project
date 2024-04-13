@@ -22,7 +22,7 @@ public:
     void startGameLoop();
     void addCharacter();
 
-    void saveGame(string filename);
+    void saveGame();
     static Game loadGame(string filename);
 
 

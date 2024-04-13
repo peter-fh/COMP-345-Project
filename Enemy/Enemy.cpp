@@ -182,7 +182,7 @@ Enemy Enemy::loadEnemy(const std::string &filename)
 
     if (!file.is_open())
     {
-        throw std::runtime_error("Could not open file");
+	cout << "Could not open enemy file" << endl;
     }
 
     while (getline(file, line))
@@ -193,7 +193,13 @@ Enemy Enemy::loadEnemy(const std::string &filename)
         {
             std::string value;
             getline(iss, value);
+	    cout << "before value.substr(1): " << value << endl;
+	    try {
             value = value.substr(1); // Remove leading space
+	    } catch (std::out_of_range e) {
+		cout << "out of range" << endl;
+	    }
+	    cout << "after value.substr(1): " << value << endl;
 
             if (key == "X")
             {
@@ -219,63 +225,6 @@ Enemy Enemy::loadEnemy(const std::string &filename)
             {
                 enemyObj.maxHP = stoi(value);
             }
-            // else if (key == "inventory")
-            // {
-            //     while (getline(file, line) && !line.empty())
-            //     {
-            //         std::istringstream itemStream(line);
-            //         std::string itemType;
-            //         getline(itemStream, itemType, ',');
-
-            //         if (itemType == "Armour")
-            //         {
-            //             std::string defense, armorName, armorType, toEquip;
-
-            //             getline(itemStream, armorName, '|');
-            //             getline(itemStream, armorType, '(');
-            //             getline(itemStream, defense, ')');
-            //             Armor *armor1 = new Armor(armorName, armorType, int(stoi(defense)));
-            //             enemyObj.inventory.push_back(armor1);
-            //             // charObj.inventoryCheck();
-            //             getline(itemStream, toEquip);
-            //             if (stoi(toEquip) == 1)
-            //             {
-            //                 if (armorType == "boots")
-            //                 {
-            //                     enemyObj.equippedBoots;
-            //                 }
-
-            //                 if (armorType == "chestplace")
-            //                 {
-            //                     enemyObj.equippedChestplate;
-            //                 }
-
-            //                 if (armorType == "helmet")
-            //                 {
-            //                     enemyObj.equippedHelmet;
-            //                 }
-
-            //                 if (armorType == "pants")
-            //                 {
-            //                     enemyObj.equippedPants;
-            //                 }
-            //             }
-            //         }
-            //         else if (itemType == "Weapon")
-            //         {
-            //             std::string damage, weaponName, toEquip;
-            //             getline(itemStream, weaponName, '(');
-            //             getline(itemStream, damage, ')');
-            //             Weapon *weapon1 = new Weapon(int(stoi(damage)), weaponName);
-            //             // enemyObj.equippedWeapon(weapon1);
-            //             getline(itemStream, toEquip);
-            //             if (stoi(toEquip) == 1)
-            //             {
-            //                 // enemyObj.equippedWeapon(weapon1);
-            //             }
-            //         }
-            //     }
-            // }
         }
     }
 

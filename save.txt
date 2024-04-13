@@ -1,0 +1,6 @@
+map_index:0
+campaign:slfiughw
+player:
+hasKey:1
+enemy:
+corpse:

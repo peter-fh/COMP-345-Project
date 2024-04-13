@@ -1,8 +1,9 @@
-X: 100
-Y: 200
-Name: Human
-Level: 3
-Current HP: 10
-Max HP: 20
+X: -2097542960
+Y: 809238529
+Name: 
+Level: 1
+Current Hit Points: 3
+Max Hit Points: 3
+Strength: 2
 
-Inventory: 
+inventory: 

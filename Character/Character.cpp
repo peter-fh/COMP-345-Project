@@ -803,7 +803,7 @@ Character Character::loadCharacter(string filename)
 
     if (!file.is_open())
     {
-        throw std::runtime_error("Could not open file");
+        throw std::runtime_error("Could not open character file");
     }
 
     while (getline(file, line))
