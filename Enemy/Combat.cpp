@@ -4,7 +4,7 @@
 
 Combat::Combat(Character& player, Enemy& enemy){
     Dice d20 = Dice(20);
-    std::string selection;
+    std::string selection = "";
     int dmg;
     
     std::cout << "Amushed by " << enemy.name << " (Level " << enemy.level << ") " << enemy.maxHP << "HP\n";
