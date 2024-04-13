@@ -22,20 +22,21 @@ Item* Chest::takeItem(int index){
     }
 }
 void Chest::openChest(){
-    cout << "sdofuiyghsdg\n";
-    if (contents[0] == nullptr){
+    cout << "entering openChest()\n";
+    /* if (contents[0] == nullptr){
         std::cout << "\nChest empty";
         return;
     }
     else{
         std::cout << "\nChest Contains";
-    }
+    } */
     int index = 1;
     for (Item* item : contents){
 
         std::cout << "\n  " << index << ": " << item->getItemName();
 	index++;
     }
+    cout << "exiting openChest()\n";
 }
 
 void Chest::reget(){

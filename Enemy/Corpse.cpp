@@ -3,14 +3,14 @@
 
 
 Item* Corpse::loot(int index){
-        if (index-1 > inventory.size() || index < 1){
-        std::cout << "\nInvalid Selection";
-        return nullptr;
+    if (index-1 > inventory.size() || index < 1){
+	std::cout << "\nInvalid Selection";
+	return nullptr;
     }
     else{
-        Item* selection = inventory[index-1];
-        inventory.erase(inventory.begin() + index-1);
-        return selection;
+	Item* selection = inventory[index-1];
+	inventory.erase(inventory.begin() + index-1);
+	return selection;
     }
 }
 

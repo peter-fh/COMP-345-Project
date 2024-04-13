@@ -1,12 +1,16 @@
 #include "Loot.h"
-
+#include <fstream>
+#include <iostream>
 
 std::vector<Item*> Loot::generateChestLoot(){
+    Dice RNGesus2 = Dice(5);
     Dice RNGesus = Dice(100);
-    int table = RNGesus.Roll()/5;
+    int table = RNGesus2.Roll();
     std::vector<Item*> lootTable;
     int pull, mod, wildcard;
     std::string classMod;
+    std::ofstream outfile("loot_debug.txt");
+    outfile << "Table: " << table << std::endl;
     switch(table){
         case(1):{
             //1 weapon, 1 random armor piece, 1 consumable

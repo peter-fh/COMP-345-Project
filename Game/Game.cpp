@@ -116,7 +116,8 @@ bool Game::insertChests(int num_chests){
 	Chest chest;
 	chests.push_back(chest);
     }
-    cout << "Chest size: " << chests.size() << endl;
+    cout << "opening chest for first time\n";
+    chests[0].openChest();
 
     std::srand(std::time(0));
     for (auto it = chests.begin(); it != chests.end(); it++){
@@ -202,6 +203,8 @@ bool Game::loadNextMap(){
     insertCharacters();
     insertEnemies(1);
     insertChests(1);
+    cout << "opening chest for second time\n";
+    chests[0].openChest();
     return true;
 }
 
