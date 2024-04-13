@@ -35,8 +35,8 @@ Map::Map(){
 	}
 	mapArray.push_back(column);
     }
-    setStart(0, 0);
-    setEnd(width - 1, height - 1);
+    // setStart(0, 0);
+    // setEnd(width - 1, height - 1);
 }
 
 
@@ -53,8 +53,8 @@ Map::Map(int inp_width, int inp_height, string inp_name){
 	mapArray.push_back(column);
     }   
     
-    setStart(0, 0);
-    setEnd(width - 1, height - 1);
+    // setStart(0, 0);
+    // setEnd(width - 1, height - 1);
 }
 
 
@@ -71,8 +71,8 @@ Map::Map(int inp_width, int inp_height)
 	}
 	mapArray.push_back(column);
     }    
-    setStart(0, 0);
-    setEnd(width - 1, height - 1);
+    // setStart(0, 0);
+    // setEnd(width - 1, height - 1);
 }
 
 
@@ -443,7 +443,7 @@ bool Map::addMappable(Mappable* mappable_obj){
 void Map::saveMap() {
     std::ofstream file(getName()+ ".txt");
     if (!file.is_open()) {
-        std::cerr << "Failed to open file0 for saving." << std::endl;
+        std::cerr << "Failed to open file for saving." << std::endl;
         return;
     }
     file << getWidth() << "," << getHeight() << std::endl;
