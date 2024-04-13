@@ -116,6 +116,7 @@ bool Game::insertChests(int num_chests){
 	Chest chest;
 	chests.push_back(chest);
     }
+    cout << "Chest size: " << chests.size() << endl;
 
     std::srand(std::time(0));
     for (auto it = chests.begin(); it != chests.end(); it++){
@@ -147,6 +148,8 @@ bool Game::insertChests(int num_chests){
 
     return true;
 }
+
+
 bool Game::insertEnemies(int num_enemies){
     enemies.clear();
     for (int i=0; i < num_enemies; i++){
@@ -359,7 +362,6 @@ void Game::userLoot(Chest& chest){
 bool Game::moveEnemy(Enemy& enemy){
     int xDirection = (player.getX() - enemy.getX()) / abs(player.getX() - enemy.getX());
     int yDirection = (player.getY() - enemy.getY()) / abs(player.getY() - enemy.getY());
-    cout << "enemy y direction: " << yDirection << endl;
     cout << enemy.status() << " is rolling for movement (press enter)";
     cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     int roll = d6.Roll();
@@ -372,7 +374,7 @@ bool Game::moveEnemy(Enemy& enemy){
 	    displayCurrentMap();
 	    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 	    roll--;
-	    int xDirection = (player.getX() - enemy.getX()) / abs(player.getX() - enemy.getX());
+	    xDirection = (player.getX() - enemy.getX()) / abs(player.getX() - enemy.getX());
 
 	} else {
 	    break;
@@ -380,12 +382,13 @@ bool Game::moveEnemy(Enemy& enemy){
     }
 
     while (roll > 0 && yDirection != 0){
-	cout << "yDirection: " << yDirection << endl;
+
 	if (moveEnemyOneSquare(0, yDirection, enemy, map)){
 	    displayCurrentMap();
 	    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 	    roll--;
-	    int yDirection = (player.getY() - enemy.getY()) / abs(player.getY() - enemy.getY());
+
+	    yDirection = (player.getY() - enemy.getY()) / abs(player.getY() - enemy.getY());
 	} else {
 	    break;
 	}
