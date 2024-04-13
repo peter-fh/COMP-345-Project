@@ -16,31 +16,31 @@ void StartingUI::CharacterBuilder(){
         std::getline(cin, dead);
         roll = d.Roll();
         cout << "Rolled: " << roll;
-        Weapon* weapon = dynamic_cast<Weapon*>(Loot::generateWeapon(roll*5));
+        Weapon* weapon = dynamic_cast<Weapon*>(Loot::generateWeapon());
         cout << weapon->getItemName();
         cout << "Roll";
         std::getline(cin, dead);
         roll = d.Roll();
         cout << "Rolled: " << roll;
-        Armor* helmet = dynamic_cast<Armor*>(Loot::generateHelmet(roll*5));
+        Armor* helmet = dynamic_cast<Armor*>(Loot::generateHelmet());
         cout << helmet->getItemName();
         cout << "Roll";
         std::getline(cin, dead);
         roll = d.Roll();
         cout << "Rolled: " << roll;
-        Armor* chestplate = dynamic_cast<Armor*>(Loot::generateChestplate(roll*5));
+        Armor* chestplate = dynamic_cast<Armor*>(Loot::generateChestplate());
         cout << chestplate->getItemName();
         cout << "Roll";
         std::getline(cin, dead);
         roll = d.Roll();
         cout << "Rolled: " << roll;
-        Armor* pants = dynamic_cast<Armor*>(Loot::generatePants(roll*5));
+        Armor* pants = dynamic_cast<Armor*>(Loot::generatePants());
         cout << pants->getItemName();
         cout << "Roll";
         std::getline(cin, dead);
         roll = d.Roll();
         cout << "Rolled: " << roll;
-        Armor* boots = dynamic_cast<Armor*>(Loot::generateBoots(roll*5));
+        Armor* boots = dynamic_cast<Armor*>(Loot::generateBoots());
         cout << boots->getItemName();
         cout << "Roll";
         std::getline(cin, dead);
@@ -49,7 +49,6 @@ void StartingUI::CharacterBuilder(){
         cout << "Reroll gear? (y/n)";
         std::getline(cin, selection);
     } while (selection != "N" || selection != "n");
-    Bow b = Bow(7, "Wooden Bow");
     //push character to map and equip items
 
 }
@@ -68,11 +67,11 @@ void StartingUI::NPCBuilder(){
         std::getline(cin, friendly);
     }
     if (friendly == "N" || friendly == "n"){
-        new Enemy(name, lvl, false);
+        new Enemy(name, lvl, true, nullptr, nullptr, nullptr, nullptr, nullptr);
         return;
     }
     else{
-        new Enemy(name, lvl, true);
+        new Enemy(name, lvl, true, nullptr, nullptr, nullptr, nullptr, nullptr);
         return;
     }
 }

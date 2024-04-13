@@ -15,6 +15,7 @@
 class Game {
 public:
     Game();
+    bool loadCampaign();
     bool loadCampaign(string campaign_name);
     bool loadNextMap();
     bool save();

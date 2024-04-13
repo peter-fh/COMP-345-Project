@@ -9,7 +9,7 @@ private:
     bool saveMapAs();
     Map createMap();
     bool loadMap();
-    Map* loadMapFromFile();
+    Map loadMapFromFile();
     bool setSquare();
     bool setCell();
     bool setStart();

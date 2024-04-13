@@ -40,6 +40,7 @@ public:
     Armor *equippedChestplate, *equippedHelmet, *equippedBoots, *equippedPants;
 
     Weapon *equippedWeapon;
+    bool friendly;
     int maxHP, currentHP;
     std::string getEnemyName();
     void saveEnemy(string filename);

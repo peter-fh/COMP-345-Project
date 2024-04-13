@@ -15,10 +15,20 @@ Game::Game() {
     d6 = Dice(6);
 }
 
+bool Game::loadCampaign(string campaign_name){
+    Campaign loaded_campaign = Campaign::loadCampaign(campaign_name);
+    if (loaded_campaign.getName() == ""){
+	cout << "Failed to load campaign.\n";
+	return false;
+    }
+    campaign = loaded_campaign;
+    cout << "Loaded campaign: " << campaign.getName() << "!\n";
+    return true;
+}
 
-bool Game::loadCampaign(string filename){
+bool Game::loadCampaign(){
     Campaign loaded_campaign;
-    loaded_campaign.setName(filename);
+    loaded_campaign.setName("Default Campaign");
     
     MapMaker mapMaker;
     Map map1 = mapMaker.makeMap1();
@@ -49,7 +59,7 @@ bool Game::loadCampaign(string filename){
 
     cout << "Loaded character: " << character1.getName() << "!\n";
 
-    cout << "Loaded campaign: " << filename << "!\n";
+    cout << "Loaded campaign: " << "Default Campaign" << "!\n";
 
     return true;
     
