@@ -24,6 +24,10 @@ class CharUI : public Observer {
     void statChecker();
     void regDisplay();
     void startup();
+    void saveCharacter();
+    void loadCharacter();
+    void editorLoop();
+    
     
     };
 

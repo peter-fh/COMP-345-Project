@@ -18,6 +18,17 @@ void CharUI::startup(){
       checkAttributes();
 }
 
+void CharUI::editorLoop(){
+    cout << "Welcome to the Character Editor!" << endl;
+
+    void checkAbilityScores();
+    void checkAttributes();
+    void checkEquipment();
+    void checkInventory();
+    void nameCharacter();
+    void statChecker();
+}
+
 void CharUI::checkInventory(){
       std::string selection;
       std::string item;

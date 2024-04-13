@@ -1,0 +1,9 @@
+X: 0
+Y: 0
+Name: y
+Level: 1
+Current Hit Points: 3
+Max Hit Points: 3
+Strength: 2
+
+inventory: 

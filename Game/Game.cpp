@@ -740,78 +740,78 @@ void Game::saveGame(string filename) {
 }
 
 Game Game::loadGame(string filename){
-	Game game;
+    Game game;
 
-std::ifstream file(filename);
+    std::ifstream file(filename);
     std::string line;
     std::vector<Item*> v;
     int x,y;
 
 
 
-if (!file.is_open())
+    if (!file.is_open())
     {
-        cout<<"no file\n";
-        throw std::runtime_error("Could not open file");
+	cout<<"no file\n";
+	throw std::runtime_error("Could not open file");
     }
 
     while (getline(file, line))
     {
-        std::istringstream iss(line);
-        std::string key;
-        if (getline(iss, key, ':'))
-        {
-            cout<<key<<endl;
-            std::string value;
-            getline(iss, value);
+	std::istringstream iss(line);
+	std::string key;
+	if (getline(iss, key, ':'))
+	{
+	    cout<<key<<endl;
+	    std::string value;
+	    getline(iss, value);
 
-            if (key == "X")
-            {
-                x = stoi(value);
-            }
-            else if (key == "Y")
-            {
-                y = stoi(value);
-            }
-            else if (key == "Loot")
-            {
-                cout<<"lootloot\n";
-                while (getline(file, line) && !line.empty())
-                {
-                    cout<<"while loop\n";
+	    if (key == "X")
+	    {
+		x = stoi(value);
+	    }
+	    else if (key == "Y")
+	    {
+		y = stoi(value);
+	    }
+	    else if (key == "Loot")
+	    {
+		cout<<"lootloot\n";
+		while (getline(file, line) && !line.empty())
+		{
+		    cout<<"while loop\n";
 
-                    std::istringstream itemStream(line);
-                    std::string itemType;
-                    getline(itemStream, itemType, ',');
+		    std::istringstream itemStream(line);
+		    std::string itemType;
+		    getline(itemStream, itemType, ',');
 
-                    if (itemType == "Armour")
-                    {
-                        std::string defense, armorName, armorType, toEquip;
+		    if (itemType == "Armour")
+		    {
+			std::string defense, armorName, armorType, toEquip;
 
-                        getline(itemStream, armorName, '|');
-                        getline(itemStream, armorType, '(');
-                        getline(itemStream, defense, ')');
-                        Armor *armor1 = new Armor(armorName, armorType, int(stoi(defense)));
-                        cout<<"armor\n";
-                        v.push_back(armor1);
-                    }
-                    else if (itemType == "Weapon")
-                    {
-                        std::string damage, weaponName, toEquip;
-                        getline(itemStream, weaponName, '(');
-                        getline(itemStream, damage, ')');
-                        Weapon *weapon1 = new Weapon(int(stoi(damage)), weaponName);
-                        cout<<"weapon\n";
-                        v.push_back(weapon1);
-                    }
-                }
-            }
-        }
+			getline(itemStream, armorName, '|');
+			getline(itemStream, armorType, '(');
+			getline(itemStream, defense, ')');
+			Armor *armor1 = new Armor(armorName, armorType, int(stoi(defense)));
+			cout<<"armor\n";
+			v.push_back(armor1);
+		    }
+		    else if (itemType == "Weapon")
+		    {
+			std::string damage, weaponName, toEquip;
+			getline(itemStream, weaponName, '(');
+			getline(itemStream, damage, ')');
+			Weapon *weapon1 = new Weapon(int(stoi(damage)), weaponName);
+			cout<<"weapon\n";
+			v.push_back(weapon1);
+		    }
+		}
+	    }
+	}
     }
     file.close();
     // corps = Corpse(v);
     // corps.setX(x);
     // corps.setY(y);
 
-	return game;
+    return game;
 }

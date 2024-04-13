@@ -10,12 +10,45 @@
 #include "Enemy/Combat.h"
 #include <iostream>
 #include "Game/Game.h"
+#include "Game/StartingUI.h"
 
 class Driver {
 
 public:
     Driver(){}
     void run(){
+	bool exit = false;
+	while (!exit){
+	    cout << "Welcome to the game! Please select an option:" << endl;
+	    cout << "1. Play default game" << endl;
+	    cout << "2. Play game with custom map" << endl;
+	    cout << "3. Campaign Editor" << endl;
+	    cout << "4. Character Creator" << endl;
+	    cout << "5. Exit" << endl;
+	    int choice;
+	    cin >> choice;
+	    if (choice == 1){
+		playDefaultGame();
+	    }
+	    else if (choice == 2){
+		cout << "Enter the filename of the map you would like to play: ";
+		string filename;
+		cin >> filename;
+		playGame(filename);
+	    }
+	    else if (choice == 3){
+		mapEditor.editorLoop();
+	    }
+	    else if (choice == 4){
+		makeCharacters();
+	    }
+	    else if (choice == 5){
+		exit = true;
+	    } else {
+		cout << "Invalid choice" << endl;
+	    }
+
+	}
 	mapEditor.editorLoop();
     }
 
@@ -23,10 +56,19 @@ private:
     Game game;
     MapEditorCLI mapEditor;
 
-    void playDefaultGame();
-    void playGame(string filename);
-    void makeCharacters();
-    void makeMap();
+    void playDefaultGame(){
+	game.loadCampaign();
+	game.loadNextMap();
+	game.startGameLoop();
+    }
+    void playGame(string filename){
+	game.loadCampaign(filename);
+	game.loadNextMap();
+	game.startGameLoop();
+    }
+    void makeCharacters(){
+
+    }
 
 };
 
