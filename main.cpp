@@ -11,49 +11,64 @@
 #include <iostream>
 #include "Game/Game.h"
 
-
-int main(){
+int main()
+{
     // Game game;
-    // game.loadCampaign("test_campaign"); 
+    // game.loadCampaign("test_campaign");
     // game.loadNextMap();
     // //game.startGameLoop();
     // game.loadNextMap();
     // game.startGameLoop();
 
+    // Character welcome(1);
+    // // welcome.printCharacter();
+    // welcome.setName("James");
+    // welcome.setHP(10);
+    // welcome.heal();
+    // Armor armor1("iron chestplate", "chestplate", 20);
+    // Weapon weapon1(3, "sword");
+    // Armor armor2("leather boots", "boots", 10);
 
-    Character welcome(1);
-    // welcome.printCharacter();
-    welcome.setName("James");
-    welcome.setHP(10);
-    welcome.heal();
-    Armor armor1("iron chestplate","chestplate", 20);
-    Weapon weapon1(3,"sword");
-    Armor armor2("leather boots","boots", 10);
+    // welcome.pickup(&armor1);
+    // welcome.pickup(&weapon1);
+    // welcome.pickup(&armor2);
 
+    // welcome.equip(&armor1);
+    // welcome.equip(&weapon1);
+    // welcome.equip(&armor2);
 
+    // welcome.inventoryCheck();
+    // welcome.setX(10);
+    // welcome.setY(15);
+    // welcome.saveCharacter();
 
+    // Character myChar = Character::loadCharacter("James.txt");
 
+    // std::cout << "Character Information:" << myChar.getX() << ", " << myChar.getY() << std::endl;
+    // // myChar.printCharacter();
+    // myChar.inventoryCheck();
 
-    welcome.pickup(&armor1);
-    welcome.pickup(&weapon1);
-    welcome.pickup(&armor2);
+    Enemy enemy21;
+    enemy21.setX(100);
+    enemy21.setY(200);
+    enemy21.maxHP = 20;
+    enemy21.currentHP = 10;
 
+    Armor armor1("iron chestplate", "chestplate", 20);
+    Weapon weapon1(3, "sword");
+    Armor armor2("leather boots", "boots", 10);
 
-    welcome.equip(&armor1);
-    welcome.equip(&weapon1);
-    welcome.equip(&armor2);
+    enemy21.giveItem(&armor1);
+    enemy21.giveItem(&weapon1);
+    enemy21.giveItem(&armor2);
 
+    enemy21.saveEnemy();
 
-    welcome.inventoryCheck();
+    // Enemy myEnemy = Enemy::loadEnemy("Goblin.txt");
 
+    std::cout << enemy21.equippedChestplate << enemy21.getX() << std::endl;
 
-    welcome.saveCharacter();
-
-    Character myChar = Character::loadCharacter("James.txt");
-    // myChar.printCharacter();
-    myChar.inventoryCheck();
-
-
+    std::cout << "Enemy Information:" << enemy21.getX() << std::endl;
 
     // Map map1(10, 7);
     // map1.setName("Intro");
@@ -68,7 +83,6 @@ int main(){
     // Cell location = map1.getNearbyUnnocupied(start.x, start.y);
 
     // map1.displayMap();
-
 
     // Map map2(26, 11);
     // map2.setName("The Dungeon");
@@ -95,7 +109,6 @@ int main(){
     // start = map2.getStart();
     // location = map2.getNearbyUnnocupied(start.x, start.y);
 
-    
     // map2.displayMap();
 
     // map1.saveMap();
@@ -106,5 +119,5 @@ int main(){
     // map2.saveMap();
 
     // myMap = Map::loadMap("The Dungeon.txt");
-    // myMap.displayMap();    
+    // myMap.displayMap();
 }

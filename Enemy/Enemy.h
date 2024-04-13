@@ -1,8 +1,6 @@
 #ifndef ENEMY_H
 #define ENEMY_H
 
-
-
 #include "../Item/Item.h"
 #include "../Item/Consumable.h"
 #include "../Item/Weapon.h"
@@ -16,36 +14,38 @@
 
 class Corpse;
 
-class Enemy : public Mappable{
-    public:
-        Enemy();
-        Enemy(std::string name, int level, int HP, Weapon* weapon, Armor* Helmet, Armor* Chestplate, Armor* Pants, Armor* Boots);
-        void giveItem(Item* i);
-        std::string name;
-        void takeDamage(int damage);
-        int Attack(float mod);
-        Corpse kill();
-        std::string status();
-        std::vector<Item*> inventory;
-        bool alive;
-        void playerFlee();
-        int armorMod, level;
-	
-        void determineSymbol() override;
+class Enemy : public Mappable
+{
+public:
+    Enemy();
+    Enemy(std::string name, int level, int HP, Weapon *weapon, Armor *Helmet, Armor *Chestplate, Armor *Pants, Armor *Boots);
+    void giveItem(Item *i);
+    std::string name;
+    void takeDamage(int damage);
+    int Attack(float mod);
+    Corpse kill();
+    std::string status();
+    std::vector<Item *> inventory;
+    bool alive;
+    void playerFlee();
+    int armorMod, level;
 
-        void equipment();
+    void determineSymbol() override;
 
-        // TODO: for final, armormod as a percentage of damage reduction, eg: 15 armorMod means attack is 85% effective
+    void equipment();
 
-        Armor *equippedChestplate, *equippedHelmet, *equippedBoots, *equippedPants;
+    // TODO: for final, armormod as a percentage of damage reduction, eg: 15 armorMod means attack is 85% effective
 
-        Weapon* equippedWeapon;
-        int maxHP, currentHP;
+    Armor *equippedChestplate, *equippedHelmet, *equippedBoots, *equippedPants;
 
+    Weapon *equippedWeapon;
+    int maxHP, currentHP;
+    std::string getEnemyName();
+    void saveEnemy();
+    static Enemy loadEnemy(const std::string &filename);
 
-    private:
-        Character* playerCharacter;
-
+private:
+    Character *playerCharacter;
 };
 
 #endif

@@ -23,25 +23,29 @@
 #include "../Map/Map.h"
 #include "../Enemy/Corpse.h"
 
-
-
 using namespace std;
 
-
-void Character::determineSymbol(){
-    if (name == ""){
-	setSymbol('P');
+void Character::determineSymbol()
+{
+    if (name == "")
+    {
+        setSymbol('P');
     }
-    else{
+    else
+    {
         char p = (char)name[0];
-        if (p == 'C' || p == 'E' || p =='B') setSymbol('P');
-        else setSymbol((char)name[0]);
+        if (p == 'C' || p == 'E' || p == 'B')
+            setSymbol('P');
+        else
+            setSymbol((char)name[0]);
     }
 }
-void Character::gainXP(int XP){
+void Character::gainXP(int XP)
+{
     std::cout << "Gained " << XP << "XP";
     currXP += XP;
-    if (currXP >= levelUpThreshold){
+    if (currXP >= levelUpThreshold)
+    {
         level++;
         std::cout << "Leveled up to level " << level << " strength and HP increased!";
         currXP -= levelUpThreshold;
@@ -52,142 +56,188 @@ void Character::gainXP(int XP){
     }
 }
 
-Character::Character(){
+Character::Character()
+{
+    int armorLevel = 0;
+    levelUpThreshold = 1;
+    alive = true;
+    std::vector<Item *> inventory;
+    inventorySize = 10;
+    equippedChestplate = nullptr;
+    equippedBoots = nullptr;
+    equippedPants = nullptr;
+    equippedHelmet = nullptr;
+    equippedWeapon = nullptr;
+    equippedBow = nullptr;
+
+    level = 1;
+    strength = level * 2;
+    hitPoints = level * 3;
+    currHP = hitPoints;
+    armorClass = armorLevel;
 }
 
-std::vector<Observer*> observers;
+std::vector<Observer *> observers;
 
-void Character::inventoryCheck(){
-    if (inventory.size() == 0){
+void Character::inventoryCheck()
+{
+    if (inventory.size() == 0)
+    {
         // Notify("  Empty Inventory");
-        cout<<"  Empty Inventory"<<endl;
+        cout << "  Empty Inventory" << endl;
         return;
     }
     int index = 1;
-    for (Item* item : Character::inventory) {
-        if (item != nullptr) {
+    for (Item *item : Character::inventory)
+    {
+        if (item != nullptr)
+        {
             if (item->held)
-                cout<<("  " + to_string(index++) + ": " + item->getItemName() + " (Equipped)\n");
-            else{
-                cout<<("  " + to_string(index++) + ": " + item->getItemName()+ " \n");
+                cout << ("  " + to_string(index++) + ": " + item->getItemName() + " (Equipped)\n");
+            else
+            {
+                cout << ("  " + to_string(index++) + ": " + item->getItemName() + " \n");
             }
         }
-}}
+    }
+}
 
-
-void Character::openChest(Chest* chest){
+void Character::openChest(Chest *chest)
+{
     std::string selection;
     int index;
     chest->openChest();
-    while (chest->getNumOfContents() != 0){
+    while (chest->getNumOfContents() != 0)
+    {
         selection = "";
         Notify("\nTake item? (y/n)");
         std::getline(cin, selection);
-        if (selection != "y" && selection != "Y" && selection != "n" && selection != "N"){ 
-            do{
-                  std::cout << "\nInvalid, please try again";
-                  std::cout << "\nCheck stats? (y/n): ";
-                  std::getline(cin, selection);
+        if (selection != "y" && selection != "Y" && selection != "n" && selection != "N")
+        {
+            do
+            {
+                std::cout << "\nInvalid, please try again";
+                std::cout << "\nCheck stats? (y/n): ";
+                std::getline(cin, selection);
             } while (selection != "y" && selection != "Y" && selection != "n" && selection != "N");
-                  }
-        if (selection == "y" || selection == "Y"){
+        }
+        if (selection == "y" || selection == "Y")
+        {
             chest->reget();
             Notify("\n Select Item: ");
             std::getline(cin, selection);
-            try{
+            try
+            {
                 index = std::stoi(selection);
-                if (index == chest->getNumOfContents()+2) return;
-                else{
-                    Item* item = chest->takeItem(index);
-                    if (item != nullptr) pickup(item);
+                if (index == chest->getNumOfContents() + 2)
+                    return;
+                else
+                {
+                    Item *item = chest->takeItem(index);
+                    if (item != nullptr)
+                        pickup(item);
                 }
-            }catch(exception e){
+            }
+            catch (exception e)
+            {
                 std::cout << "\nInvaid Selection";
             }
-    }
-        else if (selection == "n" || selection == "N") return;
-    
-
+        }
+        else if (selection == "n" || selection == "N")
+            return;
     }
     Notify("\nChest is now empty");
 }
-void Character::searchCorpse(Corpse* corpse){
+void Character::searchCorpse(Corpse *corpse)
+{
     std::string selection;
     int index;
     corpse->search();
-    while (corpse->getInvSize() != 0){
+    while (corpse->getInvSize() != 0)
+    {
         selection = "";
         Notify("\nTake item? (y/n)");
         std::getline(cin, selection);
-        if (selection != "y" && selection != "Y" && selection != "n" && selection != "N"){ 
-            do{
-                  std::cout << "\nInvalid, please try again";
-                  std::cout << "\nCheck stats? (y/n): ";
-                  std::getline(cin, selection);
+        if (selection != "y" && selection != "Y" && selection != "n" && selection != "N")
+        {
+            do
+            {
+                std::cout << "\nInvalid, please try again";
+                std::cout << "\nCheck stats? (y/n): ";
+                std::getline(cin, selection);
             } while (selection != "y" && selection != "Y" && selection != "n" && selection != "N");
-                  }
-        if (selection == "y" || selection == "Y"){
+        }
+        if (selection == "y" || selection == "Y")
+        {
             corpse->reget();
             Notify("\n Select Item: ");
             std::getline(cin, selection);
-            try{
+            try
+            {
                 index = std::stoi(selection);
-                if (index == corpse->getInvSize()+2) return;
-                else{
-                    Item* item = corpse->loot(index);
-                    if (item != nullptr) pickup(item);
+                if (index == corpse->getInvSize() + 2)
+                    return;
+                else
+                {
+                    Item *item = corpse->loot(index);
+                    if (item != nullptr)
+                        pickup(item);
                 }
-            }catch(exception e){
+            }
+            catch (exception e)
+            {
                 std::cout << "\nInvaid Selection";
             }
-    }
-        else if (selection == "n" || selection == "N") return;
-    
-
+        }
+        else if (selection == "n" || selection == "N")
+            return;
     }
     Notify("\nCorpse is now empty");
 }
 
+void Character::takeDamage(int damage)
+{
 
-
-void Character::takeDamage(int damage){
-
-    int newDamage = damage * armorLevel/100;
+    int newDamage = damage * armorLevel / 100;
     currHP -= newDamage;
     int blocked = damage - newDamage;
-    if (blocked > 0){
+    if (blocked > 0)
+    {
         std::cout << "Armor blocks " << blocked << " damage";
     }
-    if (currHP <= 0){
+    if (currHP <= 0)
+    {
         kill();
-        //reload save logic?
+        // reload save logic?
         //~Character();
     }
 }
 
-std::string Character::getName(){return name;}
+std::string Character::getName() { return name; }
 
-void Character::kill(){
+void Character::kill()
+{
     Notify("Your character has taken too much damage and perished");
     alive = false;
 }
 
-
-void Character::pickup(Item* i){
-    if (inventory.size() >= inventorySize) Notify("Cannot pickup " + i->getItemName() + " inventory full.");
-    else{
+void Character::pickup(Item *i)
+{
+    if (inventory.size() >= inventorySize)
+        Notify("Cannot pickup " + i->getItemName() + " inventory full.");
+    else
+    {
         Notify("Picked up " + i->getItemName() + "!");
         inventory.push_back(i);
         i->pickup();
     }
 }
 
-
-
-
-void Character::drop(int pos){
-    Item* i = inventory[pos];
-    if (i->key){
+void Character::drop(int pos)
+{
+    Item *i = inventory[pos];
+    if (i->key)
+    {
         Notify("Keys cannot be dropped");
         return;
     }
@@ -195,282 +245,319 @@ void Character::drop(int pos){
     inventory.erase(inventory.begin() + pos);
 }
 
-
-int Character::attack(float modifier){
-    if (equippedWeapon = nullptr){
+int Character::attack(float modifier)
+{
+    if (equippedWeapon = nullptr)
+    {
         Notify("Punched enemy for 1 damage");
         return 1;
     }
     int damage = (modifier * (equippedWeapon->getDamage()));
     cout << "damage: " << damage << "\n";
-    if (damage == 0){
+    if (damage == 0)
+    {
         Notify("Attack missed");
     }
-    else{
+    else
+    {
         Notify("Attacked for " + std::to_string(damage) + " damage!");
     }
     return damage;
 }
-int Character::bowAttack(float modifier){
-    if (equippedBow == nullptr){
+int Character::bowAttack(float modifier)
+{
+    if (equippedBow == nullptr)
+    {
         Notify("No bow equipped");
         return 0;
     }
     int damage = (modifier * (equippedBow->getDamage())), dmg;
     Dice d = Dice(3);
-    int num = modifier*5;
-    if (num = 0){
+    int num = modifier * 5;
+    if (num = 0)
+    {
         Notify("Attack failed");
         return 0;
     }
     int total = 0;
     Notify(std::to_string(num) + " shots");
-    for (int x = 0; x<num; x++){
-        dmg = (d.Roll()+3)/5*damage;
-        std::cout << "shot " << x+1 << dmg << " damage!\n";
+    for (int x = 0; x < num; x++)
+    {
+        dmg = (d.Roll() + 3) / 5 * damage;
+        std::cout << "shot " << x + 1 << dmg << " damage!\n";
         total += dmg;
     }
     Notify("Attacked with bow for " + std::to_string(total) + " damage!");
-    
+
     return total;
 }
 
-std::string Character::status(){
+std::string Character::status()
+{
     return name + ": " + std::to_string(currHP) + "/" + std::to_string(hitPoints);
-
 }
 
-
-void Character::equip(Item* i){
-    Consumable* C = dynamic_cast<Consumable*>(i);
-    if (C) {
+void Character::equip(Item *i)
+{
+    Consumable *C = dynamic_cast<Consumable *>(i);
+    if (C)
+    {
         currHP += C->getValue();
-        if (currHP > hitPoints){
+        if (currHP > hitPoints)
+        {
             currHP = hitPoints;
         }
         delete C;
         return;
     }
-    Weapon* W = dynamic_cast<Weapon*>(i);
-    if (W) {
-         if (equippedWeapon == nullptr){
+    Weapon *W = dynamic_cast<Weapon *>(i);
+    if (W)
+    {
+        if (equippedWeapon == nullptr)
+        {
             Notify("Equipped " + W->getItemName());
             equippedWeapon = W;
             W->equip();
             return;
-         }
-         else{
+        }
+        else
+        {
             Notify("Unequipped: " + equippedWeapon->getItemName() + "\nEquipped: " + W->getItemName());
             equippedWeapon->unEquip();
             equippedWeapon = W;
             W->equip();
             return;
-         }
+        }
     }
-    Armor* A = dynamic_cast<Armor*>(i);
-    if (A){
-        if (A->getType() == "Chestplate"){
-            if (equippedChestplate == nullptr){
+    Armor *A = dynamic_cast<Armor *>(i);
+    if (A)
+    {
+        if (A->getType() == "Chestplate")
+        {
+            if (equippedChestplate == nullptr)
+            {
                 Notify("Equipped: " + A->getItemName());
                 equippedChestplate = A;
                 A->equip();
                 armorLevel += A->getDefence();
                 return;
             }
-            else{
+            else
+            {
                 Notify("Unequipped: " + equippedChestplate->getItemName() + "\nEquipped " + A->getItemName());
                 armorLevel -= equippedChestplate->getDefence();
-		        armorLevel += A->getDefence();
+                armorLevel += A->getDefence();
                 equippedChestplate->unEquip();
                 equippedChestplate = A;
-                
-                A->equip();
-                return;
-         }
-        }
-        if (A->getType() == "Helmet"){
-            if (equippedHelmet == nullptr){
-                Notify("Equipped: " + A->getItemName());
-                equippedHelmet = A;
-		armorLevel += A->getDefence();
+
                 A->equip();
                 return;
             }
-            else{
-                Notify("Unequipped: " + equippedHelmet->getItemName() +  "\nEquipped: " + A->getItemName());
+        }
+        if (A->getType() == "Helmet")
+        {
+            if (equippedHelmet == nullptr)
+            {
+                Notify("Equipped: " + A->getItemName());
+                equippedHelmet = A;
+                armorLevel += A->getDefence();
+                A->equip();
+                return;
+            }
+            else
+            {
+                Notify("Unequipped: " + equippedHelmet->getItemName() + "\nEquipped: " + A->getItemName());
                 armorLevel -= equippedHelmet->getDefence();
-		equippedHelmet->unEquip();
-		armorLevel += A->getDefence();
+                equippedHelmet->unEquip();
+                armorLevel += A->getDefence();
                 equippedHelmet = A;
                 A->equip();
                 return;
-         }
+            }
         }
-        if (A->getType() == "Pants"){
-            if (equippedPants == nullptr){
+        if (A->getType() == "Pants")
+        {
+            if (equippedPants == nullptr)
+            {
                 Notify("Equipped: " + A->getItemName());
                 equippedPants = A;
-		armorLevel += A->getDefence();
+                armorLevel += A->getDefence();
                 A->equip();
                 return;
             }
-            else{
+            else
+            {
                 Notify("Unequipped: " + equippedPants->getItemName() + "\nEquipped: " + A->getItemName());
                 armorLevel -= equippedPants->getDefence();
-		equippedPants->unEquip();
-		armorLevel += A->getDefence();
+                equippedPants->unEquip();
+                armorLevel += A->getDefence();
                 equippedPants = A;
                 A->equip();
                 return;
-         }
+            }
         }
-        if (A->getType() == "Boots"){
-            if (equippedBoots == nullptr){
+        if (A->getType() == "Boots")
+        {
+            if (equippedBoots == nullptr)
+            {
                 Notify("Equipped: " + A->getItemName());
                 equippedBoots = A;
-		armorLevel += A->getDefence();
+                armorLevel += A->getDefence();
                 A->equip();
                 return;
             }
-            else{
+            else
+            {
                 Notify("Unequipped: " + equippedBoots->getItemName() + "\nEquipped: " + A->getItemName() + " (" + std::to_string(A->getDefence()) + ")");
                 armorLevel -= equippedBoots->getDefence();
-		equippedBoots->unEquip();
-		armorLevel += A->getDefence();
+                equippedBoots->unEquip();
+                armorLevel += A->getDefence();
                 equippedBoots = A;
                 A->equip();
                 return;
-         }
+            }
         }
-
-
     }
 }
 
-
-
-
-
-
-void Character::equip(int pos){
-    Item* i = inventory[pos];
-    Consumable* C = dynamic_cast<Consumable*>(i);
-    if (C) {
+void Character::equip(int pos)
+{
+    Item *i = inventory[pos];
+    Consumable *C = dynamic_cast<Consumable *>(i);
+    if (C)
+    {
         currHP += C->getValue();
         inventory.erase(inventory.begin() + pos);
         delete C;
         return;
     }
-    Bow* B = dynamic_cast<Bow*>(i);
-    if (B) {
-        if (equippedBow = nullptr){
+    Bow *B = dynamic_cast<Bow *>(i);
+    if (B)
+    {
+        if (equippedBow = nullptr)
+        {
             Notify("Equipped: " + B->getItemName());
             equippedBow = B;
             B->equip();
             return;
-         }
-        else{
+        }
+        else
+        {
             Notify("Unequipped: " + equippedBow->getItemName() + "\nEquipped: " + B->getItemName());
             equippedBow->unEquip();
             equippedBow = B;
             B->equip();
             return;
-         }
+        }
     }
-    Weapon* W = dynamic_cast<Weapon*>(i);
-    if (W) {
+    Weapon *W = dynamic_cast<Weapon *>(i);
+    if (W)
+    {
 
-        if (equippedWeapon == nullptr){
+        if (equippedWeapon == nullptr)
+        {
             Notify("Equipped: " + W->getItemName());
             equippedWeapon = W;
             W->equip();
             return;
-         }
-        else{
+        }
+        else
+        {
             Notify("Unequipped: " + equippedWeapon->getItemName() + "\nEquipped: " + W->getItemName());
             equippedWeapon->unEquip();
             equippedWeapon = W;
             W->equip();
             return;
-         }
+        }
     }
-    Armor* A = dynamic_cast<Armor*>(i);
-    if (A){
-        if (A->getType() == "Chestplate"){
-            if (equippedChestplate == nullptr){
+    Armor *A = dynamic_cast<Armor *>(i);
+    if (A)
+    {
+        if (A->getType() == "Chestplate")
+        {
+            if (equippedChestplate == nullptr)
+            {
                 Notify("Equipped " + A->getItemName());
                 equippedChestplate = A;
-		armorLevel += A->getDefence();
+                armorLevel += A->getDefence();
                 A->equip();
                 return;
             }
-            else{
+            else
+            {
                 Notify("Unequipped: " + equippedChestplate->getItemName() + "\nEquipped: " + A->getItemName());
                 armorLevel -= equippedChestplate->getDefence();
-		equippedChestplate->unEquip();
-		armorLevel += A->getDefence();
+                equippedChestplate->unEquip();
+                armorLevel += A->getDefence();
                 equippedChestplate = A;
                 A->equip();
                 return;
-         }
+            }
         }
-        if (A->getType() == "Helmet"){
-            if (equippedHelmet == nullptr){
+        if (A->getType() == "Helmet")
+        {
+            if (equippedHelmet == nullptr)
+            {
                 Notify("Equipped: " + A->getItemName());
                 equippedHelmet = A;
-		armorLevel += A->getDefence();
+                armorLevel += A->getDefence();
                 A->equip();
                 return;
             }
-            else{
+            else
+            {
                 Notify("Unequipped: " + equippedHelmet->getItemName() + "\nEquipped: " + A->getItemName());
                 armorLevel -= equippedHelmet->getDefence();
-		equippedHelmet->unEquip();
+                equippedHelmet->unEquip();
                 equippedHelmet = A;
-		armorLevel += A->getDefence();
-                A->equip();
-                return;
-         }
-        }
-        if (A->getType() == "Pants"){
-            if (equippedPants == nullptr){
-                Notify("Equipped: " + A->getItemName());
-                equippedPants = A;
-		armorLevel += A->getDefence();
+                armorLevel += A->getDefence();
                 A->equip();
                 return;
             }
-            else{
+        }
+        if (A->getType() == "Pants")
+        {
+            if (equippedPants == nullptr)
+            {
+                Notify("Equipped: " + A->getItemName());
+                equippedPants = A;
+                armorLevel += A->getDefence();
+                A->equip();
+                return;
+            }
+            else
+            {
                 Notify("Unequipped: " + equippedPants->getItemName() + "\nEquipped: " + A->getItemName());
                 armorLevel -= equippedPants->getDefence();
-		equippedPants->unEquip();
+                equippedPants->unEquip();
                 equippedPants = A;
-		armorLevel += A->getDefence();
-                A->equip();
-                return;
-         }
-        }
-        if (A->getType() == "Boots"){
-            if (equippedBoots == nullptr){
-                Notify("Equipped: " + A->getItemName());
-                equippedBoots = A;
-		armorLevel += A->getDefence();
+                armorLevel += A->getDefence();
                 A->equip();
                 return;
             }
-            else{
-                Notify("Unequipped: " + equippedBoots->getItemName() + "\nEquipped: " + A->getItemName());
-                armorLevel -= equippedBoots->getDefence();
-		equippedBoots->unEquip();
+        }
+        if (A->getType() == "Boots")
+        {
+            if (equippedBoots == nullptr)
+            {
+                Notify("Equipped: " + A->getItemName());
                 equippedBoots = A;
-		armorLevel += A->getDefence();
+                armorLevel += A->getDefence();
                 A->equip();
                 return;
-         }
+            }
+            else
+            {
+                Notify("Unequipped: " + equippedBoots->getItemName() + "\nEquipped: " + A->getItemName());
+                armorLevel -= equippedBoots->getDefence();
+                equippedBoots->unEquip();
+                equippedBoots = A;
+                armorLevel += A->getDefence();
+                A->equip();
+                return;
+            }
         }
-
     }
-
 }
 
 Character::Character(int setLevel)
@@ -478,7 +565,7 @@ Character::Character(int setLevel)
     int armorLevel = 0;
     levelUpThreshold = setLevel;
     alive = true;
-    std::vector<Item*> inventory;
+    std::vector<Item *> inventory;
     inventorySize = 10;
     equippedChestplate = nullptr;
     equippedBoots = nullptr;
@@ -490,8 +577,8 @@ Character::Character(int setLevel)
     if (setLevel > 0)
     {
         level = setLevel;
-        strength = level*2;
-        hitPoints = level*3;
+        strength = level * 2;
+        hitPoints = level * 3;
         currHP = hitPoints;
         armorClass = armorLevel;
     }
@@ -499,9 +586,8 @@ Character::Character(int setLevel)
     {
         throw invalid_argument("Level must be positive");
     }
-    
 }
-void Character::Attach(Observer* observer)
+void Character::Attach(Observer *observer)
 {
     observers.push_back(observer);
 }
@@ -520,9 +606,11 @@ void Character::Notify(std::string attribute)
     }
 }
 
-void Character::Notify(){
-    for (auto& observer: observers){
-	observer->Update(this);
+void Character::Notify()
+{
+    for (auto &observer : observers)
+    {
+        observer->Update(this);
     }
 }
 
@@ -532,7 +620,7 @@ void Character::Detach(Observer *observer)
     {
         if (*it == observer)
         {
-          it = observers.erase(it);
+            it = observers.erase(it);
         }
         else
         {
@@ -540,35 +628,51 @@ void Character::Detach(Observer *observer)
         }
     }
 }
-int Character::getLevel(){
+int Character::getLevel()
+{
     return level;
 }
-int Character::getArmorClass(){
+int Character::getArmorClass()
+{
     return armorLevel;
 }
-int Character::getCurrentHP(){
+int Character::getCurrentHP()
+{
     return currHP;
 }
-void Character::setCurrentHP(int newHP ){
+void Character::setCurrentHP(int newHP)
+{
     currHP = newHP;
 }
-int Character::getHitPoints(){
+int Character::getHitPoints()
+{
     return hitPoints;
 }
 
-int Character::getAttackBonus(){
-    if (equippedWeapon == nullptr) return 0;
+int Character::getAttackBonus()
+{
+    if (equippedWeapon == nullptr)
+        return 0;
     return equippedWeapon->getDamage();
 }
 
-void Character::heal(){
+void Character::heal()
+{
     currHP = hitPoints;
 }
 
-void Character::setName(string newName){
+void Character::setName(string newName)
+{
     name = newName;
 }
-int Character::getStrength(){
+
+void Character::setLevel(int passedlevel)
+{
+    level = passedlevel;
+}
+
+int Character::getStrength()
+{
     return strength;
 }
 int Character::calculateAttackPerRound()
@@ -576,13 +680,12 @@ int Character::calculateAttackPerRound()
 
     if (level % 5 == 0)
     {
-        attackPerRound ++;
+        attackPerRound++;
     }
 
     return attackPerRound;
 }
 // Setter for level
-
 
 // getters for equipment
 string Character::getChestplate() const { return equippedChestplate->getItemName(); }
@@ -623,18 +726,16 @@ void Character::printCharacter()
     std::cout << "Attack Bonus: " << getAttackBonus() << "\n";
     // Print ability scores
     std::cout << "Ability Scores:"
-         << "\n";
+              << "\n";
     std::cout << "  Strength: " << getStrength() << "\n";
     std::cout << "Equipment:"
-         << "\n";
+              << "\n";
     std::cout << "  Weapon: " + getWeapon() << "\n";
     std::cout << "  Helmet: " + getHelmet() << "\n";
     std::cout << "  Chestplate: " + getChestplate() << "\n";
     std::cout << "  Pants: " + getPants() << "\n";
     std::cout << "  Boots: " + getBoots() << "\n";
 }
-
-
 
 // Test armor equipment
 
@@ -646,113 +747,139 @@ void testPrint()
 }
 
 //********************************************
-//FOR MOVING CHARACTER
+// FOR MOVING CHARACTER
 
-bool Character::moveTo(int newX, int newY, Map* currentMap){
+bool Character::moveTo(int newX, int newY, Map *currentMap)
+{
     int currentX = this->getX();
     int currentY = this->getY();
-    if (currentMap->getEnd().x == newX && currentMap->getEnd().y == newY){
-        currentMap->setCell(currentX,currentY,EMPTY);
-	this->deactivate();
-	cout << name << " has reached the end of the map!" << endl;
-	cout << "Press enter to continue: ";
-	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-	return true;
+    if (currentMap->getEnd().x == newX && currentMap->getEnd().y == newY)
+    {
+        currentMap->setCell(currentX, currentY, EMPTY);
+        this->deactivate();
+        cout << name << " has reached the end of the map!" << endl;
+        cout << "Press enter to continue: ";
+        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        return true;
     }
-    if(currentMap->passable(newX,newY)){
-        currentMap->setCell(newX,newY,OCCUPIED, this);
-	this->setX(newX);
-	this->setY(newY);
-        currentMap->setCell(currentX,currentY,EMPTY);
+    if (currentMap->passable(newX, newY))
+    {
+        currentMap->setCell(newX, newY, OCCUPIED, this);
+        this->setX(newX);
+        this->setY(newY);
+        currentMap->setCell(currentX, currentY, EMPTY);
         return true;
     }
     return false;
 }
-//FOR MOVING CHARACTER
+// FOR MOVING CHARACTER
 //********************************************
 
-//SERIALIZATION
-void Character::saveCharacter(){
-    std::ofstream outFile(getName()+ ".txt");
+// SERIALIZATION
+void Character::saveCharacter()
+{
+    std::ofstream outFile(getName() + ".txt");
+    outFile << "X: " << getX() << "\n";
+    outFile << "Y: " << getY() << "\n";
     outFile << "Name: " << name << "\n";
     outFile << "Level: " << level << "\n";
     outFile << "Current Hit Points: " << currHP << "\n";
     outFile << "Max Hit Points: " << hitPoints << "\n";
     outFile << "Strength: " << strength << "\n\n";
 
-    outFile << "inventory: " << "\n";
-    for (Item* item : Character::inventory){
+    outFile << "inventory: "
+            << "\n";
+    for (Item *item : Character::inventory)
+    {
         // if(item->GetClass()->GetFName();)
-        outFile << item->getItemNameAndType()<<item->held<<"\n";
+        outFile << item->getItemNameAndType() << item->held << "\n";
     }
     outFile.close();
 }
 
-Character Character::loadCharacter(string filename){
+Character Character::loadCharacter(string filename)
+{
     std::ifstream file(filename);
     Character charObj;
     std::string line;
 
-    if (!file.is_open()) {
+    if (!file.is_open())
+    {
         throw std::runtime_error("Could not open file");
     }
 
-    while (getline(file, line)) {
+    while (getline(file, line))
+    {
         std::istringstream iss(line);
         std::string key;
-        if (getline(iss, key, ':')) {
+        if (getline(iss, key, ':'))
+        {
             std::string value;
             getline(iss, value);
 
-            if (key == "Name") {
-                string name = value;
-            } else if (key == "Level") {
-                charObj = Character(stoi(value));
-            } else if (key == "Current Hit Points") {
+            if (key == "X")
+            {
+                charObj.setX(stoi(value));
+            }
+            else if (key == "Y")
+            {
+                charObj.setY(stoi(value));
+            }
+            else if (key == "Name")
+            {
+                charObj.name = value;
+            }
+            else if (key == "Level")
+            {
+                charObj.setLevel(stoi(value));
+            }
+            else if (key == "Current Hit Points")
+            {
                 charObj.setCurrentHP(stoi(value));
-            } else if (key == "Max Hit Points") {
+            }
+            else if (key == "Max Hit Points")
+            {
                 charObj.setHP(stoi(value));
-            } else if (key == "Strength") {
+            }
+            else if (key == "Strength")
+            {
                 charObj.setStrength(stoi(value));
-            } else if (key == "inventory") {
-                while (getline(file, line) && !line.empty()) {
+            }
+            else if (key == "inventory")
+            {
+                while (getline(file, line) && !line.empty())
+                {
                     std::istringstream itemStream(line);
                     std::string itemType;
                     getline(itemStream, itemType, ',');
 
-                    if (itemType == "Armour") {
+                    if (itemType == "Armour")
+                    {
                         std::string defense, armorName, armorType, toEquip;
 
                         getline(itemStream, armorName, '|');
                         getline(itemStream, armorType, '(');
                         getline(itemStream, defense, ')');
-                        Armor* armor1 = new Armor(armorName,armorType,int(stoi(defense)));
+                        Armor *armor1 = new Armor(armorName, armorType, int(stoi(defense)));
                         charObj.pickup(armor1);
                         // charObj.inventoryCheck();
                         getline(itemStream, toEquip);
-                        if(stoi(toEquip)==1){
+                        if (stoi(toEquip) == 1)
+                        {
                             charObj.equip(armor1);
                         }
-
-                    } else if (itemType == "Weapon") {
+                    }
+                    else if (itemType == "Weapon")
+                    {
                         std::string damage, weaponName, toEquip;
                         getline(itemStream, weaponName, '(');
                         getline(itemStream, damage, ')');
-                        Weapon* weapon1= new Weapon(int(stoi(damage)),weaponName);
+                        Weapon *weapon1 = new Weapon(int(stoi(damage)), weaponName);
                         charObj.pickup(weapon1);
                         getline(itemStream, toEquip);
-                        if(stoi(toEquip)==1){
+                        if (stoi(toEquip) == 1)
+                        {
                             charObj.equip(weapon1);
-                        }
-                    } else if (itemType == "Consumable") {
-                        std::string value, consumableName, toEquip;
-                        getline(itemStream, consumableName, '(');
-                        getline(itemStream, value, ')');
-                        Consumable* consumable1 = new Consumable(consumableName,int(stoi(value)));
-                        charObj.pickup(consumable1);
-                        getline(itemStream, toEquip);
-                        if(stoi(toEquip)==1){
-                            charObj.equip(consumable1);
                         }
                     }
                 }

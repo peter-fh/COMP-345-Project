@@ -1,0 +1,8 @@
+X: 100
+Y: 200
+Name: Orc
+Level: 1
+Current HP: 10
+Max HP: 20
+
+Inventory: 
