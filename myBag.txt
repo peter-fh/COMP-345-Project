@@ -1,0 +1,7 @@
+X: 1
+Y: 1
+Loot:
+Armour,Iron Helmet|Helmet(12)
+Armour,Iron Pants|Pants(12)
+Armour,Iron Chestpiece|Chestplate(12)
+Armour,Iron Boots|Boots(12)
