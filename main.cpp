@@ -72,11 +72,14 @@ int main(){
 
 
     Game game;
-    game.loadCampaign("test_campaign");
-    game.loadNextMap();
+    game.loadCampaign();
+    game.insertCorpses(2);
+    game.insertEnemies(2);
+    
+    // game.loadNextMap();
     //game.startGameLoop();
-    game.loadNextMap();
-    game.startGameLoop();
+    // game.loadNextMap();
+    // game.startGameLoop();
 
     // Game game;
     // game.loadCampaign("test_campaign"); 
@@ -85,35 +88,35 @@ int main(){
     // game.loadNextMap();
     // game.startGameLoop(); 
 
-    Character welcome(1);
-    // welcome.printCharacter();
-    welcome.setName("James");
-    welcome.setHP(10);
-    welcome.heal();
-    Armor armor10("iron chestplate", "chestplate", 20);
-    Weapon weapon10(3, "sword");
-    Armor armor20("leather boots", "boots", 10);
+    // Character welcome(1);
+    // // welcome.printCharacter();
+    // welcome.setName("James");
+    // welcome.setHP(10);
+    // welcome.heal();
+    // Armor armor10("iron chestplate", "chestplate", 20);
+    // Weapon weapon10(3, "sword");
+    // Armor armor20("leather boots", "boots", 10);
 
 
-    welcome.pickup(&armor10);
-    welcome.pickup(&weapon10);
-    welcome.pickup(&armor20);
+    // welcome.pickup(&armor10);
+    // welcome.pickup(&weapon10);
+    // welcome.pickup(&armor20);
 
-    welcome.equip(&armor10);
-    welcome.equip(&weapon10);
-    welcome.equip(&armor20);
+    // welcome.equip(&armor10);
+    // welcome.equip(&weapon10);
+    // welcome.equip(&armor20);
 
-    welcome.inventoryCheck();
+    // welcome.inventoryCheck();
 
-    welcome.saveCharacter();
-    cout<<"before load\n";
-    Character myChar = Character::loadCharacter("James.txt");
-    cout<<"after load\n";
+    // welcome.saveCharacter();
+    // cout<<"before load\n";
+    // Character myChar = Character::loadCharacter("James.txt");
+    // cout<<"after load\n";
 
-    // myChar.printCharacter();
-    myChar.inventoryCheck();
-    myChar.setName("Mike");
-    myChar.saveCharacter();
+    // // myChar.printCharacter();
+    // myChar.inventoryCheck();
+    // myChar.setName("Mike");
+    // myChar.saveCharacter();
     // welcome.saveCharacter();
 //CHARACTER SAVING AND LOADING**********
 
