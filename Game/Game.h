@@ -38,7 +38,7 @@ private:
     void combat(Enemy& enemy);    
     bool insertCharacters();
     bool insertEnemies(int num_enemies);
-    bool insertChests(int num_chests);
+    bool insertBags(int num_bags);
     void insertCorpses();
     void userTurn(Character& character);
     void userMove(Character& character, int& roll);
