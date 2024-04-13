@@ -799,6 +799,7 @@ Character Character::loadCharacter(string filename)
     std::ifstream file(filename);
     Character charObj;
     std::string line;
+    int x,y;
 
     if (!file.is_open())
     {
@@ -816,11 +817,11 @@ Character Character::loadCharacter(string filename)
 
             if (key == "X")
             {
-                charObj.setX(stoi(value));
+                x = stoi(value);
             }
             else if (key == "Y")
             {
-                charObj.setY(stoi(value));
+                y = stoi(value);
             }
             else if (key == "Name")
             {
@@ -883,7 +884,8 @@ Character Character::loadCharacter(string filename)
             }
         }
     }
+    charObj.setX(x);
+    charObj.setY(y);
 
-    file.close();
     return charObj;
 }

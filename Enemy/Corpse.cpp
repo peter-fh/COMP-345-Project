@@ -157,6 +157,7 @@ if (!file.is_open())
             }
         }
     }
+    file.close();
     corps = Corpse(v);
     corps.setX(x);
     corps.setY(y);
