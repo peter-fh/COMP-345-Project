@@ -21,7 +21,7 @@ Combat::Combat(Character& player, Enemy& enemy){
                 std::cout << "\nInvalid, please try again";
                 std::cout << "Player Move: \n   1: Attack\n   2: Attempt to Flee\n";
                 std::getline(cin, selection);
-            } while (selection != "1" && selection != "2") && selection != "3";
+            } while (selection != "1" && selection != "2" && selection != "3");
                   }
         std::this_thread::sleep_for(0.5s); 
         //make it look better
