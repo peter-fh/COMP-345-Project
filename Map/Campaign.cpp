@@ -2,7 +2,6 @@
 
 
 Campaign::Campaign() {
-
     Map map(5, 5);
 }
 
