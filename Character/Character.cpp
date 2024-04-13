@@ -167,10 +167,14 @@ void Character::searchCorpse(Corpse* corpse){
 
 
 void Character::takeDamage(int damage){
-
-    int newDamage = damage * armorLevel/100;
-    currHP -= newDamage;
-    int blocked = damage - newDamage;
+    if (armorLevel > 10){
+	    damage -= armorLevel/10;
+	    currHP -= damage;
+	    int blocked = armorLevel/10;
+    }
+    else{
+	    currHP -= damage;
+    }
     if (blocked > 0){
         std::cout << "Armor blocks " << blocked << " damage";
     }
