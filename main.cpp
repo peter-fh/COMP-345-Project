@@ -73,7 +73,7 @@ int main(){
 
     Game game;
     game.loadCampaign();
-    game.insertCorpses(2);
+    game.insertCorpses();
     game.insertEnemies(2);
     
     // game.loadNextMap();

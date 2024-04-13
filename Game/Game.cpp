@@ -722,7 +722,7 @@ void Game::saveGame(string filename) {
 	int i = 0;
     for (Enemy& enemy: enemies){
 		file << i <<",";
-		enemy.saveEnemy(i+"enemy.txt");
+		enemy.saveEnemy(std::to_string(i) + "enemy.txt");
 		i++;
 	}
 
@@ -730,7 +730,7 @@ void Game::saveGame(string filename) {
 	i = 0;
     for (Corpse& corpse: corpses){
 		file << i <<",";
-		corpse.saveCorpse(i+"corpse.txt");
+		corpse.saveCorpse(std::to_string(i) + "corpse.txt");
 		i++;
 	}
 
@@ -740,14 +740,16 @@ void Game::saveGame(string filename) {
 }
 
 Game Game::loadGame(string filename){
-	Game game;
+	Game theGame = Game();
 
-std::ifstream file(filename);
+	Character player;
+    std::vector<Enemy> enemies;
+    std::vector<Corpse> corpses;
+
+	std::ifstream file(filename);
     std::string line;
-    std::vector<Item*> v;
-    int x,y;
-
-
+	string map_index,campaign,player,hasKey;
+	string enemy,corpse;
 
 if (!file.is_open())
     {
@@ -765,53 +767,72 @@ if (!file.is_open())
             std::string value;
             getline(iss, value);
 
-            if (key == "X")
+            if (key == "map_index")
             {
-                x = stoi(value);
+                theGame.map_index = stoi(value);
             }
-            else if (key == "Y")
+            else if (key == "campaign")
             {
-                y = stoi(value);
+				Campaign cai = Campaign::loadCampaign(value+".txt");
+                theGame.campaign =cai;
+				theGame.map = cai.get(theGame.map_index)
             }
-            else if (key == "Loot")
+			else if (key == "player")
             {
-                cout<<"lootloot\n";
+				Character cay = Character::loadCharacter(value+".txt");
+                theGame.player = cay;
+				cay.determineSymbol();
+				cay.activate();
+				theGame.map.setCell(cay.getX(),cay.getY(), OCCUPIED, &theGame.player));
+            }
+			else if (key == "hasKey")
+            {
+				if(stoi(value)==1){
+					theGame.hasKey = true;
+				}
+				else{
+					theGame.hasKey = false;
+				}
+            }
+
+
+            else if (key == "enemy")
+            {
                 while (getline(file, line) && !line.empty())
                 {
-                    cout<<"while loop\n";
-
                     std::istringstream itemStream(line);
-                    std::string itemType;
-                    getline(itemStream, itemType, ',');
+                    std::string value;
+                    getline(itemStream, value, ',');
+					Enemy emy = Enemy::loadEnemy(value+".txt");
+					
+					emy.determineSymbol();
+					emy.activate();
+					enemies.push_back(emy);
 
-                    if (itemType == "Armour")
-                    {
-                        std::string defense, armorName, armorType, toEquip;
+					theGame.map.setCell(emy.getX(),emy.getY(), OCCUPIED, &enemies.back());
+                }
+            }
+			else if (key == "corpse")
+            {
+                while (getline(file, line) && !line.empty())
+                {
+                    std::istringstream itemStream(line);
+                    std::string value;
+                    getline(itemStream, value, ',');
+					Corpse cos = Corpse::loadCorpse(value+".txt");
 
-                        getline(itemStream, armorName, '|');
-                        getline(itemStream, armorType, '(');
-                        getline(itemStream, defense, ')');
-                        Armor *armor1 = new Armor(armorName, armorType, int(stoi(defense)));
-                        cout<<"armor\n";
-                        v.push_back(armor1);
-                    }
-                    else if (itemType == "Weapon")
-                    {
-                        std::string damage, weaponName, toEquip;
-                        getline(itemStream, weaponName, '(');
-                        getline(itemStream, damage, ')');
-                        Weapon *weapon1 = new Weapon(int(stoi(damage)), weaponName);
-                        cout<<"weapon\n";
-                        v.push_back(weapon1);
-                    }
+					cos.determineSymbol();
+					cos.activate();
+					corpses.push_back(cos);
+
+					theGame.map.setCell(cos.getX(),cos.getY(), OCCUPIED, &enemies.back());
                 }
             }
         }
     }
     file.close();
-    // corps = Corpse(v);
-    // corps.setX(x);
-    // corps.setY(y);
+	theGame.enemies = enemies;
+	theGame.corpses = corpses;
 
-	return game;
+	return theGame;
 }
