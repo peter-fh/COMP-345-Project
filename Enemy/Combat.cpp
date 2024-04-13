@@ -4,7 +4,7 @@
 #include <thread>
 
 void Combat::displayTexture(){
-    for (int i=0; i < 20; i++){
+    for (int i=0; i < 40; i++){
 	cout << "\n";
     }
     string texture[10] = {

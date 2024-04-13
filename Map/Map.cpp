@@ -180,6 +180,9 @@ string Map::toString(){
 		    if (getCell(x, y).mappable_obj->getSymbol() == 'E'){
 			output +=textures.enemy[i];
 		    }
+		    if (getCell(x, y).mappable_obj->getSymbol() == 'X'){
+			output +=textures.bag[i];
+		    }
 		} 
 		output += " ";
 	    }
