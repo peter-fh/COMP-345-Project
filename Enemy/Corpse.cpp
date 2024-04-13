@@ -28,7 +28,9 @@ void Corpse::reget(){
 }
 
 void Corpse::search(){
-    if (inventory[0] == nullptr){
+    if (inventory.size() == 0){
+        cout<<"inventory null\n";
+
         std::cout << "\nCorpse empty";
         return;
     }
@@ -87,7 +89,7 @@ void Corpse::saveCorpse(string filename) {
 }
 
 Corpse Corpse::loadCorpse(string filename){ 
-    Corpse corps = Corpse();
+    Corpse corps;
     std::ifstream file(filename);
     std::string line;
     std::vector<Item*> v;
@@ -95,6 +97,7 @@ Corpse Corpse::loadCorpse(string filename){
 
 if (!file.is_open())
     {
+        cout<<"no file\n";
         throw std::runtime_error("Could not open file");
     }
 
@@ -104,21 +107,28 @@ if (!file.is_open())
         std::string key;
         if (getline(iss, key, ':'))
         {
+            cout<<key<<endl;
             std::string value;
             getline(iss, value);
 
             if (key == "X")
             {
+                cout<<value<<endl;
+
                 corps.setX(stoi(value));
             }
             else if (key == "Y")
             {
+                cout<<value<<endl;
                 corps.setY(stoi(value));
             }
-            else if (key == "inventory")
+            else if (key == "Loot")
             {
+                cout<<"lootloot\n";
                 while (getline(file, line) && !line.empty())
                 {
+                    cout<<"while loop\n";
+
                     std::istringstream itemStream(line);
                     std::string itemType;
                     getline(itemStream, itemType, ',');
@@ -131,7 +141,8 @@ if (!file.is_open())
                         getline(itemStream, armorType, '(');
                         getline(itemStream, defense, ')');
                         Armor *armor1 = new Armor(armorName, armorType, int(stoi(defense)));
-                        corps.pickup(armor1);
+                        cout<<"armor\n";
+                        v.push_back(armor1);
                     }
                     else if (itemType == "Weapon")
                     {
@@ -139,11 +150,13 @@ if (!file.is_open())
                         getline(itemStream, weaponName, '(');
                         getline(itemStream, damage, ')');
                         Weapon *weapon1 = new Weapon(int(stoi(damage)), weaponName);
-                        corps.pickup(weapon1);
+                        cout<<"weapon\n";
+                        v.push_back(weapon1);
                     }
                 }
             }
         }
     }
+    corps = Corpse(v);
     return corps;
 }

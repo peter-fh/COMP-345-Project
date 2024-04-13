@@ -31,7 +31,7 @@ int main(){
 
     cout<<"\n"<<looted.getX()<<", "<< looted.getY()<<endl;
     looted.search();
-    looted.saveCorpse("myOtherBag.txt");
+    // looted.saveCorpse("myOtherBag.txt");
 
 
 
