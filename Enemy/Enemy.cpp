@@ -151,9 +151,16 @@ void Enemy::equipment(){
 }
 
 void Enemy::takeDamage(int damage){
-    currentHP -= damage*(armorMod/100.0f);
-    if (damage - damage*(armorMod/100.0f > 0)){
-        cout << "\nArmor blocks " << damage - damage*(armorMod/100.0f > 0) << " damage";
+    if (armorMod > 10){
+	    damage -= armorMod/10;
+	    currentHP -= damage;
+	    int blocked = armorMod/10;
+    }
+    else{
+	    currentHP -= damage;
+    }
+    if (blocked > 0){
+        std::cout << "Armor blocks " << blocked << " damage";
     }
     if (currentHP <= 0){
         std::cout << "\n" << name << " slain";
