@@ -152,8 +152,9 @@ void Campaign::saveCampaign(){
 
     int i=0;
     for(std::list<Map>::iterator it = maps.begin(); it != maps.end(); ++it){
-	file << i << ":"<< it->getName() << "\n";
-	++i;
+        it->saveMap();
+        file << i << ":"<< it->getName() << "\n";
+        ++i;
     }    
     file.close();
 }

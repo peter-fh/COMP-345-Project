@@ -21,6 +21,11 @@ public:
     bool save();
     void startGameLoop();
     void addCharacter();
+
+    void saveGame(string filename);
+    static Game loadGame(string filename);
+
+
 private:
 
     int map_index;
@@ -28,7 +33,7 @@ private:
 
     Character player;
     std::vector<Enemy> enemies;
-    std::vector<Chest> chests;
+    std::vector<Chest> chests; //no chests
     std::vector<Corpse> corpses;
     void combat(Enemy& enemy);    
     bool insertCharacters();

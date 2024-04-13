@@ -43,7 +43,7 @@ public:
     bool friendly;
     int maxHP, currentHP;
     std::string getEnemyName();
-    void saveEnemy();
+    void saveEnemy(string filename);
     static Enemy loadEnemy(const std::string &filename);
 
 private:

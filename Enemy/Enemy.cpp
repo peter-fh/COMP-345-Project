@@ -155,9 +155,9 @@ void Enemy::determineSymbol()
 
 std::string Enemy::getEnemyName() { return name; }
 
-void Enemy::saveEnemy()
+void Enemy::saveEnemy(string filename)
 {
-    std::ofstream outFile("Goblin.txt");
+    std::ofstream outFile(filename);
     outFile << "X: " << getX() << "\n";
     outFile << "Y: " << getY() << "\n";
     outFile << "Name: " << name << "\n";
@@ -174,7 +174,7 @@ void Enemy::saveEnemy()
     outFile.close();
 }
 
-static Enemy loadEnemy(const std::string &filename)
+Enemy Enemy::loadEnemy(const std::string &filename)
 {
     std::ifstream file(filename);
     Enemy enemyObj;
