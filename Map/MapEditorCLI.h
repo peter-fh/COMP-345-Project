@@ -8,6 +8,7 @@ private:
     bool saveMap();
     bool saveMapAs();
     Map createMap();
+    bool saveCampaign();
     bool loadMap();
     Map loadMapFromFile();
     bool setSquare();

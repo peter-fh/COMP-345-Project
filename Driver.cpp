@@ -14,7 +14,10 @@
 class Driver {
 
 public:
-
+    Driver(){}
+    void run(){
+	mapEditor.editorLoop();
+    }
 
 private:
     Game game;
@@ -26,3 +29,9 @@ private:
     void makeMap();
 
 };
+
+int main(){
+    Driver driver;
+    driver.run();
+    return 0;
+}

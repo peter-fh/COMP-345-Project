@@ -154,6 +154,11 @@ bool MapEditorCLI::saveMapAs(){
     return campaign.insert(mapEditor.saveMap(), index);
 }
 
+bool MapEditorCLI::saveCampaign(){
+    cout << "Saving campaign as: " << campaign.getName() << ".\n";
+    campaign.saveCampaign();
+    return true;
+}
 
 bool MapEditorCLI::moveMap(){
     string name1;
@@ -361,7 +366,7 @@ void MapEditorCLI::campaignEditorLoop(){
 	     campaign.display_campaign();
 	}
 	else if (userIn == 5){ // EXIT
-	    // TODO: Add save to file functionality
+	    saveCampaign();
 	    exit = true;
 	}
 
@@ -375,7 +380,7 @@ Campaign MapEditorCLI::editorLoop(){
     cout << "\n\n\nWelcome to the campaign editor!\n";
     cout << "Your options are:\n";
     cout << "(1) Create new campaign\n";
-    //cout << "(2) Load campaign from file\n";
+    cout << "(2) Load campaign from file\n";
     int userInput;
     cout << "Selection: #";
     cin >> userInput;
@@ -388,8 +393,14 @@ Campaign MapEditorCLI::editorLoop(){
 	campaign = Campaign();
 	campaign.setName(name);
 	campaignEditorLoop();
+    } else if (userInput == 2){
+	cout << "Enter a file name: ";
+	string fileName;
+	cin >> fileName;
+	fileName += ".txt";
+	campaign = Campaign::loadCampaign(fileName);
+	campaignEditorLoop();
     }
-    // TODO: Add functionality to load from file
 
     return campaign;
 }
