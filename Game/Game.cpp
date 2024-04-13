@@ -177,7 +177,10 @@ void Game::initiativePhase(){
     for (Enemy& enemy : enemies){
 	if (enemy.isActive()){
 	    enemy.initiative = d20.Roll();
-	    cout << enemy.status() << " rolled a " << enemy.initiative << "!\n";
+	    cout << enemy.status();
+
+	    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+	    cout << " rolled a " << enemy.initiative << "!\n";
 	}
     }
     cout << "Press enter to continue.";
@@ -217,6 +220,7 @@ void Game::gameLoop(){
 
 	for (Enemy& enemy : enemies){
 	    if (enemy.initiative == i){
+		enemyTurn(enemy);
 	    }
 	}
     }
@@ -229,17 +233,13 @@ void Game::enemyTurn(Enemy& enemy){
     for (Enemy& nearbyEnemy: nearby){
 	if (&nearbyEnemy == &enemy){
 	    Combat combat(player, enemy);    
-	}
-	else{
-	    moveEnemy(enemy);
+	    return;
 	}
     }
+    moveEnemy(enemy);
 }
 
 
-void Game::moveEnemy(Enemy& enemy){
-
-}
 
 
 vector<Enemy> Game::enemiesNearby(Character& character){
@@ -286,6 +286,35 @@ void Game::userTurn(Character& character){
 
 }
 
+void Game::moveEnemy(Enemy& enemy){
+    int xDirection = (player.getX() - enemy.getX()) / abs(player.getX() - enemy.getX());
+    int yDirection = (player.getY() - enemy.getY()) / abs(player.getY() - enemy.getY());
+    cout << enemy.status() << "is rolling for movement (press enter)";
+    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    int roll = d6.Roll();
+    cout << enemy.status() << " rolled a " << roll << "!\n";
+    while (roll > 0 && xDirection != 0){
+	if (moveEnemyOneSquare(xDirection, 0, enemy, map)){
+	    displayCurrentMap();
+	    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+	    roll--;
+	} else {
+	    xDirection = 0;
+	}
+    }
+
+    while (roll > 0 && yDirection != 0){
+	if (moveEnemyOneSquare(0, yDirection, enemy, map)){
+	    displayCurrentMap();
+	    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+	    roll--;
+	} else {
+	    yDirection = 0;
+	}
+    }
+
+
+}
 bool Game::moveEnemyOneSquare(int dx, int dy, Enemy& enemy, Map& map){
     
     int currentX = enemy.getX();
