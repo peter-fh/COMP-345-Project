@@ -44,11 +44,11 @@ public:
     int currXP, levelUpThreshold;
     void gainXP(int XP);
     void determineSymbol() override;
-    void openChest(Chest* chest);
-    void searchCorpse(Corpse* corpse);
+    void openChest(Chest *chest);
+    void searchCorpse(Corpse *corpse);
     Character();
     std::string status();
-    std::vector<Item*> inventory;
+    std::vector<Item *> inventory;
     std::string name;
     void inventoryCheck();
     void setName(std::string name);
@@ -57,17 +57,17 @@ public:
     int currHP;
     void kill();
     void equip(int pos);
-    void equip(Item* i);
-    void pickup(Item* i);
+    void equip(Item *i);
+    void pickup(Item *i);
     void drop(int pos);
     int bowAttack(float modi);
     bool alive;
-    Weapon* equippedWeapon;
-    Armor* equippedHelmet;
-    Armor* equippedChestplate;
-    Armor* equippedPants;
-    Armor* equippedBoots;
-    Bow* equippedBow;
+    Weapon *equippedWeapon;
+    Armor *equippedHelmet;
+    Armor *equippedChestplate;
+    Armor *equippedPants;
+    Armor *equippedBoots;
+    Bow *equippedBow;
     void Attach(Observer *observer) override;
     void Detach(Observer *observer) override;
     void Notify(string attribute, int newValue, int oldValue);
@@ -97,13 +97,16 @@ public:
     string getPants() const;
     // increase (buff and debuff)
     void heal();
-    void setHP(int newHP){
+    void setHP(int newHP)
+    {
         hitPoints = newHP;
     }
-    void setCurrentHP(int newHP );
+    void setCurrentHP(int newHP);
 
-    void takeDmg(int hit){
-        if (hit < 1){
+    void takeDmg(int hit)
+    {
+        if (hit < 1)
+        {
             std::cout << "The hit was inneffective" << endl;
         }
         else
@@ -117,9 +120,9 @@ public:
             }
         }
         this->setHP(this->getHitPoints() - hit);
-
     }
-    void setStrength(int newStrength){
+    void setStrength(int newStrength)
+    {
         strength = newStrength;
     }
 
@@ -151,24 +154,23 @@ public:
     {
         setStrategy(new AggressorStrategy());
     }
+    void setLevel(int passedlevel);
 
     // FOR STRATEGY^
     //*************************
-    //MOVING CHARACTER
-    bool moveTo(int newX, int newY, Map* currentMap);
+    // MOVING CHARACTER
+    bool moveTo(int newX, int newY, Map *currentMap);
 
     int initiativeRoll;
 
     void saveCharacter();
     static Character loadCharacter(string filename);
 
-
 private: // private!!!
-
     Strategy *strategy;
 
-    std::vector<Observer*> observers;
-    
+    std::vector<Observer *> observers;
+
     int level;       // assigned at the beginning
     int hitPoints;   // based on constitution modifier and level
     int armorClass;  // based on dexterity modifier

@@ -21,9 +21,14 @@ public:
     void display_names();
     int len();
 
+    void saveCampaign();
+    static Campaign loadCampaign(string filename);
+
 private:
     std::list<Map> maps;
     string name;
 };
+
+
 
 
