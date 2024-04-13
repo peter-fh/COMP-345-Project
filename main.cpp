@@ -28,24 +28,30 @@ int main(){
     welcome.heal();
     Armor armor1("iron chestplate","chestplate", 20);
     Weapon weapon1(3,"sword");
+    Armor armor2("leather boots","boots", 10);
+
 
 
 
 
     welcome.pickup(&armor1);
     welcome.pickup(&weapon1);
+    welcome.pickup(&armor2);
 
-    welcome.equip(0);
-    welcome.equip(1);
 
-    welcome.setX(1);
-    welcome.setY(3);
+    welcome.equip(&armor1);
+    welcome.equip(&weapon1);
+    welcome.equip(&armor2);
+
+
+    welcome.inventoryCheck();
 
 
     welcome.saveCharacter();
 
-    // Character myChar = Character::loadCharacter("James.txt");
+    Character myChar = Character::loadCharacter("James.txt");
     // myChar.printCharacter();
+    myChar.inventoryCheck();
 
 
 
@@ -60,12 +66,6 @@ int main(){
 
     // Cell start = map1.getStart();
     // Cell location = map1.getNearbyUnnocupied(start.x, start.y);
-
-    // welcome.setX(location.x);
-    // welcome.setY(location.y);
-    // welcome.determineSymbol();
-    // welcome.activate();
-    // map1.setCell(location.x, location.y, OCCUPIED, &welcome); 
 
     // map1.displayMap();
 
@@ -95,16 +95,16 @@ int main(){
     // start = map2.getStart();
     // location = map2.getNearbyUnnocupied(start.x, start.y);
 
-    // welcome.setX(location.x);
-    // welcome.setY(location.y);
-    // welcome.determineSymbol();
-    // welcome.activate();
-    // map2.setCell(location.x, location.y, OCCUPIED, &welcome); 
-
+    
     // map2.displayMap();
 
     // map1.saveMap();
 
     // Map myMap = Map::loadMap("Intro.txt");
     // myMap.displayMap();
+
+    // map2.saveMap();
+
+    // myMap = Map::loadMap("The Dungeon.txt");
+    // myMap.displayMap();    
 }

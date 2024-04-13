@@ -59,16 +59,17 @@ std::vector<Observer*> observers;
 
 void Character::inventoryCheck(){
     if (inventory.size() == 0){
-        Notify("  Empty Inventory");
+        // Notify("  Empty Inventory");
+        cout<<"  Empty Inventory"<<endl;
         return;
     }
     int index = 1;
     for (Item* item : Character::inventory) {
         if (item != nullptr) {
             if (item->held)
-                Notify("  " + to_string(index++) + ": " + item->getItemName() + " (Equipped)");
+                cout<<("  " + to_string(index++) + ": " + item->getItemName() + " (Equipped)\n");
             else{
-                Notify("  " + to_string(index++) + ": " + item->getItemName());
+                cout<<("  " + to_string(index++) + ": " + item->getItemName()+ " \n");
             }
         }
 }}
@@ -548,6 +549,9 @@ int Character::getArmorClass(){
 int Character::getCurrentHP(){
     return currHP;
 }
+void Character::setCurrentHP(int newHP ){
+    currHP = newHP;
+}
 int Character::getHitPoints(){
     return hitPoints;
 }
@@ -674,52 +678,88 @@ void Character::saveCharacter(){
     outFile << "Level: " << level << "\n";
     outFile << "Current Hit Points: " << currHP << "\n";
     outFile << "Max Hit Points: " << hitPoints << "\n";
-    outFile << "Character is: " << alive << "\n";
-
-    outFile << "Armor Class: " << armorClass << "\n";
-    outFile << "Attack Bonus: " << attackBonus << "\n";
-    outFile << "Damage Bonus: " << damageBonus << "\n";
-
-    outFile << "Strength: " << strength << "\n";
+    outFile << "Strength: " << strength << "\n\n";
 
     outFile << "inventory: " << "\n";
     for (Item* item : Character::inventory){
-        outFile << item->getItemName() << "\n";
+        // if(item->GetClass()->GetFName();)
+        outFile << item->getItemNameAndType()<<item->held<<"\n";
     }
     outFile.close();
 }
 
 Character Character::loadCharacter(string filename){
-    Character character;
-
     std::ifstream file(filename);
+    Character charObj;
     std::string line;
 
-    if (std::getline(file, line)) { // Read the first line
+    if (!file.is_open()) {
+        throw std::runtime_error("Could not open file");
+    }
+
+    while (getline(file, line)) {
         std::istringstream iss(line);
-        std::string value;
-        int width, height;
+        std::string key;
+        if (getline(iss, key, ':')) {
+            std::string value;
+            getline(iss, value);
 
-        // Get first value
-        std::getline(iss, value, ',');
-        width = std::stoi(value);
+            if (key == "Name") {
+                string name = value;
+            } else if (key == "Level") {
+                charObj = Character(stoi(value));
+            } else if (key == "Current Hit Points") {
+                charObj.setCurrentHP(stoi(value));
+            } else if (key == "Max Hit Points") {
+                charObj.setHP(stoi(value));
+            } else if (key == "Strength") {
+                charObj.setStrength(stoi(value));
+            } else if (key == "inventory") {
+                while (getline(file, line) && !line.empty()) {
+                    std::istringstream itemStream(line);
+                    std::string itemType;
+                    getline(itemStream, itemType, ',');
 
-        // Get second value
-        std::getline(iss, value, ',');
-        height = std::stoi(value);
+                    if (itemType == "Armour") {
+                        std::string defense, armorName, armorType, toEquip;
 
-    }
+                        getline(itemStream, armorName, '|');
+                        getline(itemStream, armorType, '(');
+                        getline(itemStream, defense, ')');
+                        Armor* armor1 = new Armor(armorName,armorType,int(stoi(defense)));
+                        charObj.pickup(armor1);
+                        // charObj.inventoryCheck();
+                        getline(itemStream, toEquip);
+                        if(stoi(toEquip)==1){
+                            charObj.equip(armor1);
+                        }
 
-    int row = 0;
-    if (file.is_open()) {
-        while (std::getline(file, line)) {
-            std::istringstream iss(line);
-            std::string cell;
-
-            row++;
+                    } else if (itemType == "Weapon") {
+                        std::string damage, weaponName, toEquip;
+                        getline(itemStream, weaponName, '(');
+                        getline(itemStream, damage, ')');
+                        Weapon* weapon1= new Weapon(int(stoi(damage)),weaponName);
+                        charObj.pickup(weapon1);
+                        getline(itemStream, toEquip);
+                        if(stoi(toEquip)==1){
+                            charObj.equip(weapon1);
+                        }
+                    } else if (itemType == "Consumable") {
+                        std::string value, consumableName, toEquip;
+                        getline(itemStream, consumableName, '(');
+                        getline(itemStream, value, ')');
+                        Consumable* consumable1 = new Consumable(consumableName,int(stoi(value)));
+                        charObj.pickup(consumable1);
+                        getline(itemStream, toEquip);
+                        if(stoi(toEquip)==1){
+                            charObj.equip(consumable1);
+                        }
+                    }
+                }
+            }
         }
-        file.close();
     }
 
-    return character;
+    file.close();
+    return charObj;
 }

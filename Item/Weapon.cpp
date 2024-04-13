@@ -16,3 +16,6 @@ int Weapon::getDamage(){
 std::string Weapon::getItemName(){
     return itemName + " (" + std::to_string(baseDamage) + ")";
 }
+std::string Weapon::getItemNameAndType(){
+    return "Weapon," +itemName + "(" + std::to_string(baseDamage) + ")";
+}

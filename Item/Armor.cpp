@@ -20,3 +20,7 @@ void Armor::unEquip(){held = false;}
 std::string Armor::getItemName(){
     return itemName + " (" + std::to_string(defence) + ")";
 }
+
+std::string Armor::getItemNameAndType(){
+    return "Armour," + itemName +"|"+ type +"(" + std::to_string(defence) + ")";
+}

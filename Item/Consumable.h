@@ -12,6 +12,9 @@ class Consumable : public Item{
         int value;
         void equip() override; //consume but
         int getValue();
+        std::string getItemNameAndType() override;
+
+
 
 };
 
